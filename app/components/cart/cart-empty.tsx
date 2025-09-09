@@ -1,0 +1,88 @@
+import {Link} from 'react-router';
+import {cx} from 'class-variance-authority';
+import {AnimatePresence} from 'motion/react';
+
+import {useLocalePath} from '~/hooks/use-locale-path';
+import {useSanityThemeContent} from '~/hooks/use-sanity-theme-content';
+import {cn} from '~/lib/utils';
+
+import type {CartLayouts} from '.';
+
+import {ProgressiveMotionDiv} from '../progressive-motion';
+import {Button} from '../ui/button';
+
+export function CartEmpty({
+  layout = 'drawer',
+  onClose,
+  show,
+}: {
+  layout?: CartLayouts;
+  onClose?: () => void;
+  show: boolean;
+}) {
+  const {themeContent} = useSanityThemeContent();
+  const container = {
+    drawer: cx([
+      'flex h-full content-start items-center justify-center gap-4 p-5 pb-8 md:gap-12 md:pb-12',
+    ]),
+    page: cx([
+      `container flex w-full flex-1 items-center justify-center gap-4 py-12 text-center md:items-start md:justify-start md:gap-8 md:text-left lg:gap-12`,
+    ]),
+  };
+
+  const collectionsPath = useLocalePath({path: '/collections'});
+
+  return (
+    <AnimatePresence>
+      {show && (
+        <ProgressiveMotionDiv
+          animate={{
+            opacity: 1,
+          }}
+          className={cn(container[layout])}
+          exit={{
+            opacity: 0,
+          }}
+          forceMotion={layout === 'drawer'}
+          initial={{
+            opacity: layout === 'page' ? 1 : 0,
+          }}
+        >
+          <section
+            className={cn([
+              'grid gap-6',
+              layout === 'drawer' && 'justify-center text-center',
+            ])}
+          >
+            <span>{themeContent?.cart?.emptyMessage}</span>
+            <div>
+              {layout === 'page' ? (
+                <Button asChild>
+                  <Link prefetch="intent" to={collectionsPath}>
+                    {themeContent?.cart?.continueShopping}
+                  </Link>
+                </Button>
+              ) : (
+                <Button onClick={onClose}>
+                  {themeContent?.cart?.continueShopping}
+                </Button>
+              )}
+            </div>
+            {/* Todo => add FeaturedProducts */}
+            {/* 
+              <section className="grid gap-8 pt-16">
+                <FeaturedProducts
+                  count={4}
+                  heading="Shop Best Sellers"
+                  layout={layout}
+                  onClose={onClose}
+                  sortKey="BEST_SELLING"
+                />
+              </section>
+            */}
+          </section>
+        </ProgressiveMotionDiv>
+      )}
+    </AnimatePresence>
+  );
+}
