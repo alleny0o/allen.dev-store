@@ -14,15 +14,15 @@ import {useLocalePath} from '~/hooks/use-locale-path';
 import {cn} from '~/lib/utils';
 import {useRootLoaderData} from '~/root';
 
-import {ClientOnly} from '../client-only';
-import {headerVariants} from '../cva/header';
-import {IconAccount} from '../icons/icon-account';
-import {DesktopNavigation} from '../navigation/desktop-navigation';
-import {MobileNavigation} from '../navigation/mobile-navigation.client';
-import {IconButton} from '../ui/button';
-import CartDrawer from './cart-drawer-wrapper';
-import {Logo} from './header-logo';
-import {MobileNavigationTrigger} from '../navigation/mobile-navigation-trigger';
+import { ClientOnly } from '~/components/client-only';
+import { headerVariants } from '~/components/cva/header';
+import { IconAccount } from '~/components/icons/icon-account';
+import { DesktopNavigation } from '~/components/navigation/desktop-navigation';
+import { MobileNavigation } from '~/components/navigation/mobile-navigation.client';
+import { IconButton } from '~/components/ui/button';
+import { CartDrawer } from '../layout/cart-drawer.client';
+import { Logo } from './header-logo';
+import { MobileNavigationTrigger } from '~/components/navigation/mobile-navigation-trigger';
 import {useSanityThemeContent} from '~/hooks/use-sanity-theme-content';
 
 export function Header() {
@@ -57,7 +57,7 @@ export function Header() {
           <div className="flex items-center">
             <DesktopNavigation data={header?.menu} />
             <AccountLink className="relative flex items-center justify-center focus:ring-primary/5" />
-            <CartDrawer />
+            {/* <CartDrawer /> */}
             <ClientOnly fallback={<MobileNavigationTrigger />}>
               {() => (
                 <Suspense>

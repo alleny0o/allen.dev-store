@@ -1,6 +1,10 @@
+// react-router types
 import type {ShouldRevalidateFunction} from 'react-router';
+
+// sanity types
 import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
 
+// react-router functions & components
 import {
   isRouteErrorResponse,
   Link,
@@ -16,25 +20,39 @@ import {
   useRouteLoaderData,
   redirect,
 } from 'react-router';
+
+// shopify / hydrogen
 import {getShopAnalytics, Analytics, useNonce} from '@shopify/hydrogen';
 
+// route types
 import type {Route} from './+types/root';
 
+// components
 import {Fonts} from './components/fonts';
 import {CssVars} from './components/css-vars';
 import {CustomAnalytics} from './components/custom-analytics';
 import {AppLayout} from './components/layout';
 import {Button} from './components/ui/button';
+
+// data / queries
 import {ROOT_QUERY} from './data/sanity/queries';
+import {ALL_LOCALIZATION_QUERY} from './data/shopify/queries';
+
+// hooks
 import {useLocalePath} from './hooks/use-locale-path';
 import {useSanityThemeContent} from './hooks/use-sanity-theme-content';
+
+// lib utilities
 import {generateFontsPreloadLinks} from './lib/fonts';
 import {resolveShopifyPromises} from './lib/resolve-shopify-promises';
 import {seoPayload} from './lib/seo.server';
 import {generateFaviconUrls} from './lib/generate-favicon-urls';
 import {resolveEffectiveLocale} from './lib/locale/resolver';
-import {ALL_LOCALIZATION_QUERY} from './data/shopify/queries';
+
+// styles
 import tailwindCss from './styles/tailwind.css?url';
+
+// constants
 import {SANITY_STUDIO_PATH} from './sanity/constants';
 
 export type RootLoaderData = Route.ComponentProps['loaderData'];
@@ -161,8 +179,8 @@ export async function loader({context, request}: Route.LoaderArgs) {
     featuredCollectionPromise,
     featuredProductPromise,
     isLoggedIn: isLoggedInPromise,
-    locale, // Enhanced locale with contentLanguage
-    localizations, // All available locales for switcher
+    locale,
+    localizations,
     sanityPreviewMode,
     sanityRoot,
     seo,

@@ -1,6 +1,6 @@
 import {useRootLoaderData} from '~/root';
 
-import {CmsSection} from '../cms-section';
+import { CmsSection } from '~/components/cms-section';
 
 export function Footer() {
   const {sanityRoot} = useRootLoaderData();

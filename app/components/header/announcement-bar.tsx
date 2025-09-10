@@ -8,15 +8,15 @@ import {useMemo} from 'react';
 import {useColorsCssVars} from '~/hooks/use-colors-css-vars';
 import {useRootLoaderData} from '~/root';
 
-import {IconArrowRight} from '../icons/icon-arrow-right';
-import {SanityInternalLink} from '../sanity/link/sanity-internal-link';
+import {IconArrowRight} from '~/components/icons/icon-arrow-right';
+import {SanityInternalLink} from '~/components/sanity/link/sanity-internal-link';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '../ui/carousel';
+} from '~/components/ui/carousel';
 
 type AnnouncementBarProps = NonNullable<
   NonNullable<ROOT_QUERYResult['header']>['announcementBar']
