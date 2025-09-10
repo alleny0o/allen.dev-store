@@ -7,7 +7,7 @@ import {
   getAdjacentAndFirstAvailableVariants,
   useSelectedOptionInUrlParam,
 } from '@shopify/hydrogen';
-import {DEFAULT_LOCALE} from 'countries';
+import {FALLBACK_LOCALE} from '~/lib/locale/fallbacks';
 import invariant from 'tiny-invariant';
 
 import type {Route} from './+types/($locale).products.$productHandle';
@@ -35,7 +35,7 @@ export async function loader({context, params, request}: Route.LoaderArgs) {
   const selectedOptions = getSelectedProductOptions(request);
 
   const queryParams = {
-    defaultLanguage: DEFAULT_LOCALE.language.toLowerCase(),
+    defaultLanguage: FALLBACK_LOCALE.language.toLowerCase(),
     language,
     productHandle,
   };

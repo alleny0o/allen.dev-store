@@ -682,8 +682,6 @@ export type Settings = {
     _weak?: boolean;
     [internalGroqTypeReferenceTo]?: 'colorScheme';
   };
-  showCurrencyCodes?: boolean;
-  showTrailingZeros?: Array<string>;
   cartCollection?: {
     _ref: string;
     _type: 'reference';
@@ -7069,8 +7067,8 @@ export type ROOT_QUERYResult = {
         blur?: number;
       };
     } | null;
-    showCurrencyCodes: boolean | null;
-    showTrailingZeros: Array<string> | null;
+    showCurrencyCodes: null;
+    showTrailingZeros: null;
     siteName: string | null;
     snapchat: string | null;
     socialSharingImagePreview: {

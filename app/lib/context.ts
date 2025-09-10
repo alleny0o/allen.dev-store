@@ -1,6 +1,4 @@
 import {createHydrogenContext, createWithCache} from '@shopify/hydrogen';
-import {getLocaleFromRequest} from 'countries';
-
 import {SANITY_API_VERSION, SANITY_STUDIO_PATH} from '~/sanity/constants';
 
 import {envVariables} from './env.server';
@@ -8,11 +6,8 @@ import {AppSession} from './hydrogen.session.server';
 import {createSanityContext} from './sanity/sanity.server';
 import {SanitySession} from './sanity/sanity.session.server';
 import {CART_QUERY_FRAGMENT} from '~/data/shopify/queries';
+import { FALLBACK_LOCALE } from './locale/fallbacks';
 
-/**
- * The context implementation is separate from server.ts
- * so that type can be extracted for AppLoadContext
- * */
 export async function createAppLoadContext(
   request: Request,
   env: Env,
@@ -20,27 +15,27 @@ export async function createAppLoadContext(
 ) {
   const envVars = envVariables(env);
   const isDev = envVars.NODE_ENV === 'development';
-  const locale = getLocaleFromRequest(request);
   const waitUntil = executionContext.waitUntil.bind(executionContext);
 
-  /*
-   * Open a cache instance in the worker and a custom session instance.
-   */
   const [cache, session, sanitySession] = await Promise.all([
     caches.open('hydrogen'),
     AppSession.init(request, [env.SESSION_SECRET]),
     SanitySession.init(request, [env.SESSION_SECRET]),
   ]);
+
   const withCache = createWithCache({cache, waitUntil, request});
   const sanityPreviewMode = await sanitySession.has('previewMode');
 
+  const locale = FALLBACK_LOCALE;
+
   const hydrogenContext = createHydrogenContext({
     cache,
-    cart: {
-      queryFragment: CART_QUERY_FRAGMENT,
-    },
+    cart: {queryFragment: CART_QUERY_FRAGMENT},
     env: envVars,
-    i18n: {country: locale.country, language: locale.language},
+    i18n: {
+      country: locale.country,
+      language: locale.language,
+    },
     request,
     session,
     waitUntil,

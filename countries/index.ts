@@ -91,9 +91,3 @@ export function getAllLocales() {
     };
   });
 }
-
-export function getAllCountries() {
-  return Object.keys(countries).map((key) => {
-    return countries[key].country;
-  });
-}

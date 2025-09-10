@@ -1,5 +1,4 @@
 import type {ShouldRevalidateFunction} from 'react-router';
-
 import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
 
 import {
@@ -15,9 +14,9 @@ import {
   ScrollRestoration,
   useLocation,
   useRouteLoaderData,
+  redirect,
 } from 'react-router';
 import {getShopAnalytics, Analytics, useNonce} from '@shopify/hydrogen';
-import {DEFAULT_LOCALE} from 'countries';
 
 import type {Route} from './+types/root';
 
@@ -33,6 +32,8 @@ import {generateFontsPreloadLinks} from './lib/fonts';
 import {resolveShopifyPromises} from './lib/resolve-shopify-promises';
 import {seoPayload} from './lib/seo.server';
 import {generateFaviconUrls} from './lib/generate-favicon-urls';
+import {resolveEffectiveLocale} from './lib/locale/resolver';
+import {ALL_LOCALIZATION_QUERY} from './data/shopify/queries';
 import tailwindCss from './styles/tailwind.css?url';
 import {SANITY_STUDIO_PATH} from './sanity/constants';
 
@@ -46,6 +47,11 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
   currentUrl,
   nextUrl,
 }) => {
+  // revalidate when the locale changes
+  const currLocale = currentUrl.pathname.match(/^\/([a-z]{2}-[a-z]{2})/i)?.[1];
+  const nextLocale = nextUrl.pathname.match(/^\/([a-z]{2}-[a-z]{2})/i)?.[1];
+  if (currLocale !== nextLocale) return true;
+
   // revalidate when a mutation is performed e.g add to cart, login...
   if (formMethod && formMethod !== 'GET') return true;
 
@@ -60,40 +66,58 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
   return false;
 };
 
-export const meta: Route.MetaFunction = ({data}) => {
+export const meta: Route.MetaFunction = ({loaderData}) => {
   // Preload fonts files to avoid FOUT (flash of unstyled text)
   const fontsPreloadLinks = generateFontsPreloadLinks({
-    fontsData: data?.sanityRoot.data?.fonts,
+    fontsData: loaderData?.sanityRoot.data?.fonts,
   });
 
-  const faviconUrls = data ? generateFaviconUrls(data) : [];
+  const faviconUrls = loaderData ? generateFaviconUrls(loaderData) : [];
 
   return [...faviconUrls, ...fontsPreloadLinks];
 };
 
 export async function loader({context, request}: Route.LoaderArgs) {
-  const {
-    cart,
-    customerAccount,
-    env,
-    locale,
-    sanity,
-    sanityPreviewMode,
-    storefront,
-  } = context;
-  const language = locale?.language.toLowerCase();
+  const {cart, customerAccount, env, sanity, sanityPreviewMode, storefront} =
+    context;
+
+  const url = new URL(request.url);
   const isLoggedInPromise = customerAccount.isLoggedIn();
 
-  const queryParams = {
-    defaultLanguage: DEFAULT_LOCALE.language.toLowerCase(),
-    language,
-  };
+  // 1. Fetch Shopify localizations
+  const localizations = await storefront.query(ALL_LOCALIZATION_QUERY, {
+    cache: storefront.CacheLong(),
+  });
 
-  const sanityRoot = await sanity.loadQuery<ROOT_QUERYResult>(
-    ROOT_QUERY,
-    queryParams,
+  // 2. Resolve locale with content language mapping
+  const {locale, cookie, shouldRedirect, redirectUrl} = resolveEffectiveLocale(
+    request,
+    localizations,
+    url.pathname,
   );
 
+  // 3. Handle redirect if needed
+  if (shouldRedirect && redirectUrl) {
+    throw redirect(redirectUrl, {
+      headers: cookie ? {'Set-Cookie': cookie} : {},
+    });
+  }
+
+  // 4. Set Shopify storefront context for API calls
+  if (locale?.country) {
+    context.storefront.i18n.country = locale.country;
+  }
+  if (locale?.language) {
+    context.storefront.i18n.language = locale.language;
+  }
+
+  // 5. Fetch Sanity root data with resolved content language
+  const sanityRoot = await sanity.loadQuery<ROOT_QUERYResult>(ROOT_QUERY, {
+    language: locale?.language.toLowerCase() || 'en',
+    defaultLanguage: 'en', // Always fallback to English
+  });
+
+  // 6. Generate SEO data
   const seo = seoPayload.root({
     root: sanityRoot.data,
     sanity: {
@@ -103,6 +127,7 @@ export async function loader({context, request}: Route.LoaderArgs) {
     url: request.url,
   });
 
+  // 7. Resolve Shopify promises from Sanity document
   const {
     collectionListPromise,
     featuredCollectionPromise,
@@ -113,6 +138,7 @@ export async function loader({context, request}: Route.LoaderArgs) {
     storefront,
   });
 
+  // 8. Return all data with locale and localizations
   return {
     cart: cart.get(),
     collectionListPromise,
@@ -135,7 +161,8 @@ export async function loader({context, request}: Route.LoaderArgs) {
     featuredCollectionPromise,
     featuredProductPromise,
     isLoggedIn: isLoggedInPromise,
-    locale,
+    locale, // Enhanced locale with contentLanguage
+    localizations, // All available locales for switcher
     sanityPreviewMode,
     sanityRoot,
     seo,
@@ -152,8 +179,11 @@ export function Layout({children}: {children: React.ReactNode}) {
   const {pathname} = useLocation();
   const isCmsRoute = pathname.includes(SANITY_STUDIO_PATH);
 
+  // Use resolved locale language or fallback to 'en'
+  const language = data?.locale?.language?.toLowerCase() || 'en';
+
   return (
-    <html lang={data?.locale.language.toLowerCase()}>
+    <html lang={language}>
       <head>
         <meta charSet="utf-8" />
         <meta content="width=device-width,initial-scale=1" name="viewport" />
@@ -236,5 +266,5 @@ export function ErrorBoundary() {
 
 export const useRootLoaderData = () => {
   const [root] = useMatches();
-  return root?.data as RootLoaderData;
+  return root?.loaderData as RootLoaderData;
 };

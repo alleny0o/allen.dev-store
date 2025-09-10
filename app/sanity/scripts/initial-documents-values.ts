@@ -1,4 +1,4 @@
-import {DEFAULT_LOCALE} from 'countries';
+import {FALLBACK_LOCALE} from '~/lib/locale/fallbacks';
 import {nanoid} from 'nanoid';
 
 export const initialDocumentsValues = [
@@ -68,7 +68,7 @@ export const initialDocumentsValues = [
         heading: [
           {
             _type: 'internationalizedArrayStringValue',
-            _key: DEFAULT_LOCALE.language.toLowerCase(),
+            _key: FALLBACK_LOCALE.language.toLowerCase(),
             value: 'Related products',
           },
         ],
@@ -112,7 +112,7 @@ export const initialDocumentsValues = [
     },
     title: [
       {
-        _key: DEFAULT_LOCALE.language.toLowerCase(),
+        _key: FALLBACK_LOCALE.language.toLowerCase(),
         _type: 'internationalizedArrayStringValue',
         value: 'Collections',
       },
@@ -145,7 +145,7 @@ export const initialDocumentsValues = [
     },
     title: [
       {
-        _key: DEFAULT_LOCALE.language.toLowerCase(),
+        _key: FALLBACK_LOCALE .language.toLowerCase(),
         _type: 'internationalizedArrayStringValue',
         value: 'Products',
       },

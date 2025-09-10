@@ -3309,23 +3309,6 @@
         },
         "optional": true
       },
-      "showCurrencyCodes": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "boolean"
-        },
-        "optional": true
-      },
-      "showTrailingZeros": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "array",
-          "of": {
-            "type": "string"
-          }
-        },
-        "optional": true
-      },
       "cartCollection": {
         "type": "objectAttribute",
         "value": {

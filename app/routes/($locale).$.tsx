@@ -3,7 +3,7 @@ import type {I18nLocale} from 'types';
 import type {PAGE_QUERYResult} from 'types/sanity/sanity.generated';
 import type {Route} from './+types/($locale).$';
 
-import {DEFAULT_LOCALE} from 'countries';
+import {FALLBACK_LOCALE} from '~/lib/locale/fallbacks';
 
 import {CmsSection} from '~/components/cms-section';
 import {PAGE_QUERY} from '~/data/sanity/queries';
@@ -24,7 +24,7 @@ export async function loader({context, params, request}: Route.LoaderArgs) {
   const language = locale?.language.toLowerCase();
 
   const queryParams = {
-    defaultLanguage: DEFAULT_LOCALE.language.toLowerCase(),
+    defaultLanguage: FALLBACK_LOCALE.language.toLowerCase(),
     handle,
     language,
   };

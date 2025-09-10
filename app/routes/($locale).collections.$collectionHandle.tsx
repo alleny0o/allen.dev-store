@@ -2,7 +2,7 @@ import type {COLLECTION_QUERYResult} from 'types/sanity/sanity.generated';
 import type {CollectionDetailsQuery} from 'types/shopify/storefrontapi.generated';
 
 import {Analytics} from '@shopify/hydrogen';
-import {DEFAULT_LOCALE} from 'countries';
+import {FALLBACK_LOCALE} from '~/lib/locale/fallbacks';
 import invariant from 'tiny-invariant';
 
 import type {Route} from './+types/($locale).collections.$collectionHandle';
@@ -27,7 +27,7 @@ export async function loader({context, params, request}: Route.LoaderArgs) {
 
   const queryParams = {
     collectionHandle,
-    defaultLanguage: DEFAULT_LOCALE.language.toLowerCase(),
+    defaultLanguage: FALLBACK_LOCALE.language.toLowerCase(),
     language,
   };
 

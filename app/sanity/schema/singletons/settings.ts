@@ -1,7 +1,4 @@
-import {getAllLocales} from 'countries';
-import {defineArrayMember, defineField, defineType} from 'sanity';
-
-import {setShowTrailingZeroKeyValue} from '~/lib/utils';
+import { defineField, defineType} from 'sanity';
 
 const GROUPS = [
   {
@@ -265,28 +262,6 @@ export default defineType({
       group: 'badges',
       type: 'reference',
       to: [{type: 'colorScheme'}],
-    }),
-    defineField({
-      name: 'showCurrencyCodes',
-      group: 'currencyFormat',
-      type: 'boolean',
-      initialValue: true,
-    }),
-    defineField({
-      name: 'showTrailingZeros',
-      group: 'currencyFormat',
-      description:
-        'Select which countries where you want to show trailing zeros ($15.00).',
-      type: 'array',
-      of: [defineArrayMember({type: 'string'})],
-      options: {
-        list: getAllLocales().map((locale) => {
-          return {
-            title: locale.label,
-            value: setShowTrailingZeroKeyValue(locale),
-          };
-        }),
-      },
     }),
     defineField({
       name: 'cartCollection',

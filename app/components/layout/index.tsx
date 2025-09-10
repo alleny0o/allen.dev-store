@@ -22,8 +22,8 @@ export function AppLayout({children = null}: LayoutProps) {
 
   return (
     <ShopifyProvider
-      countryIsoCode={locale.country || 'US'}
-      languageIsoCode={locale.language || 'EN'}
+      countryIsoCode={locale.country}
+      languageIsoCode={locale.language}
       storeDomain={env.PUBLIC_STORE_DOMAIN}
       storefrontApiVersion={env.PUBLIC_STOREFRONT_API_VERSION}
       storefrontToken={env.PUBLIC_STOREFRONT_API_TOKEN}

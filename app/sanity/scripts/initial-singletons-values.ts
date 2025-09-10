@@ -1,4 +1,4 @@
-import {DEFAULT_LOCALE} from 'countries';
+import {FALLBACK_LOCALE} from '~/lib/locale/fallbacks';
 import {nanoid} from 'nanoid';
 
 import {setShowTrailingZeroKeyValue} from '~/lib/utils';
@@ -26,7 +26,7 @@ export const initialSingletonsValues = {
         maxWidth: 450,
         richtext: [
           {
-            _key: DEFAULT_LOCALE.language.toLowerCase(),
+            _key: FALLBACK_LOCALE.language.toLowerCase(),
             _type: 'internationalizedArrayRichtextValue',
             value: [
               {
@@ -190,7 +190,7 @@ export const initialSingletonsValues = {
       textAlignment: 'left',
     },
     showCurrencyCodes: true,
-    showTrailingZeros: [setShowTrailingZeroKeyValue(DEFAULT_LOCALE)],
+    showTrailingZeros: [setShowTrailingZeroKeyValue(FALLBACK_LOCALE)],
     facebook: 'https://facebook.com/shopify',
     instagram: 'https://instagram.com/shopify',
     linkedin: 'https://linkedin.com/company/shopify',
@@ -214,7 +214,7 @@ export const initialSingletonsValues = {
     },
     announcementBar: [
       {
-        _key: DEFAULT_LOCALE.language.toLowerCase(),
+        _key: FALLBACK_LOCALE.language.toLowerCase(),
         _type: 'internationalizedArrayAnnouncementBarValue',
         value: [
           {
@@ -233,7 +233,7 @@ export const initialSingletonsValues = {
     },
     menu: [
       {
-        _key: DEFAULT_LOCALE.language.toLowerCase(),
+        _key: FALLBACK_LOCALE.language.toLowerCase(),
         _type: 'internationalizedArrayHeaderNavigationValue',
         value: [
           {
@@ -265,7 +265,7 @@ export const initialSingletonsValues = {
         _type: 'socialLinksOnly',
         copyright: [
           {
-            _key: DEFAULT_LOCALE.language.toLowerCase(),
+            _key: FALLBACK_LOCALE.language.toLowerCase(),
             _type: 'internationalizedArrayStringValue',
             value: '© 2024 Fluid, Inc. All rights reserved.',
           },
@@ -407,7 +407,7 @@ export const initialSingletonsValues = {
 } as const;
 
 function generateIntString(value: string) {
-  const locale = DEFAULT_LOCALE;
+  const locale = FALLBACK_LOCALE;
   return [
     {
       _key: locale.language.toLowerCase(),

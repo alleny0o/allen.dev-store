@@ -1,14 +1,12 @@
-import {getAllLanguages} from 'countries';
 import {defineLocations} from 'sanity/presentation';
+import {SUPPORTED_CONTENT_LANGUAGES} from '~/lib/locale/sanity-languages';
 
-const languages = getAllLanguages();
+const languages = SUPPORTED_CONTENT_LANGUAGES;
 const defaultLanguage = languages[0];
 
-// Helper to build localized paths
 const localizedPath = (id: string, path: string) =>
   id === defaultLanguage.id ? path : `/${id}${path}`;
 
-// Helper to create locations for any document type
 const createLocations = (doc: any, path: string) =>
   languages.map(({id, title}) => ({
     href: localizedPath(id, path),
@@ -24,10 +22,7 @@ export const locations = {
   }),
 
   page: defineLocations({
-    select: {
-      title: 'title',
-      slug: 'slug.current',
-    },
+    select: {title: 'title', slug: 'slug.current'},
     resolve: (doc) => ({
       locations: createLocations(
         {
@@ -42,20 +37,14 @@ export const locations = {
   }),
 
   product: defineLocations({
-    select: {
-      title: 'store.title',
-      slug: 'store.slug.current',
-    },
+    select: {title: 'store.title', slug: 'store.slug.current'},
     resolve: (doc) => ({
       locations: createLocations(doc, `/products/${doc?.slug}`),
     }),
   }),
 
   collection: defineLocations({
-    select: {
-      title: 'store.title',
-      slug: 'store.slug.current',
-    },
+    select: {title: 'store.title', slug: 'store.slug.current'},
     resolve: (doc) => ({
       locations: createLocations(doc, `/collections/${doc?.slug}`),
     }),

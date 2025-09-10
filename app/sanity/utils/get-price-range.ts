@@ -1,11 +1,11 @@
-import {DEFAULT_LOCALE} from 'countries';
+import {FALLBACK_LOCALE} from '~/lib/locale/fallbacks';
 
 type PriceObject = {
   maxVariantPrice: number;
   minVariantPrice: number;
 };
 
-const DEFAULT_CURRENCY_CODE = DEFAULT_LOCALE.currency;
+const DEFAULT_CURRENCY_CODE = FALLBACK_LOCALE.currency;
 
 const formatNumber = (val: number) => {
   return new Intl.NumberFormat('en', {

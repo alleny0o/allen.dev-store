@@ -1,7 +1,7 @@
 import type {PAGE_QUERYResult} from 'types/sanity/sanity.generated';
 import type {Route} from './+types/($locale).$';
 
-import {DEFAULT_LOCALE} from 'countries';
+import {FALLBACK_LOCALE} from '~/lib/locale/fallbacks';
 
 import {PAGE_QUERY} from '~/data/sanity/queries';
 import {mergeRouteModuleMeta} from '~/lib/meta';
@@ -19,7 +19,7 @@ export async function loader({context, request}: Route.LoaderArgs) {
   const {env, locale, sanity, storefront} = context;
   const language = locale?.language.toLowerCase();
   const queryParams = {
-    defaultLanguage: DEFAULT_LOCALE.language.toLowerCase(),
+    defaultLanguage: FALLBACK_LOCALE.language.toLowerCase(),
     handle: 'home',
     language,
   };
