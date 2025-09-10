@@ -2,7 +2,6 @@ import type {FooterOfType, SectionDefaultProps} from 'types';
 
 import {useColorsCssVars} from '~/hooks/use-colors-css-vars';
 
-import {CountrySelector} from '../layout/country-selector';
 import {SocialMediaButtons} from '../social-media';
 
 type FooterSocialLinksOnlyProps = FooterOfType<'socialLinksOnly'>;
@@ -22,7 +21,6 @@ export function FooterSocialLinksOnly(
       <div className="flex flex-wrap items-center justify-center gap-1">
         <SocialMediaButtons />
       </div>
-      <CountrySelector />
       <p className="mt-4">{data.copyright}</p>
     </div>
   );
