@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "sanity-io.vscode-sanity",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "dbaeumer.vscode-eslint",
+    "graphql.vscode-graphql",
+    "graphql.vscode-graphql-syntax"
+  ]
+}
