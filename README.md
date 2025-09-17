@@ -1,4 +1,4 @@
-# 🛍️ allen.dev-store
+# 🛒 allen.dev-store
 
 A minimalist, developer-friendly Shopify Hydrogen (Remix) theme built on top of the open-source **Fluid** starter.
 
