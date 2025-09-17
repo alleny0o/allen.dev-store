@@ -39,6 +39,6 @@ A gallery of screenshots and previews of the demo store will be added here.
 
 ## 📜 License
 
-MIT © 2025 Allen  
+MIT © 2025 allen.dev
 
 > Based on [Fluid](https://github.com/…) (MIT)
