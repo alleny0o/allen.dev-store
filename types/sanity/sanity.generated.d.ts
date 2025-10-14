@@ -19,7 +19,6 @@ export type ProductSectionDesign = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  layoutNote?: string;
   breakpoint?: 'md' | 'lg';
   flipLayout?: boolean;
   columnRatio?: '5:7' | '6:6' | '7:5' | '8:4' | '9:3';
@@ -863,6 +862,12 @@ export type RelatedProductsSection = {
 
 export type ProductHeroSection = {
   _type: 'productHeroSection';
+  richtext?: Array<
+    {
+      _key: string;
+    } & InternationalizedArrayProductRichtextValue
+  >;
+  mediaAspectRatio?: 'square' | 'video' | 'auto';
   settings?: SectionSettings;
 };
 
@@ -2989,8 +2994,97 @@ export type DEFAULT_PRODUCT_TEMPLATEResult = {
         _type: 'productHeroSection';
         desktopMediaPosition: null;
         desktopMediaWidth: null;
-        mediaAspectRatio: null;
-        richtext: null;
+        mediaAspectRatio: 'auto' | 'square' | 'video' | null;
+        richtext: Array<
+          | {
+              quantitySelector?: boolean;
+              shopPayButton?: boolean;
+              _type: 'addToCartButton';
+              _key: string;
+            }
+          | {
+              children?: Array<{
+                marks?: Array<string>;
+                text?: string;
+                _type: 'span';
+                _key: string;
+              }>;
+              style?:
+                | 'blockquote'
+                | 'h1'
+                | 'h2'
+                | 'h3'
+                | 'h4'
+                | 'h5'
+                | 'h6'
+                | 'normal';
+              listItem?: 'bullet' | 'number';
+              markDefs: Array<
+                | {
+                    link: string | null;
+                    openInNewTab: boolean | null;
+                    _type: 'externalLink';
+                    _key: string;
+                    name: null;
+                  }
+                | {
+                    link:
+                      | {
+                          documentType: 'blogPost';
+                          slug: null;
+                        }
+                      | {
+                          documentType: 'collection';
+                          slug: {
+                            _type: 'slug';
+                            current: string | null;
+                          } | null;
+                        }
+                      | {
+                          documentType: 'home';
+                          slug: null;
+                        }
+                      | {
+                          documentType: 'page';
+                          slug: {
+                            _type: 'slug';
+                            current: string | null;
+                          } | null;
+                        }
+                      | {
+                          documentType: 'product';
+                          slug: {
+                            _type: 'slug';
+                            current: string | null;
+                          } | null;
+                        }
+                      | null;
+                    anchor: Anchor | null;
+                    _type: 'internalLink';
+                    _key: string;
+                    name: null;
+                  }
+              > | null;
+              level?: number;
+              _type: 'block';
+              _key: string;
+            }
+          | {
+              priceProxy?: ProxyString;
+              _type: 'price';
+              _key: string;
+            }
+          | {
+              descriptionProxy?: ProxyString;
+              _type: 'shopifyDescription';
+              _key: string;
+            }
+          | {
+              titleProxy?: ProxyString;
+              _type: 'shopifyTitle';
+              _key: string;
+            }
+        > | null;
         settings: {
           colorScheme: {
             background: {
@@ -12416,8 +12510,97 @@ export type PRODUCT_QUERYResult = {
             _type: 'productHeroSection';
             desktopMediaPosition: null;
             desktopMediaWidth: null;
-            mediaAspectRatio: null;
-            richtext: null;
+            mediaAspectRatio: 'auto' | 'square' | 'video' | null;
+            richtext: Array<
+              | {
+                  quantitySelector?: boolean;
+                  shopPayButton?: boolean;
+                  _type: 'addToCartButton';
+                  _key: string;
+                }
+              | {
+                  children?: Array<{
+                    marks?: Array<string>;
+                    text?: string;
+                    _type: 'span';
+                    _key: string;
+                  }>;
+                  style?:
+                    | 'blockquote'
+                    | 'h1'
+                    | 'h2'
+                    | 'h3'
+                    | 'h4'
+                    | 'h5'
+                    | 'h6'
+                    | 'normal';
+                  listItem?: 'bullet' | 'number';
+                  markDefs: Array<
+                    | {
+                        link: string | null;
+                        openInNewTab: boolean | null;
+                        _type: 'externalLink';
+                        _key: string;
+                        name: null;
+                      }
+                    | {
+                        link:
+                          | {
+                              documentType: 'blogPost';
+                              slug: null;
+                            }
+                          | {
+                              documentType: 'collection';
+                              slug: {
+                                _type: 'slug';
+                                current: string | null;
+                              } | null;
+                            }
+                          | {
+                              documentType: 'home';
+                              slug: null;
+                            }
+                          | {
+                              documentType: 'page';
+                              slug: {
+                                _type: 'slug';
+                                current: string | null;
+                              } | null;
+                            }
+                          | {
+                              documentType: 'product';
+                              slug: {
+                                _type: 'slug';
+                                current: string | null;
+                              } | null;
+                            }
+                          | null;
+                        anchor: Anchor | null;
+                        _type: 'internalLink';
+                        _key: string;
+                        name: null;
+                      }
+                  > | null;
+                  level?: number;
+                  _type: 'block';
+                  _key: string;
+                }
+              | {
+                  priceProxy?: ProxyString;
+                  _type: 'price';
+                  _key: string;
+                }
+              | {
+                  descriptionProxy?: ProxyString;
+                  _type: 'shopifyDescription';
+                  _key: string;
+                }
+              | {
+                  titleProxy?: ProxyString;
+                  _type: 'shopifyTitle';
+                  _key: string;
+                }
+            > | null;
             settings: {
               colorScheme: {
                 background: {
@@ -13657,8 +13840,97 @@ export type PRODUCT_QUERYResult = {
           _type: 'productHeroSection';
           desktopMediaPosition: null;
           desktopMediaWidth: null;
-          mediaAspectRatio: null;
-          richtext: null;
+          mediaAspectRatio: 'auto' | 'square' | 'video' | null;
+          richtext: Array<
+            | {
+                quantitySelector?: boolean;
+                shopPayButton?: boolean;
+                _type: 'addToCartButton';
+                _key: string;
+              }
+            | {
+                children?: Array<{
+                  marks?: Array<string>;
+                  text?: string;
+                  _type: 'span';
+                  _key: string;
+                }>;
+                style?:
+                  | 'blockquote'
+                  | 'h1'
+                  | 'h2'
+                  | 'h3'
+                  | 'h4'
+                  | 'h5'
+                  | 'h6'
+                  | 'normal';
+                listItem?: 'bullet' | 'number';
+                markDefs: Array<
+                  | {
+                      link: string | null;
+                      openInNewTab: boolean | null;
+                      _type: 'externalLink';
+                      _key: string;
+                      name: null;
+                    }
+                  | {
+                      link:
+                        | {
+                            documentType: 'blogPost';
+                            slug: null;
+                          }
+                        | {
+                            documentType: 'collection';
+                            slug: {
+                              _type: 'slug';
+                              current: string | null;
+                            } | null;
+                          }
+                        | {
+                            documentType: 'home';
+                            slug: null;
+                          }
+                        | {
+                            documentType: 'page';
+                            slug: {
+                              _type: 'slug';
+                              current: string | null;
+                            } | null;
+                          }
+                        | {
+                            documentType: 'product';
+                            slug: {
+                              _type: 'slug';
+                              current: string | null;
+                            } | null;
+                          }
+                        | null;
+                      anchor: Anchor | null;
+                      _type: 'internalLink';
+                      _key: string;
+                      name: null;
+                    }
+                > | null;
+                level?: number;
+                _type: 'block';
+                _key: string;
+              }
+            | {
+                priceProxy?: ProxyString;
+                _type: 'price';
+                _key: string;
+              }
+            | {
+                descriptionProxy?: ProxyString;
+                _type: 'shopifyDescription';
+                _key: string;
+              }
+            | {
+                titleProxy?: ProxyString;
+                _type: 'shopifyTitle';
+                _key: string;
+              }
+          > | null;
           settings: {
             colorScheme: {
               background: {
@@ -16156,8 +16428,97 @@ export type ALL_SECTIONS_QUERYResult =
             _type: 'productHeroSection';
             desktopMediaPosition: null;
             desktopMediaWidth: null;
-            mediaAspectRatio: null;
-            richtext: null;
+            mediaAspectRatio: 'auto' | 'square' | 'video' | null;
+            richtext: Array<
+              | {
+                  quantitySelector?: boolean;
+                  shopPayButton?: boolean;
+                  _type: 'addToCartButton';
+                  _key: string;
+                }
+              | {
+                  children?: Array<{
+                    marks?: Array<string>;
+                    text?: string;
+                    _type: 'span';
+                    _key: string;
+                  }>;
+                  style?:
+                    | 'blockquote'
+                    | 'h1'
+                    | 'h2'
+                    | 'h3'
+                    | 'h4'
+                    | 'h5'
+                    | 'h6'
+                    | 'normal';
+                  listItem?: 'bullet' | 'number';
+                  markDefs: Array<
+                    | {
+                        link: string | null;
+                        openInNewTab: boolean | null;
+                        _type: 'externalLink';
+                        _key: string;
+                        name: null;
+                      }
+                    | {
+                        link:
+                          | {
+                              documentType: 'blogPost';
+                              slug: null;
+                            }
+                          | {
+                              documentType: 'collection';
+                              slug: {
+                                _type: 'slug';
+                                current: string | null;
+                              } | null;
+                            }
+                          | {
+                              documentType: 'home';
+                              slug: null;
+                            }
+                          | {
+                              documentType: 'page';
+                              slug: {
+                                _type: 'slug';
+                                current: string | null;
+                              } | null;
+                            }
+                          | {
+                              documentType: 'product';
+                              slug: {
+                                _type: 'slug';
+                                current: string | null;
+                              } | null;
+                            }
+                          | null;
+                        anchor: Anchor | null;
+                        _type: 'internalLink';
+                        _key: string;
+                        name: null;
+                      }
+                  > | null;
+                  level?: number;
+                  _type: 'block';
+                  _key: string;
+                }
+              | {
+                  priceProxy?: ProxyString;
+                  _type: 'price';
+                  _key: string;
+                }
+              | {
+                  descriptionProxy?: ProxyString;
+                  _type: 'shopifyDescription';
+                  _key: string;
+                }
+              | {
+                  titleProxy?: ProxyString;
+                  _type: 'shopifyTitle';
+                  _key: string;
+                }
+            > | null;
             settings: {
               colorScheme: {
                 background: {

@@ -1,9 +1,9 @@
 import {defineField, defineType} from 'sanity';
 
 const GROUPS = [
-  {name: 'layout', title: '🧱 Layout', default: true},
-  {name: 'mobile', title: '📱 Mobile Layout'},
-  {name: 'media', title: '🖼️ Media Gallery'},
+  {name: 'layout', title: 'Layout', default: true},
+  {name: 'mobile', title: 'Mobile Layout'},
+  {name: 'media', title: 'Media Gallery'},
 ];
 
 export default defineType({
@@ -15,28 +15,20 @@ export default defineType({
   fields: [
     // ==================== LAYOUT ====================
     defineField({
-      name: 'layoutNote',
-      type: 'string',
-      readOnly: true,
-      group: 'layout',
-      description:
-        '💡 Control how your product media and details are arranged. Changes here affect desktop view only.',
-    }),
-    defineField({
       name: 'breakpoint',
       title: 'Desktop Layout Breakpoint',
       description:
-        '📐 When should the layout switch from mobile to desktop? Most shops use "Large (1024px)" for best results. (Default = Large)',
+        'When should the layout switch from mobile to desktop? Most shops use "Large [1024px]" for best results. [Default = Large]',
       type: 'string',
       group: 'layout',
       initialValue: 'lg',
       options: {
         list: [
           {
-            title: 'Medium — 768px (Tablets switch to desktop earlier)',
+            title: 'Medium — 768px [Tablets switch to desktop earlier]',
             value: 'md',
           },
-          {title: 'Large — 1024px (⭐ Default)', value: 'lg'},
+          {title: 'Large — 1024px [⭐ Default]', value: 'lg'},
         ],
         layout: 'radio',
       },
@@ -45,7 +37,7 @@ export default defineType({
       name: 'flipLayout',
       title: 'Flip Layout',
       description:
-        '⬅️➡️ Switch sides: Put product details on the left and media on the right (normally media are on the left).',
+        'Switch sides: Put product details on the left and media on the right [normally media are on the left].',
       type: 'boolean',
       group: 'layout',
       initialValue: false,
@@ -54,7 +46,7 @@ export default defineType({
       name: 'columnRatio',
       title: 'Column Width Balance',
       description:
-        '📏 Choose how much space media vs. details should take up. "7:5" means media get a bit more space than details. Most shops prefer the default 7:5 ratio. (Default = 7:5)',
+        'Choose how much space media vs. details should take up. "7:5" means media get a bit more space than details. Most shops prefer the default 7:5 ratio. [Default = 7:5]',
       type: 'string',
       group: 'layout',
       initialValue: '7:5',
@@ -62,7 +54,7 @@ export default defineType({
         list: [
           {title: '5:7 — More space for details', value: '5:7'},
           {title: '6:6 — Equal space for both', value: '6:6'},
-          {title: '7:5 — Standard (⭐ Default)', value: '7:5'},
+          {title: '7:5 — Standard [⭐ Default]', value: '7:5'},
           {title: '8:4 — Focus on media', value: '8:4'},
           {title: '9:3 — Maximum media size', value: '9:3'},
         ],
@@ -74,23 +66,22 @@ export default defineType({
       title: 'Spacing Between Columns',
       type: 'object',
       group: 'layout',
-      description:
-        '↔️ Add breathing room between your media and product details.',
+      description: 'Add breathing room between your media and product details.',
       options: {collapsible: true, collapsed: false},
       fields: [
         defineField({
           name: 'desktop',
           type: 'number',
-          title: 'Desktop Spacing (pixels)',
-          description: '40px (Default) works well for most screens.',
+          title: 'Desktop Spacing [pixels]',
+          description: '40px [Default] works well for most screens.',
           initialValue: 40,
           validation: (Rule) => Rule.min(0).max(120),
         }),
         defineField({
           name: 'mobile',
           type: 'number',
-          title: 'Mobile Spacing (pixels)',
-          description: '24px (Default) works well for most mobile screens.',
+          title: 'Mobile Spacing [pixels]',
+          description: '24px [Default] works well for most mobile screens.',
           initialValue: 24,
           validation: (Rule) => Rule.min(0).max(80),
         }),
@@ -101,7 +92,7 @@ export default defineType({
       name: 'detailsPadding',
       title: 'Product Details Padding',
       description:
-        '🧍 Add inner padding around the product details section. Affects only the details area (not media). This also controls horizontal padding for the mobile header when "Show title & price first" is enabled.',
+        'Add inner padding around the product details section. Affects only the details area [not media]. This also controls horizontal padding for the mobile header when "Show title & price first" is enabled.',
       type: 'object',
       group: 'layout',
       options: {collapsible: true, collapsed: true},
@@ -113,19 +104,19 @@ export default defineType({
           fields: [
             defineField({
               name: 'x',
-              title: 'Horizontal Padding (px)',
+              title: 'Horizontal Padding [px]',
               type: 'number',
               description:
-                'Space on the left and right of product details. (Default = 24px)',
+                'Space on the left and right of product details. [Default = 24px]',
               initialValue: 24,
               validation: (Rule) => Rule.min(0).max(100),
             }),
             defineField({
               name: 'y',
-              title: 'Vertical Padding (px)',
+              title: 'Vertical Padding [px]',
               type: 'number',
               description:
-                'Space above and below product details. (Default = 32px)',
+                'Space above and below product details. [Default = 32px]',
               initialValue: 32,
               validation: (Rule) => Rule.min(0).max(100),
             }),
@@ -138,19 +129,19 @@ export default defineType({
           fields: [
             defineField({
               name: 'x',
-              title: 'Horizontal Padding (px)',
+              title: 'Horizontal Padding [px]',
               type: 'number',
               description:
-                'Space on the left and right of product details. (Default = 16px)',
+                'Space on the left and right of product details. [Default = 16px]',
               initialValue: 16,
               validation: (Rule) => Rule.min(0).max(100),
             }),
             defineField({
               name: 'y',
-              title: 'Vertical Padding (px)',
+              title: 'Vertical Padding [px]',
               type: 'number',
               description:
-                'Space above and below product details. (Default = 24px)',
+                'Space above and below product details. [Default = 24px]',
               initialValue: 24,
               validation: (Rule) => Rule.min(0).max(100),
             }),
@@ -164,18 +155,18 @@ export default defineType({
       name: 'mobileLayout',
       title: 'What Shows First on Mobile?',
       description:
-        '📱 Choose whether customers see media or product info first when shopping on their phone. (Default = Show media first)',
+        'Choose whether customers see media or product info first when shopping on their phone. [Default = Show media first]',
       type: 'string',
       group: 'mobile',
       initialValue: 'mediaFirst',
       options: {
         list: [
           {
-            title: '🖼️ Show media first (⭐ Default — works for most products)',
+            title: 'Show media first [⭐ Default — works for most products]',
             value: 'mediaFirst',
           },
           {
-            title: '🪧 Show title & price first (Good for text-heavy products)',
+            title: 'Show title & price first [Good for text-heavy products]',
             value: 'headerFirst',
           },
         ],
@@ -186,7 +177,7 @@ export default defineType({
       name: 'mobileHeaderContent',
       title: 'Customize Mobile Header',
       description:
-        '✏️ Pick what info appears in the compact header section at the top (only applies when "Show title & price first" is selected above). Full product details will still appear below the media gallery.',
+        'Pick what info appears in the compact header section at the top [only applies when "Show title & price first" is selected above]. Full product details will still appear below the media gallery.',
       type: 'object',
       group: 'mobile',
       hidden: ({parent}) => parent?.mobileLayout !== 'headerFirst',
@@ -222,7 +213,7 @@ export default defineType({
       name: 'mobileHeaderPaddingY',
       title: 'Mobile Header Vertical Padding',
       description:
-        '📐 Control top/bottom padding for the compact header (only applies when "Show title & price first" is selected). Horizontal padding uses the same value as Product Details Padding above. (Default = 12px)',
+        'Control top/bottom padding for the compact header [only applies when "Show title & price first" is selected]. Horizontal padding uses the same value as Product Details Padding above. [Default = 12px]',
       type: 'number',
       group: 'mobile',
       hidden: ({parent}) => parent?.mobileLayout !== 'headerFirst',
@@ -236,21 +227,21 @@ export default defineType({
       type: 'string',
       title: 'How Should Media Display?',
       description:
-        '🎨 Choose how customers browse your product photos on desktop. Mobile always uses a swipeable carousel for best experience. (Default = Carousel)',
+        'Choose how customers browse your product photos on desktop. Mobile always uses a swipeable carousel for best experience. [Default = Carousel]',
       group: 'media',
       initialValue: 'carousel',
       options: {
         list: [
           {
-            title: '🎠 Carousel (⭐ Default — one media at a time with arrows)',
+            title: 'Carousel [⭐ Default — one media at a time with arrows]',
             value: 'carousel',
           },
           {
-            title: '📜 Vertical Scroll (All media in a scrollable column)',
+            title: 'Vertical Scroll [All media in a scrollable column]',
             value: 'vertical',
           },
           {
-            title: '🔳 Grid Layout (Multiple media side-by-side)',
+            title: 'Grid Layout [Multiple media side-by-side]',
             value: 'grid',
           },
         ],
@@ -265,7 +256,7 @@ export default defineType({
       group: 'media',
       hidden: ({parent}) => parent?.galleryDisplay !== 'grid',
       description:
-        '📐 Space between media items in the grid (pixels). (Default = 16px)',
+        'Space between media items in the grid [pixels]. [Default = 16px]',
       initialValue: 16,
       validation: (Rule) => Rule.min(0).max(64),
     }),
@@ -294,18 +285,18 @@ export default defineType({
       type: 'object',
       group: 'media',
       hidden: ({parent}) => parent?.galleryDisplay === 'grid',
-      description: '🎨 Customize how your thumbnail strip looks.',
+      description: 'Customize how your thumbnail strip looks.',
       options: {collapsible: true, collapsed: true},
       fields: [
         defineField({
           name: 'position',
           type: 'string',
           title: 'Thumbnail Position',
-          description: '(Default = Left Side)',
+          description: '[Default = Left Side]',
           initialValue: 'left',
           options: {
             list: [
-              {title: 'Left Side (⭐ Default)', value: 'left'},
+              {title: 'Left Side [⭐ Default]', value: 'left'},
               {title: 'Bottom', value: 'bottom'},
             ],
             layout: 'radio',
@@ -314,15 +305,15 @@ export default defineType({
         defineField({
           name: 'overlayOnImage',
           type: 'boolean',
-          title: 'Overlay on Image (Left Position Only)',
+          title: 'Overlay on Image [Left Position Only]',
           hidden: ({parent}) => parent?.position !== 'left',
           initialValue: false,
         }),
         defineField({
           name: 'borderRadius',
           type: 'number',
-          title: 'Rounded Corners (pixels)',
-          description: '(Default = 4px)',
+          title: 'Rounded Corners [pixels]',
+          description: '[Default = 4px]',
           initialValue: 4,
           validation: (Rule) => Rule.min(0).max(20),
         }),

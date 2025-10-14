@@ -7,11 +7,16 @@ export default defineType({
   type: 'object',
   fields: [
     defineField({
-      name: 'settings',
+      name: 'richtext',
+      type: 'internationalizedArrayProductRichtext',
+    }),
+    defineField({
+      type: 'aspectRatios',
+      name: 'mediaAspectRatio',
+    }),
+    defineField({
       type: 'sectionSettings',
-      title: 'Section Settings',
-      description:
-        '🛒 This section represents the main product display — media gallery and product details. The layout and behavior are handled globally in code.',
+      name: 'settings',
     }),
   ],
   preview: {
@@ -19,7 +24,6 @@ export default defineType({
     prepare({settings}) {
       return {
         title: 'Product Hero Section',
-        subtitle: 'Media gallery + product details (auto-rendered)',
         media: () => (settings?.hide ? <EyeOff /> : <Box />),
       };
     },
