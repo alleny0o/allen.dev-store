@@ -32,4 +32,3 @@ This repository uses TypeScript, ESLint, and Prettier. Running these checks earl
   - `lint`: `eslint --no-error-on-unmatched-pattern .`
   - `format:check`: `prettier --check --ignore-unknown .`
   - `format`: `prettier --write --ignore-unknown .`
-
