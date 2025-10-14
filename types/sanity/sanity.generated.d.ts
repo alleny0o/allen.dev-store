@@ -13,9 +13,9 @@
  */
 
 // Source: schema.json
-export type ProductSection = {
+export type ProductSectionDesign = {
   _id: string;
-  _type: 'productSection';
+  _type: 'productSectionDesign';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -43,9 +43,11 @@ export type ProductSection = {
   showThumbnails?: boolean;
   thumbnailOptions?: {
     position?: 'left' | 'bottom';
+    overlayOnImage?: boolean;
     borderRadius?: number;
     aspectRatio?: '1:1' | '4:3' | '3:2' | '16:9';
   };
+  showThumbnailsOnMobile?: boolean;
   enableModal?: boolean;
   enableZoom?: boolean;
   showDots?: boolean;
@@ -1943,7 +1945,7 @@ export type SanityAssetSourceData = {
 };
 
 export type AllSanitySchemaTypes =
-  | ProductSection
+  | ProductSectionDesign
   | ThemeContent
   | Settings
   | Footer

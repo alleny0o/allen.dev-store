@@ -36,10 +36,10 @@ export const SINGLETONS: {[key: string]: Singleton} = {
     title: 'Footer',
     icon: InsertAboveIcon,
   },
-  productSection: {
-    id: 'productSection',
-    _type: 'productSection',
-    title: 'Product Section',
+  productSectionDesign: {
+    id: 'productSectionDesign',
+    _type: 'productSectionDesign',
+    title: 'Product section design',
     icon: CubeIcon,
   },
   themeContent: {

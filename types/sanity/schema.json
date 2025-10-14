@@ -1,6 +1,6 @@
 [
   {
-    "name": "productSection",
+    "name": "productSectionDesign",
     "type": "document",
     "attributes": {
       "_id": {
@@ -13,7 +13,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "string",
-          "value": "productSection"
+          "value": "productSectionDesign"
         }
       },
       "_createdAt": {
@@ -273,6 +273,13 @@
               },
               "optional": true
             },
+            "overlayOnImage": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "boolean"
+              },
+              "optional": true
+            },
             "borderRadius": {
               "type": "objectAttribute",
               "value": {
@@ -306,6 +313,13 @@
               "optional": true
             }
           }
+        },
+        "optional": true
+      },
+      "showThumbnailsOnMobile": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
         },
         "optional": true
       },

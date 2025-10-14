@@ -7,8 +7,8 @@ const GROUPS = [
 ];
 
 export default defineType({
-  name: 'productSection',
-  title: 'Product Section',
+  name: 'productSectionDesign',
+  title: 'Product section design',
   type: 'document',
   __experimental_formPreviewTitle: false,
   groups: GROUPS,
@@ -26,7 +26,7 @@ export default defineType({
       name: 'flipLayout',
       title: 'Flip Layout',
       description:
-        '⬅️➡️ Switch sides: Put product details on the left and media on the right (normally media are on left)',
+        '⬅️➡️ Switch sides: Put product details on the left and media on the right (normally media are on the left).',
       type: 'boolean',
       group: 'layout',
     }),
@@ -54,21 +54,21 @@ export default defineType({
       type: 'object',
       group: 'layout',
       description:
-        '↔️ Add breathing room between your media and product details',
+        '↔️ Add breathing room between your media and product details.',
       options: {collapsible: true, collapsed: false},
       fields: [
         defineField({
           name: 'desktop',
           type: 'number',
           title: 'Desktop Spacing (pixels)',
-          description: '40px gives a comfortable amount of space',
+          description: '40px gives a comfortable amount of space.',
           validation: (Rule) => Rule.min(0).max(120),
         }),
         defineField({
           name: 'mobile',
           type: 'number',
           title: 'Mobile Spacing (pixels)',
-          description: '24px works well for most mobile screens',
+          description: '24px works well for most mobile screens.',
           validation: (Rule) => Rule.min(0).max(80),
         }),
       ],
@@ -79,7 +79,7 @@ export default defineType({
       name: 'mobileLayout',
       title: 'What Shows First on Mobile?',
       description:
-        '📱 Choose whether customers see media or product info first when shopping on their phone',
+        '📱 Choose whether customers see media or product info first when shopping on their phone.',
       type: 'string',
       group: 'mobile',
       options: {
@@ -100,7 +100,7 @@ export default defineType({
       name: 'mobileHeaderContent',
       title: 'Customize Mobile Header',
       description:
-        '✏️ Pick what info appears in the header section (only applies when "Show title & price first" is selected above)',
+        '✏️ Pick what info appears in the header section (only applies when "Show title & price first" is selected above).',
       type: 'object',
       group: 'mobile',
       hidden: ({parent}) => parent?.mobileLayout !== 'headerFirst',
@@ -110,25 +110,25 @@ export default defineType({
           name: 'showVendor',
           type: 'boolean',
           title: 'Show Brand/Vendor Name',
-          description: 'Display who makes this product',
+          description: 'Display who makes this product.',
         }),
         defineField({
           name: 'showTitle',
           type: 'boolean',
           title: 'Show Product Title',
-          description: 'Display the product name',
+          description: 'Display the product name.',
         }),
         defineField({
           name: 'showReviews',
           type: 'boolean',
           title: 'Show Review Stars',
-          description: 'Display customer rating',
+          description: 'Display customer rating.',
         }),
         defineField({
           name: 'showPrice',
           type: 'boolean',
           title: 'Show Price',
-          description: 'Display product price',
+          description: 'Display product price.',
         }),
       ],
     }),
@@ -139,7 +139,7 @@ export default defineType({
       type: 'string',
       title: 'How Should Media Display?',
       description:
-        '🎨 Choose how customers browse your product photos on desktop. Mobile always uses swipeable carousel for best experience.',
+        '🎨 Choose how customers browse your product photos on desktop. Mobile always uses a swipeable carousel for best experience.',
       group: 'media',
       options: {
         list: [
@@ -164,13 +164,13 @@ export default defineType({
       name: 'mainAspectRatio',
       title: 'Media Shape',
       description:
-        '🖼️ Control how your media are cropped. Square (1:1) works best for most products and looks clean. Choose "Auto" if you want media to keep their original proportions.',
+        '🖼️ Control how your media are cropped. Square (1:1) works best for most products and looks clean. Choose "Auto" to keep original proportions.',
       type: 'string',
       group: 'media',
       options: {
         list: [
           {
-            title: '1:1 — Square (⭐ Recommended for clean, consistent look)',
+            title: '1:1 — Square (⭐ Recommended for a clean, consistent look)',
             value: '1:1',
           },
           {title: '4:3 — Classic photo shape (slightly wider)', value: '4:3'},
@@ -179,7 +179,7 @@ export default defineType({
             title: '16:9 — Wide rectangle (good for lifestyle shots)',
             value: '16:9',
           },
-          {title: 'Auto — Keep original media proportions', value: 'auto'},
+          {title: 'Auto — Keep original proportions', value: 'auto'},
         ],
         layout: 'radio',
       },
@@ -192,7 +192,7 @@ export default defineType({
       type: 'object',
       group: 'media',
       hidden: ({parent}) => parent?.galleryDisplay !== 'grid',
-      description: '⚙️ Fine-tune how the grid looks',
+      description: '⚙️ Fine-tune how the grid looks.',
       options: {collapsible: true, collapsed: true},
       fields: [
         defineField({
@@ -200,7 +200,7 @@ export default defineType({
           title: 'Media Per Row',
           type: 'string',
           description:
-            '2 columns is easier to browse, 3 columns fits more media',
+            '2 columns is easier to browse, 3 columns fits more media.',
           options: {
             list: [
               {
@@ -216,7 +216,7 @@ export default defineType({
           name: 'gap',
           title: 'Space Between Media (pixels)',
           type: 'number',
-          description: '16px gives nice spacing between media',
+          description: '16px gives nice spacing between media.',
           validation: (Rule) => Rule.min(0).max(64),
         }),
       ],
@@ -227,7 +227,7 @@ export default defineType({
       type: 'boolean',
       title: 'Show Navigation Arrows',
       description:
-        '◀️▶️ Display left/right arrows so customers can easily switch between media (desktop only)',
+        '◀️▶️ Display left/right arrows so customers can easily switch between media (desktop only).',
       group: 'media',
       hidden: ({parent}) => parent?.galleryDisplay !== 'carousel',
     }),
@@ -237,7 +237,7 @@ export default defineType({
       type: 'boolean',
       title: 'Show Small Preview Thumbnails',
       description:
-        '🖼️ Display a strip of small media previews so customers can jump to any photo instantly',
+        '🖼️ Display a strip of small media previews so customers can jump to any photo instantly.',
       group: 'media',
       hidden: ({parent}) => parent?.galleryDisplay === 'grid',
     }),
@@ -248,7 +248,7 @@ export default defineType({
       type: 'object',
       group: 'media',
       hidden: ({parent}) => parent?.galleryDisplay === 'grid',
-      description: '🎨 Customize how your thumbnail strip looks',
+      description: '🎨 Customize how your thumbnail strip looks.',
       options: {collapsible: true, collapsed: true},
       fields: [
         defineField({
@@ -266,6 +266,14 @@ export default defineType({
             ],
             layout: 'radio',
           },
+        }),
+        defineField({
+          name: 'overlayOnImage',
+          type: 'boolean',
+          title: 'Overlay on Image (Left Position Only)',
+          description:
+            '💫 When enabled, thumbnails are positioned absolutely over the main image instead of beside it.',
+          hidden: ({parent}) => parent?.position !== 'left',
         }),
         defineField({
           name: 'borderRadius',
@@ -298,11 +306,21 @@ export default defineType({
     }),
 
     defineField({
+      name: 'showThumbnailsOnMobile',
+      type: 'boolean',
+      title: 'Show Thumbnails on Mobile',
+      description:
+        '📱 When enabled, thumbnails will also appear on mobile devices (disabled by default for cleaner layouts).',
+      group: 'media',
+      hidden: ({parent}) => !parent?.showThumbnails,
+    }),
+
+    defineField({
       name: 'enableModal',
       type: 'boolean',
       title: 'Enable Fullscreen View',
       description:
-        '🔍 Let customers click media to open a large fullscreen view. Recommended for seeing product details.',
+        '🔍 Let customers click media to open a large fullscreen view. Recommended for detailed product imagery.',
       group: 'media',
     }),
 
@@ -320,7 +338,7 @@ export default defineType({
       type: 'boolean',
       title: 'Show Position Dots',
       description:
-        '⚫⚫⚫ Display dots on mobile showing which media they\'re viewing (e.g., "2 of 5")',
+        '⚫⚫⚫ Display dots on mobile showing which media they\'re viewing (e.g., "2 of 5").',
       group: 'media',
     }),
   ],
@@ -349,9 +367,11 @@ export default defineType({
     showThumbnails: true,
     thumbnailOptions: {
       position: 'left',
+      overlayOnImage: false,
       borderRadius: 4,
       aspectRatio: '1:1',
     },
+    showThumbnailsOnMobile: false,
     enableModal: true,
     enableZoom: false,
     showDots: true,
@@ -359,7 +379,7 @@ export default defineType({
 
   preview: {
     prepare: () => ({
-      title: 'Product Section',
+      title: 'Product section design',
       subtitle: 'Layout, mobile, and media settings',
     }),
   },

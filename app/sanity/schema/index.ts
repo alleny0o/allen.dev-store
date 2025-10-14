@@ -93,7 +93,7 @@ import header from './singletons/header';
 import home from './singletons/home';
 import settings from './singletons/settings';
 import themeContent from './singletons/theme-content';
-import productSection from './singletons/product-section';
+import productSectionDesign from './singletons/product-section-design';
 
 // ─────────────────────────────────────────────
 // 📦 Schema Groups
@@ -104,7 +104,7 @@ const singletons = [
   footer,
   settings,
   themeContent,
-  productSection,
+  productSectionDesign,
 ];
 
 const documents = [

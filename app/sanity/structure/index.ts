@@ -45,7 +45,7 @@ export const structure: StructureResolver = (S, context) => {
           S.list()
             .title('Design')
             .items([
-              singleton(S, SINGLETONS.productSection).title('Product section').icon(Package),
+              singleton(S, SINGLETONS.productSectionDesign).id('productSectionDesign').title('Product section').icon(Package),
               S.documentTypeListItem('colorScheme').showIcon(true),
               singleton(S, SINGLETONS.typography),
               singleton(S, SINGLETONS.themeContent).title('Theme content'),
