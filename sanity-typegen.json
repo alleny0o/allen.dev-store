@@ -6,3 +6,4 @@
   "schema": "./types/sanity/schema.json",
   "generates": "./types/sanity/sanity.generated.d.ts"
 }
+

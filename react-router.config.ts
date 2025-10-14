@@ -5,3 +5,4 @@ export default {
   buildDirectory: 'dist',
   ssr: true,
 } satisfies Config;
+
