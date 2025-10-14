@@ -13,6 +13,35 @@
  */
 
 // Source: schema.json
+export type ProductSection = {
+  _id: string;
+  _type: 'productSection';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  flipLayout?: boolean;
+  columnRatio?: '6:6' | '7:5' | '8:4' | '9:3';
+  gap?: {
+    mobile?: number;
+    desktop?: number;
+  };
+  mobileLayout?: 'mediaFirst' | 'headerFirst';
+  mobileHeaderContent?: {
+    showVendor?: boolean;
+    showTitle?: boolean;
+    showReviews?: boolean;
+    showPrice?: boolean;
+  };
+  stickyGallery?: boolean;
+  stickyOffset?: number;
+  showArrows?: boolean;
+  showThumbnails?: boolean;
+  thumbnailPosition?: 'left' | 'bottom';
+  enableModal?: boolean;
+  showDots?: boolean;
+  enableZoom?: boolean;
+};
+
 export type ThemeContent = {
   _id: string;
   _type: 'themeContent';
@@ -789,36 +818,6 @@ export type SocialLinksOnly = {
   settings?: SectionSettings;
 };
 
-export type CollectionBannerSection = {
-  _type: 'collectionBannerSection';
-  showImage?: boolean;
-  showDescription?: boolean;
-  contentPosition?:
-    | 'top_left'
-    | 'top_center'
-    | 'top_right'
-    | 'middle_left'
-    | 'middle_center'
-    | 'middle_right'
-    | 'bottom_left'
-    | 'bottom_center'
-    | 'bottom_right';
-  contentAlignment?: 'left' | 'center' | 'right';
-  bannerHeight?: number;
-  overlayOpacity?: number;
-  settings?: SectionSettings;
-};
-
-export type CollectionProductGridSection = {
-  _type: 'collectionProductGridSection';
-  productsPerPage?: number;
-  desktopColumns?: number;
-  mobileColumns?: number;
-  enableFiltering?: boolean;
-  enableSorting?: boolean;
-  settings?: SectionSettings;
-};
-
 export type RichtextSection = {
   _type: 'richtextSection';
   richtext?: Array<
@@ -829,37 +828,6 @@ export type RichtextSection = {
   desktopContentPosition?: 'left' | 'center' | 'right';
   contentAlignment?: 'left' | 'center' | 'right';
   maxWidth?: number;
-  settings?: SectionSettings;
-};
-
-export type CarouselSection = {
-  _type: 'carouselSection';
-  title?: Array<
-    {
-      _key: string;
-    } & InternationalizedArrayStringValue
-  >;
-  pagination?: boolean;
-  arrows?: boolean;
-  autoplay?: boolean;
-  loop?: boolean;
-  slidesPerViewDesktop?: number;
-  slides?: Array<{
-    image?: {
-      asset?: {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-      };
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: 'image';
-    };
-    _type: 'slide';
-    _key: string;
-  }>;
   settings?: SectionSettings;
 };
 
@@ -888,16 +856,38 @@ export type ProductInformationSection = {
   settings?: SectionSettings;
 };
 
-export type CollectionListSection = {
-  _type: 'collectionListSection';
-  collections?: Array<{
-    _ref: string;
-    _type: 'reference';
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: 'collection';
-  }>;
-  desktopColumns?: number;
+export type ImageBannerSection = {
+  _type: 'imageBannerSection';
+  content?: Array<
+    {
+      _key: string;
+    } & InternationalizedArrayBannerRichtextValue
+  >;
+  contentPosition?:
+    | 'top_left'
+    | 'top_center'
+    | 'top_right'
+    | 'middle_left'
+    | 'middle_center'
+    | 'middle_right'
+    | 'bottom_left'
+    | 'bottom_center'
+    | 'bottom_right';
+  contentAlignment?: 'left' | 'center' | 'right';
+  backgroundImage?: {
+    asset?: {
+      _ref: string;
+      _type: 'reference';
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: 'image';
+  };
+  bannerHeight?: number;
+  overlayOpacity?: number;
   settings?: SectionSettings;
 };
 
@@ -937,13 +927,33 @@ export type FeaturedCollectionSection = {
   settings?: SectionSettings;
 };
 
-export type ImageBannerSection = {
-  _type: 'imageBannerSection';
-  content?: Array<
-    {
-      _key: string;
-    } & InternationalizedArrayBannerRichtextValue
-  >;
+export type CollectionProductGridSection = {
+  _type: 'collectionProductGridSection';
+  productsPerPage?: number;
+  desktopColumns?: number;
+  mobileColumns?: number;
+  enableFiltering?: boolean;
+  enableSorting?: boolean;
+  settings?: SectionSettings;
+};
+
+export type CollectionListSection = {
+  _type: 'collectionListSection';
+  collections?: Array<{
+    _ref: string;
+    _type: 'reference';
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: 'collection';
+  }>;
+  desktopColumns?: number;
+  settings?: SectionSettings;
+};
+
+export type CollectionBannerSection = {
+  _type: 'collectionBannerSection';
+  showImage?: boolean;
+  showDescription?: boolean;
   contentPosition?:
     | 'top_left'
     | 'top_center'
@@ -955,21 +965,51 @@ export type ImageBannerSection = {
     | 'bottom_center'
     | 'bottom_right';
   contentAlignment?: 'left' | 'center' | 'right';
-  backgroundImage?: {
-    asset?: {
-      _ref: string;
-      _type: 'reference';
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: 'image';
-  };
   bannerHeight?: number;
   overlayOpacity?: number;
   settings?: SectionSettings;
+};
+
+export type CarouselSection = {
+  _type: 'carouselSection';
+  title?: Array<
+    {
+      _key: string;
+    } & InternationalizedArrayStringValue
+  >;
+  pagination?: boolean;
+  arrows?: boolean;
+  autoplay?: boolean;
+  loop?: boolean;
+  slidesPerViewDesktop?: number;
+  slides?: Array<{
+    image?: {
+      asset?: {
+        _ref: string;
+        _type: 'reference';
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: 'image';
+    };
+    _type: 'slide';
+    _key: string;
+  }>;
+  settings?: SectionSettings;
+};
+
+export type ProductVariant = {
+  _id: string;
+  _type: 'productVariant';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  hidden?: string;
+  titleProxy?: string;
+  store?: ShopifyProductVariant;
 };
 
 export type Typography = {
@@ -1010,17 +1050,6 @@ export type Typography = {
     letterSpacing?: number;
     lineHeight?: number;
   };
-};
-
-export type ProductVariant = {
-  _id: string;
-  _type: 'productVariant';
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  hidden?: string;
-  titleProxy?: string;
-  store?: ShopifyProductVariant;
 };
 
 export type CollectionRule = {
@@ -1074,143 +1103,6 @@ export type Inventory = {
   policy?: string;
 };
 
-export type RangeSlider = number;
-
-export type AnnouncementBar = Array<{
-  text?: string;
-  link?:
-    | {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'home';
-      }
-    | {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'page';
-      }
-    | {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'product';
-      }
-    | {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'collection';
-      }
-    | {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'blogPost';
-      };
-  externalLink?: string;
-  openInNewTab?: boolean;
-  _type: 'announcement';
-  _key: string;
-}>;
-
-export type Button = {
-  _type: 'button';
-  label?: string;
-  link?:
-    | {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'home';
-      }
-    | {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'page';
-      }
-    | {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'product';
-      }
-    | {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'collection';
-      }
-    | {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'blogPost';
-      };
-  anchor?: string;
-};
-
-export type HeaderNavigation = Array<
-  | ({
-      _key: string;
-    } & InternalLink)
-  | ({
-      _key: string;
-    } & ExternalLink)
-  | ({
-      _key: string;
-    } & NestedNavigation)
->;
-
-export type Anchor = string;
-
-export type SectionSettings = {
-  _type: 'sectionSettings';
-  hide?: boolean;
-  colorScheme?: {
-    _ref: string;
-    _type: 'reference';
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: 'colorScheme';
-  };
-  padding?: Padding;
-  customCss?: Code;
-};
-
-export type ColorScheme = {
-  _id: string;
-  _type: 'colorScheme';
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name?: string;
-  default?: boolean;
-  background?: ColorPicker;
-  foreground?: ColorPicker;
-  primary?: ColorPicker;
-  primaryForeground?: ColorPicker;
-  border?: ColorPicker;
-  card?: ColorPicker;
-  cardForeground?: ColorPicker;
-};
-
-export type ColorPicker = {
-  _type: 'colorPicker';
-  hex?: string;
-  hsl?: {
-    h?: number;
-    s?: number;
-    l?: number;
-  };
-  rgb?: {
-    r?: number;
-    g?: number;
-    b?: number;
-  };
-};
-
 export type FontCategory = {
   _type: 'fontCategory';
   fontName?: string;
@@ -1259,188 +1151,6 @@ export type FontAsset = {
   fontWeight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 };
 
-export type BannerRichtext = Array<
-  | {
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: 'span';
-        _key: string;
-      }>;
-      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-      listItem?: never;
-      markDefs?: null;
-      level?: number;
-      _type: 'block';
-      _key: string;
-    }
-  | ({
-      _key: string;
-    } & Button)
->;
-
-export type ProductRichtext = Array<
-  | {
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: 'span';
-        _key: string;
-      }>;
-      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
-      listItem?: 'bullet' | 'number';
-      markDefs?: Array<
-        | {
-            link?:
-              | {
-                  _ref: string;
-                  _type: 'reference';
-                  _weak?: boolean;
-                  [internalGroqTypeReferenceTo]?: 'home';
-                }
-              | {
-                  _ref: string;
-                  _type: 'reference';
-                  _weak?: boolean;
-                  [internalGroqTypeReferenceTo]?: 'page';
-                }
-              | {
-                  _ref: string;
-                  _type: 'reference';
-                  _weak?: boolean;
-                  [internalGroqTypeReferenceTo]?: 'product';
-                }
-              | {
-                  _ref: string;
-                  _type: 'reference';
-                  _weak?: boolean;
-                  [internalGroqTypeReferenceTo]?: 'collection';
-                }
-              | {
-                  _ref: string;
-                  _type: 'reference';
-                  _weak?: boolean;
-                  [internalGroqTypeReferenceTo]?: 'blogPost';
-                };
-            anchor?: Anchor;
-            _type: 'internalLink';
-            _key: string;
-          }
-        | {
-            link?: string;
-            openInNewTab?: boolean;
-            _type: 'externalLink';
-            _key: string;
-          }
-      >;
-      level?: number;
-      _type: 'block';
-      _key: string;
-    }
-  | {
-      titleProxy?: ProxyString;
-      _type: 'shopifyTitle';
-      _key: string;
-    }
-  | {
-      descriptionProxy?: ProxyString;
-      _type: 'shopifyDescription';
-      _key: string;
-    }
-  | {
-      priceProxy?: ProxyString;
-      _type: 'price';
-      _key: string;
-    }
-  | {
-      quantitySelector?: boolean;
-      shopPayButton?: boolean;
-      _type: 'addToCartButton';
-      _key: string;
-    }
->;
-
-export type CollectionSections = Array<
-  | ({
-      _key: string;
-    } & CollectionBannerSection)
-  | ({
-      _key: string;
-    } & CollectionProductGridSection)
-  | ({
-      _key: string;
-    } & ImageBannerSection)
-  | ({
-      _key: string;
-    } & FeaturedCollectionSection)
-  | ({
-      _key: string;
-    } & FeaturedProductSection)
-  | ({
-      _key: string;
-    } & CollectionListSection)
-  | ({
-      _key: string;
-    } & CarouselSection)
-  | ({
-      _key: string;
-    } & RichtextSection)
->;
-
-export type ProductSections = Array<
-  | ({
-      _key: string;
-    } & ProductInformationSection)
-  | ({
-      _key: string;
-    } & RelatedProductsSection)
-  | ({
-      _key: string;
-    } & ImageBannerSection)
-  | ({
-      _key: string;
-    } & FeaturedCollectionSection)
-  | ({
-      _key: string;
-    } & FeaturedProductSection)
-  | ({
-      _key: string;
-    } & CollectionListSection)
-  | ({
-      _key: string;
-    } & CarouselSection)
-  | ({
-      _key: string;
-    } & RichtextSection)
->;
-
-export type Sections = Array<
-  | ({
-      _key: string;
-    } & ImageBannerSection)
-  | ({
-      _key: string;
-    } & FeaturedCollectionSection)
-  | ({
-      _key: string;
-    } & FeaturedProductSection)
-  | ({
-      _key: string;
-    } & CollectionListSection)
-  | ({
-      _key: string;
-    } & CarouselSection)
-  | ({
-      _key: string;
-    } & RichtextSection)
->;
-
-export type Footers = Array<
-  {
-    _key: string;
-  } & SocialLinksOnly
->;
-
 export type NestedNavigation = {
   _type: 'nestedNavigation';
   name?: string;
@@ -1485,149 +1195,6 @@ export type NestedNavigation = {
   >;
 };
 
-export type ExternalLink = {
-  _type: 'externalLink';
-  name?: string;
-  link?: string;
-  openInNewTab?: boolean;
-};
-
-export type InternalLink = {
-  _type: 'internalLink';
-  name?: string;
-  link?:
-    | {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'home';
-      }
-    | {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'page';
-      }
-    | {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'product';
-      }
-    | {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'collection';
-      }
-    | {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'blogPost';
-      };
-  anchor?: Anchor;
-};
-
-export type AspectRatios = 'square' | 'video' | 'auto';
-
-export type Richtext = Array<
-  | {
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: 'span';
-        _key: string;
-      }>;
-      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
-      listItem?: 'bullet' | 'number';
-      markDefs?: Array<
-        | {
-            link?:
-              | {
-                  _ref: string;
-                  _type: 'reference';
-                  _weak?: boolean;
-                  [internalGroqTypeReferenceTo]?: 'home';
-                }
-              | {
-                  _ref: string;
-                  _type: 'reference';
-                  _weak?: boolean;
-                  [internalGroqTypeReferenceTo]?: 'page';
-                }
-              | {
-                  _ref: string;
-                  _type: 'reference';
-                  _weak?: boolean;
-                  [internalGroqTypeReferenceTo]?: 'product';
-                }
-              | {
-                  _ref: string;
-                  _type: 'reference';
-                  _weak?: boolean;
-                  [internalGroqTypeReferenceTo]?: 'collection';
-                }
-              | {
-                  _ref: string;
-                  _type: 'reference';
-                  _weak?: boolean;
-                  [internalGroqTypeReferenceTo]?: 'blogPost';
-                };
-            anchor?: Anchor;
-            _type: 'internalLink';
-            _key: string;
-          }
-        | {
-            link?: string;
-            openInNewTab?: boolean;
-            _type: 'externalLink';
-            _key: string;
-          }
-      >;
-      level?: number;
-      _type: 'block';
-      _key: string;
-    }
-  | {
-      asset?: {
-        _ref: string;
-        _type: 'reference';
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-      };
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      maxWidth?: RangeSlider;
-      alignment?: 'left' | 'center' | 'right';
-      _type: 'image';
-      _key: string;
-    }
-  | ({
-      _key: string;
-    } & Button)
->;
-
-export type ContentAlignment = 'left' | 'center' | 'right';
-
-export type ContentPosition =
-  | 'top_left'
-  | 'top_center'
-  | 'top_right'
-  | 'middle_left'
-  | 'middle_center'
-  | 'middle_right'
-  | 'bottom_left'
-  | 'bottom_center'
-  | 'bottom_right';
-
-export type Padding = {
-  _type: 'padding';
-  top?: RangeSlider;
-  bottom?: RangeSlider;
-};
-
 export type Link =
   | {
       _ref: string;
@@ -1659,6 +1226,318 @@ export type Link =
       _weak?: boolean;
       [internalGroqTypeReferenceTo]?: 'blogPost';
     };
+
+export type InternalLink = {
+  _type: 'internalLink';
+  name?: string;
+  link?: Link;
+  anchor?: string;
+};
+
+export type Button = {
+  _type: 'button';
+  label?: string;
+  link?: Link;
+  anchor?: string;
+};
+
+export type HeaderNavigation = Array<
+  | ({
+      _key: string;
+    } & InternalLink)
+  | ({
+      _key: string;
+    } & ExternalLink)
+  | ({
+      _key: string;
+    } & NestedNavigation)
+>;
+
+export type ExternalLink = {
+  _type: 'externalLink';
+  name?: string;
+  link?: string;
+  openInNewTab?: boolean;
+};
+
+export type Anchor = string;
+
+export type ProductSections = Array<
+  | ({
+      _key: string;
+    } & ProductInformationSection)
+  | ({
+      _key: string;
+    } & RelatedProductsSection)
+  | ({
+      _key: string;
+    } & ImageBannerSection)
+  | ({
+      _key: string;
+    } & FeaturedCollectionSection)
+  | ({
+      _key: string;
+    } & FeaturedProductSection)
+  | ({
+      _key: string;
+    } & CollectionListSection)
+  | ({
+      _key: string;
+    } & CarouselSection)
+  | ({
+      _key: string;
+    } & RichtextSection)
+>;
+
+export type CollectionSections = Array<
+  | ({
+      _key: string;
+    } & CollectionBannerSection)
+  | ({
+      _key: string;
+    } & CollectionProductGridSection)
+  | ({
+      _key: string;
+    } & ImageBannerSection)
+  | ({
+      _key: string;
+    } & FeaturedCollectionSection)
+  | ({
+      _key: string;
+    } & FeaturedProductSection)
+  | ({
+      _key: string;
+    } & CollectionListSection)
+  | ({
+      _key: string;
+    } & CarouselSection)
+  | ({
+      _key: string;
+    } & RichtextSection)
+>;
+
+export type Sections = Array<
+  | ({
+      _key: string;
+    } & ImageBannerSection)
+  | ({
+      _key: string;
+    } & FeaturedCollectionSection)
+  | ({
+      _key: string;
+    } & FeaturedProductSection)
+  | ({
+      _key: string;
+    } & CollectionListSection)
+  | ({
+      _key: string;
+    } & CarouselSection)
+  | ({
+      _key: string;
+    } & RichtextSection)
+>;
+
+export type SectionSettings = {
+  _type: 'sectionSettings';
+  hide?: boolean;
+  colorScheme?: {
+    _ref: string;
+    _type: 'reference';
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: 'colorScheme';
+  };
+  padding?: Padding;
+  customCss?: Code;
+};
+
+export type ColorScheme = {
+  _id: string;
+  _type: 'colorScheme';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  default?: boolean;
+  background?: ColorPicker;
+  foreground?: ColorPicker;
+  primary?: ColorPicker;
+  primaryForeground?: ColorPicker;
+  border?: ColorPicker;
+  card?: ColorPicker;
+  cardForeground?: ColorPicker;
+};
+
+export type Richtext = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: 'span';
+        _key: string;
+      }>;
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+      listItem?: 'bullet' | 'number';
+      markDefs?: Array<
+        | {
+            link?: Link;
+            anchor?: Anchor;
+            _type: 'internalLink';
+            _key: string;
+          }
+        | {
+            link?: string;
+            openInNewTab?: boolean;
+            _type: 'externalLink';
+            _key: string;
+          }
+      >;
+      level?: number;
+      _type: 'block';
+      _key: string;
+    }
+  | {
+      asset?: {
+        _ref: string;
+        _type: 'reference';
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      maxWidth?: number;
+      alignment?: 'left' | 'center' | 'right';
+      _type: 'image';
+      _key: string;
+    }
+  | ({
+      _key: string;
+    } & Button)
+>;
+
+export type RangeSlider = number;
+
+export type ProductRichtext = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: 'span';
+        _key: string;
+      }>;
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+      listItem?: 'bullet' | 'number';
+      markDefs?: Array<
+        | {
+            link?: Link;
+            anchor?: Anchor;
+            _type: 'internalLink';
+            _key: string;
+          }
+        | {
+            link?: string;
+            openInNewTab?: boolean;
+            _type: 'externalLink';
+            _key: string;
+          }
+      >;
+      level?: number;
+      _type: 'block';
+      _key: string;
+    }
+  | {
+      titleProxy?: ProxyString;
+      _type: 'shopifyTitle';
+      _key: string;
+    }
+  | {
+      descriptionProxy?: ProxyString;
+      _type: 'shopifyDescription';
+      _key: string;
+    }
+  | {
+      priceProxy?: ProxyString;
+      _type: 'price';
+      _key: string;
+    }
+  | {
+      quantitySelector?: boolean;
+      shopPayButton?: boolean;
+      _type: 'addToCartButton';
+      _key: string;
+    }
+>;
+
+export type Padding = {
+  _type: 'padding';
+  top?: RangeSlider;
+  bottom?: RangeSlider;
+};
+
+export type Footers = Array<
+  {
+    _key: string;
+  } & SocialLinksOnly
+>;
+
+export type ContentPosition =
+  | 'top_left'
+  | 'top_center'
+  | 'top_right'
+  | 'middle_left'
+  | 'middle_center'
+  | 'middle_right'
+  | 'bottom_left'
+  | 'bottom_center'
+  | 'bottom_right';
+
+export type ContentAlignment = 'left' | 'center' | 'right';
+
+export type ColorPicker = {
+  _type: 'colorPicker';
+  hex?: string;
+  hsl?: {
+    h?: number;
+    s?: number;
+    l?: number;
+  };
+  rgb?: {
+    r?: number;
+    g?: number;
+    b?: number;
+  };
+};
+
+export type BannerRichtext = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: 'span';
+        _key: string;
+      }>;
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+      listItem?: never;
+      markDefs?: null;
+      level?: number;
+      _type: 'block';
+      _key: string;
+    }
+  | ({
+      _key: string;
+    } & Button)
+>;
+
+export type AspectRatios = 'square' | 'video' | 'auto';
+
+export type AnnouncementBar = Array<{
+  text?: string;
+  link?: Link;
+  externalLink?: string;
+  openInNewTab?: boolean;
+  _type: 'announcement';
+  _key: string;
+}>;
 
 export type InternationalizedArrayBannerRichtextValue = {
   _type: 'internationalizedArrayBannerRichtextValue';
@@ -2063,23 +1942,24 @@ export type SanityAssetSourceData = {
 };
 
 export type AllSanitySchemaTypes =
+  | ProductSection
   | ThemeContent
   | Settings
   | Footer
   | Header
   | SocialLinksOnly
-  | CollectionBannerSection
-  | CollectionProductGridSection
   | RichtextSection
-  | CarouselSection
   | RelatedProductsSection
   | ProductInformationSection
-  | CollectionListSection
+  | ImageBannerSection
   | FeaturedProductSection
   | FeaturedCollectionSection
-  | ImageBannerSection
-  | Typography
+  | CollectionProductGridSection
+  | CollectionListSection
+  | CollectionBannerSection
+  | CarouselSection
   | ProductVariant
+  | Typography
   | CollectionRule
   | ShopifyProductVariant
   | ProxyString
@@ -2087,31 +1967,31 @@ export type AllSanitySchemaTypes =
   | PlaceholderString
   | Option
   | Inventory
-  | RangeSlider
-  | AnnouncementBar
-  | Button
-  | HeaderNavigation
-  | Anchor
-  | SectionSettings
-  | ColorScheme
-  | ColorPicker
   | FontCategory
   | FontAsset
-  | BannerRichtext
-  | ProductRichtext
-  | CollectionSections
-  | ProductSections
-  | Sections
-  | Footers
   | NestedNavigation
-  | ExternalLink
-  | InternalLink
-  | AspectRatios
-  | Richtext
-  | ContentAlignment
-  | ContentPosition
-  | Padding
   | Link
+  | InternalLink
+  | Button
+  | HeaderNavigation
+  | ExternalLink
+  | Anchor
+  | ProductSections
+  | CollectionSections
+  | Sections
+  | SectionSettings
+  | ColorScheme
+  | Richtext
+  | RangeSlider
+  | ProductRichtext
+  | Padding
+  | Footers
+  | ContentPosition
+  | ContentAlignment
+  | ColorPicker
+  | BannerRichtext
+  | AspectRatios
+  | AnnouncementBar
   | InternationalizedArrayBannerRichtextValue
   | InternationalizedArrayRichtextValue
   | InternationalizedArrayProductRichtextValue
@@ -3425,7 +3305,7 @@ export type DEFAULT_PRODUCT_TEMPLATEResult = {
               media?: unknown;
               hotspot: SanityImageHotspot | null;
               crop: SanityImageCrop | null;
-              maxWidth?: RangeSlider;
+              maxWidth?: number;
               alignment?: 'center' | 'left' | 'right';
               _type: 'image';
               _key: string;
@@ -4681,7 +4561,7 @@ export type DEFAULT_COLLECTION_TEMPLATEResult = {
               media?: unknown;
               hotspot: SanityImageHotspot | null;
               crop: SanityImageCrop | null;
-              maxWidth?: RangeSlider;
+              maxWidth?: number;
               alignment?: 'center' | 'left' | 'right';
               _type: 'image';
               _key: string;
@@ -6033,7 +5913,7 @@ export type ROOT_QUERYResult = {
                 media?: unknown;
                 hotspot: SanityImageHotspot | null;
                 crop: SanityImageCrop | null;
-                maxWidth?: RangeSlider;
+                maxWidth?: number;
                 alignment?: 'center' | 'left' | 'right';
                 _type: 'image';
                 _key: string;
@@ -6505,7 +6385,7 @@ export type ROOT_QUERYResult = {
       | {
           _key: string;
           _type: 'internalLink';
-          anchor: Anchor | null;
+          anchor: string | null;
           link:
             | {
                 documentType: 'blogPost';
@@ -6553,7 +6433,7 @@ export type ROOT_QUERYResult = {
             | {
                 _key: string;
                 _type: 'internalLink';
-                anchor: Anchor | null;
+                anchor: string | null;
                 link:
                   | {
                       documentType: 'blogPost';
@@ -8244,7 +8124,7 @@ export type COLLECTION_QUERYResult = {
                   media?: unknown;
                   hotspot: SanityImageHotspot | null;
                   crop: SanityImageCrop | null;
-                  maxWidth?: RangeSlider;
+                  maxWidth?: number;
                   alignment?: 'center' | 'left' | 'right';
                   _type: 'image';
                   _key: string;
@@ -9499,7 +9379,7 @@ export type COLLECTION_QUERYResult = {
                 media?: unknown;
                 hotspot: SanityImageHotspot | null;
                 crop: SanityImageCrop | null;
-                maxWidth?: RangeSlider;
+                maxWidth?: number;
                 alignment?: 'center' | 'left' | 'right';
                 _type: 'image';
                 _key: string;
@@ -10517,7 +10397,7 @@ export type PAGE_QUERYResult =
                   media?: unknown;
                   hotspot: SanityImageHotspot | null;
                   crop: SanityImageCrop | null;
-                  maxWidth?: RangeSlider;
+                  maxWidth?: number;
                   alignment?: 'center' | 'left' | 'right';
                   _type: 'image';
                   _key: string;
@@ -11548,7 +11428,7 @@ export type PAGE_QUERYResult =
                   media?: unknown;
                   hotspot: SanityImageHotspot | null;
                   crop: SanityImageCrop | null;
-                  maxWidth?: RangeSlider;
+                  maxWidth?: number;
                   alignment?: 'center' | 'left' | 'right';
                   _type: 'image';
                   _key: string;
@@ -12901,7 +12781,7 @@ export type PRODUCT_QUERYResult = {
                   media?: unknown;
                   hotspot: SanityImageHotspot | null;
                   crop: SanityImageCrop | null;
-                  maxWidth?: RangeSlider;
+                  maxWidth?: number;
                   alignment?: 'center' | 'left' | 'right';
                   _type: 'image';
                   _key: string;
@@ -14231,7 +14111,7 @@ export type PRODUCT_QUERYResult = {
                 media?: unknown;
                 hotspot: SanityImageHotspot | null;
                 crop: SanityImageCrop | null;
-                maxWidth?: RangeSlider;
+                maxWidth?: number;
                 alignment?: 'center' | 'left' | 'right';
                 _type: 'image';
                 _key: string;
@@ -15491,7 +15371,7 @@ export type ALL_SECTIONS_QUERYResult =
                   media?: unknown;
                   hotspot: SanityImageHotspot | null;
                   crop: SanityImageCrop | null;
-                  maxWidth?: RangeSlider;
+                  maxWidth?: number;
                   alignment?: 'center' | 'left' | 'right';
                   _type: 'image';
                   _key: string;
@@ -16819,7 +16699,7 @@ export type ALL_SECTIONS_QUERYResult =
                   media?: unknown;
                   hotspot: SanityImageHotspot | null;
                   crop: SanityImageCrop | null;
-                  maxWidth?: RangeSlider;
+                  maxWidth?: number;
                   alignment?: 'center' | 'left' | 'right';
                   _type: 'image';
                   _key: string;
@@ -17833,7 +17713,7 @@ export type ALL_SECTIONS_QUERYResult =
                   media?: unknown;
                   hotspot: SanityImageHotspot | null;
                   crop: SanityImageCrop | null;
-                  maxWidth?: RangeSlider;
+                  maxWidth?: number;
                   alignment?: 'center' | 'left' | 'right';
                   _type: 'image';
                   _key: string;
@@ -18847,7 +18727,7 @@ export type ALL_SECTIONS_QUERYResult =
                   media?: unknown;
                   hotspot: SanityImageHotspot | null;
                   crop: SanityImageCrop | null;
-                  maxWidth?: RangeSlider;
+                  maxWidth?: number;
                   alignment?: 'center' | 'left' | 'right';
                   _type: 'image';
                   _key: string;

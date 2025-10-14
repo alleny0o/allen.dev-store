@@ -1,5 +1,12 @@
+// ─────────────────────────────────────────────
+// 🧩 Plugins
+// ─────────────────────────────────────────────
 import colorPicker from '../plugins/color-picker';
 import rangeSlider from '../plugins/range-slider';
+
+// ─────────────────────────────────────────────
+// 📄 Document Types
+// ─────────────────────────────────────────────
 import blogPost from './documents/blog-post';
 import collection from './documents/collection';
 import collectionTemplate from './documents/collection-template';
@@ -9,9 +16,10 @@ import page from './documents/page';
 import product from './documents/product';
 import productTemplate from './documents/product-template';
 import productVariant from './documents/product-variant';
-import fontAsset from './objects/font/font-asset';
-import fontCategory from './objects/font/font-category';
-import socialLinksOnly from './objects/footers/social-links-only';
+
+// ─────────────────────────────────────────────
+// 🧰 Objects: Global (utilities, layout, content)
+// ─────────────────────────────────────────────
 import announcementBar from './objects/global/announcement-bar';
 import aspectRatios from './objects/global/aspect-ratios';
 import bannerRichtext from './objects/global/banner-richtext';
@@ -22,11 +30,15 @@ import padding from './objects/global/padding';
 import productRichtext from './objects/global/product-richtext';
 import richtext from './objects/global/richtext';
 import sectionSettings from './objects/global/section-settings';
+import seo from './objects/global/seo';
 import sectionsList, {
   collectionSections,
   productSections,
 } from './objects/global/sections-list';
-import seo from './objects/global/seo';
+
+// ─────────────────────────────────────────────
+// 🧭 Objects: Navigation
+// ─────────────────────────────────────────────
 import anchor from './objects/navigation/anchor';
 import externalLink from './objects/navigation/external-link';
 import headerNavigation from './objects/navigation/header-navigation';
@@ -34,6 +46,34 @@ import internalButton from './objects/navigation/internal-button';
 import internalLink from './objects/navigation/internal-link';
 import link from './objects/navigation/link';
 import nestedNavigation from './objects/navigation/nested-navigation';
+
+// ─────────────────────────────────────────────
+// 🅰️ Objects: Font
+// ─────────────────────────────────────────────
+import fontAsset from './objects/font/font-asset';
+import fontCategory from './objects/font/font-category';
+
+// ─────────────────────────────────────────────
+// 🦶 Objects: Footers
+// ─────────────────────────────────────────────
+import socialLinksOnly from './objects/footers/social-links-only';
+
+// ─────────────────────────────────────────────
+// 🛍️ Objects: Shopify Integration
+// ─────────────────────────────────────────────
+import inventory from './objects/shopify/inventory';
+import options from './objects/shopify/options';
+import placeholderString from './objects/shopify/placeholder-string';
+import priceRange from './objects/shopify/price-range';
+import proxyString from './objects/shopify/proxy-string';
+import shopifyCollection from './objects/shopify/shopify-collection';
+import shopifyCollectionRule from './objects/shopify/shopify-collection-rule';
+import shopifyProduct from './objects/shopify/shopify-product';
+import shopifyProductVariant from './objects/shopify/shopify-product-variant';
+
+// ─────────────────────────────────────────────
+// 🧱 Objects: Sections
+// ─────────────────────────────────────────────
 import carouselSection from './objects/sections/carousel-section';
 import collectionBanner from './objects/sections/collection-banner';
 import collectionListSection from './objects/sections/collection-list-section';
@@ -44,72 +84,89 @@ import imageBannerSection from './objects/sections/image-banner-section';
 import productInformationSection from './objects/sections/product-information-section';
 import relatedProductsSection from './objects/sections/related-products-section';
 import richtextSection from './objects/sections/richtext-section';
-import inventory from './objects/shopify/inventory';
-import options from './objects/shopify/options';
-import placeholderString from './objects/shopify/placeholder-string';
-import priceRange from './objects/shopify/price-range';
-import proxyString from './objects/shopify/proxy-string';
-import shopifyCollection from './objects/shopify/shopify-collection';
-import shopifyCollectionRule from './objects/shopify/shopify-collection-rule';
-import shopifyProduct from './objects/shopify/shopify-product';
-import shopifyProductVariant from './objects/shopify/shopify-product-variant';
+
+// ─────────────────────────────────────────────
+// ⚙️ Singletons
+// ─────────────────────────────────────────────
 import footer from './singletons/footer';
 import header from './singletons/header';
 import home from './singletons/home';
 import settings from './singletons/settings';
 import themeContent from './singletons/theme-content';
+import productSection from './singletons/product-section';
 
-const singletons = [home, header, footer, settings, themeContent];
+// ─────────────────────────────────────────────
+// 📦 Schema Groups
+// ─────────────────────────────────────────────
+const singletons = [
+  home,
+  header,
+  footer,
+  settings,
+  themeContent,
+  productSection,
+];
+
 const documents = [
-  page,
-  color,
+  blogPost,
   collection,
+  collectionTemplate,
+  color,
+  font,
+  page,
   product,
   productTemplate,
-  collectionTemplate,
-  blogPost,
   productVariant,
-  font,
 ];
+
 const sections = [
-  imageBannerSection,
+  carouselSection,
+  collectionBanner,
+  collectionListSection,
+  collectionProductGrid,
   featuredCollectionSection,
   featuredProductSection,
-  collectionListSection,
+  imageBannerSection,
   productInformationSection,
   relatedProductsSection,
-  carouselSection,
   richtextSection,
-  collectionProductGrid,
-  collectionBanner,
 ];
+
 const footers = [socialLinksOnly];
+
 const objects = [
-  link,
-  padding,
-  contentPosition,
-  contentAlignment,
-  richtext,
+  // Global
+  announcementBar,
   aspectRatios,
-  internalLink,
-  externalLink,
-  nestedNavigation,
-  footersList,
-  sectionsList,
-  productSections,
-  collectionSections,
-  productRichtext,
   bannerRichtext,
-  fontAsset,
-  fontCategory,
-  seo,
+  colorPicker,
+  contentAlignment,
+  contentPosition,
+  footersList,
+  padding,
+  productRichtext,
+  rangeSlider,
+  richtext,
   sectionSettings,
+  sectionsList,
+  collectionSections,
+  productSections,
+  seo,
+
+  // Navigation
   anchor,
+  externalLink,
   headerNavigation,
   internalButton,
-  announcementBar,
-  rangeSlider,
-  colorPicker,
+  internalLink,
+  link,
+  nestedNavigation,
+
+  // Font
+  fontAsset,
+  fontCategory,
+
+  // Shopify
   inventory,
   options,
   placeholderString,
@@ -121,6 +178,9 @@ const objects = [
   shopifyCollectionRule,
 ];
 
+// ─────────────────────────────────────────────
+// 🧠 Export Schema
+// ─────────────────────────────────────────────
 export const schemaTypes = [
   ...objects,
   ...documents,
