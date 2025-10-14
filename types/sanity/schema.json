@@ -41,6 +41,23 @@
         },
         "optional": true
       },
+      "breakpoint": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "md"
+            },
+            {
+              "type": "string",
+              "value": "lg"
+            }
+          ]
+        },
+        "optional": true
+      },
       "flipLayout": {
         "type": "objectAttribute",
         "value": {
@@ -93,6 +110,61 @@
               "type": "objectAttribute",
               "value": {
                 "type": "number"
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
+      "detailsPadding": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "desktop": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "object",
+                "attributes": {
+                  "x": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "number"
+                    },
+                    "optional": true
+                  },
+                  "y": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "number"
+                    },
+                    "optional": true
+                  }
+                }
+              },
+              "optional": true
+            },
+            "mobile": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "object",
+                "attributes": {
+                  "x": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "number"
+                    },
+                    "optional": true
+                  },
+                  "y": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "number"
+                    },
+                    "optional": true
+                  }
+                }
               },
               "optional": true
             }
@@ -154,6 +226,13 @@
         },
         "optional": true
       },
+      "mobileHeaderPaddingY": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
+        },
+        "optional": true
+      },
       "galleryDisplay": {
         "type": "objectAttribute",
         "value": {
@@ -175,65 +254,10 @@
         },
         "optional": true
       },
-      "mainAspectRatio": {
+      "gridGap": {
         "type": "objectAttribute",
         "value": {
-          "type": "union",
-          "of": [
-            {
-              "type": "string",
-              "value": "1:1"
-            },
-            {
-              "type": "string",
-              "value": "4:3"
-            },
-            {
-              "type": "string",
-              "value": "3:2"
-            },
-            {
-              "type": "string",
-              "value": "16:9"
-            },
-            {
-              "type": "string",
-              "value": "auto"
-            }
-          ]
-        },
-        "optional": true
-      },
-      "gridOptions": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "object",
-          "attributes": {
-            "columns": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "union",
-                "of": [
-                  {
-                    "type": "string",
-                    "value": "2"
-                  },
-                  {
-                    "type": "string",
-                    "value": "3"
-                  }
-                ]
-              },
-              "optional": true
-            },
-            "gap": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "number"
-              },
-              "optional": true
-            }
-          }
+          "type": "number"
         },
         "optional": true
       },
@@ -284,31 +308,6 @@
               "type": "objectAttribute",
               "value": {
                 "type": "number"
-              },
-              "optional": true
-            },
-            "aspectRatio": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "union",
-                "of": [
-                  {
-                    "type": "string",
-                    "value": "1:1"
-                  },
-                  {
-                    "type": "string",
-                    "value": "4:3"
-                  },
-                  {
-                    "type": "string",
-                    "value": "3:2"
-                  },
-                  {
-                    "type": "string",
-                    "value": "16:9"
-                  }
-                ]
               },
               "optional": true
             }

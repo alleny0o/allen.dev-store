@@ -20,9 +20,7 @@ export const sections: {
   featuredCollectionSection: FeaturedCollectionSection,
   featuredProductSection: FeaturedProductSection,
   imageBannerSection: ImageBannerSection,
-
   productHeroSection: ProductHeroSection,
-
   relatedProductsSection: RelatedProductsSection,
   richtextSection: RichtextSection,
   socialLinksOnly: FooterSocialLinksOnly,

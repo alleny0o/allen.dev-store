@@ -262,14 +262,16 @@ export const RICHTEXT_FRAGMENT = defineQuery(`{
 }`);
 
 export const PRODUCT_SECTION_DESIGN_FRAGMENT = `{
+  breakpoint,
   flipLayout,
   columnRatio,
   gap,
+  detailsPadding,
   mobileLayout,
   mobileHeaderContent,
+  mobileHeaderPaddingY,
   galleryDisplay,
-  mainAspectRatio,
-  gridOptions,
+  gridGap,
   showArrows,
   showThumbnails,
   thumbnailOptions,
