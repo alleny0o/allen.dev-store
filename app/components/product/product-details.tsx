@@ -9,7 +9,7 @@ import type {ShopifyTitleBlockProps} from '../blocks/shopify-title-block';
 import type {ExternalLinkAnnotationProps} from '../sanity/richtext/components/external-link-annotation';
 import type {InternalLinkAnnotationProps} from '../sanity/richtext/components/internal-link-annotation';
 import type {FeaturedProductSectionProps} from '../sections/featured-product-section';
-import type {ProductHeroSectionProps} from '../sections/product-hero-section';
+import type {ProductHeroSectionProps} from '../sections/product-page/product-hero';
 import type {AddToCartButtonBlockProps} from './product-form';
 
 import {PriceBlock} from '../blocks/price-block';

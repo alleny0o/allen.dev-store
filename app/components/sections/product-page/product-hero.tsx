@@ -3,8 +3,8 @@ import type {SectionDefaultProps, SectionOfType} from 'types';
 import {stegaClean} from '@sanity/client/stega';
 
 import {cn, getAspectRatioData} from '~/lib/utils';
-import {MediaGallery} from '../product/media-gallery';
-import {ProductDetails} from '../product/product-details';
+import {MediaGallery} from '../../product/media-gallery';
+import {ProductDetails} from '../../product/product-details';
 
 export type ProductHeroSectionProps =
   SectionOfType<'productHeroSection'>;
