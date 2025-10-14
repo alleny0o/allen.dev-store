@@ -6,7 +6,7 @@ import {CollectionProductGridSection} from '~/components/sections/collection-pro
 import {FeaturedCollectionSection} from '~/components/sections/featured-collection-section';
 import {FeaturedProductSection} from '~/components/sections/featured-product-section';
 import {ImageBannerSection} from '~/components/sections/image-banner-section';
-import {ProductHeroSection} from '~/components/sections/product-page/product-hero';
+import {ProductHeroSection} from '~/components/sections/product-hero/product-hero';
 import {RelatedProductsSection} from '~/components/sections/related-products-section';
 import {RichtextSection} from '~/components/sections/richtext-section';
 
