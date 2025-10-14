@@ -20,13 +20,13 @@ export default defineType({
       readOnly: true,
       group: 'layout',
       description:
-        '💡 Control how your product images and details are arranged. Changes here affect desktop view only.',
+        '💡 Control how your product media and details are arranged. Changes here affect desktop view only.',
     }),
     defineField({
       name: 'flipLayout',
       title: 'Flip Layout',
       description:
-        '⬅️➡️ Switch sides: Put product details on the left and images on the right (normally images are on left)',
+        '⬅️➡️ Switch sides: Put product details on the left and media on the right (normally media are on left)',
       type: 'boolean',
       group: 'layout',
       initialValue: false,
@@ -35,16 +35,15 @@ export default defineType({
       name: 'columnRatio',
       title: 'Column Width Balance',
       description:
-        '📏 Choose how much space images vs. details should take up. "7:5" means images get a bit more space than details. Most shops prefer the recommended 7:5 ratio.',
+        '📏 Choose how much space media vs. details should take up. "7:5" means media get a bit more space than details. Most shops prefer the recommended 7:5 ratio.',
       type: 'string',
       group: 'layout',
       options: {
         list: [
           {title: '5:7 — More space for details', value: '5:7'},
           {title: '6:6 — Equal space for both', value: '6:6'},
-          {title: '7:5 — Standard (⭐ Recommended)', value: '7:5'},
-          {title: '8:4 — Focus on images', value: '8:4'},
-          {title: '9:3 — Maximum image size', value: '9:3'},
+          {title: '7:5 — Standard (⭐ Default)', value: '7:5'},
+          {title: '8:4 — Focus on media', value: '8:4'},
         ],
         layout: 'radio',
       },
@@ -56,7 +55,7 @@ export default defineType({
       type: 'object',
       group: 'layout',
       description:
-        '↔️ Add breathing room between your images and product details',
+        '↔️ Add breathing room between your media and product details',
       options: {collapsible: true, collapsed: false},
       fields: [
         defineField({
@@ -83,17 +82,17 @@ export default defineType({
       name: 'mobileLayout',
       title: 'What Shows First on Mobile?',
       description:
-        '📱 Choose whether customers see images or product info first when shopping on their phone',
+        '📱 Choose whether customers see media or product info first when shopping on their phone',
       type: 'string',
       group: 'mobile',
       options: {
         list: [
           {
-            title: '🖼️ Show images first (Standard — works for most products)',
+            title: '🖼️ Show media first (Default — works for most products)',
             value: 'mediaFirst',
           },
           {
-            title: '🪧 Show title & price first (Good for text-heavy products)',
+            title: '🪧 Show header first (Good for text-heavy products)',
             value: 'headerFirst',
           },
         ],
@@ -146,22 +145,22 @@ export default defineType({
     defineField({
       name: 'galleryDisplay',
       type: 'string',
-      title: 'How Should Images Display?',
+      title: 'How Should Media Display?',
       description:
         '🎨 Choose how customers browse your product photos on desktop. Mobile always uses swipeable carousel for best experience.',
       group: 'media',
       options: {
         list: [
           {
-            title: '🎠 Carousel (Default — one image at a time with arrows)',
+            title: '🎠 Carousel (Default — one media at a time with arrows)',
             value: 'carousel',
           },
           {
-            title: '📜 Vertical Scroll (All images in a scrollable column)',
+            title: '📜 Vertical Scroll (All media in a scrollable column)',
             value: 'vertical',
           },
           {
-            title: '🔳 Grid Layout (Multiple images side-by-side)',
+            title: '🔳 Grid Layout (Multiple media side-by-side)',
             value: 'grid',
           },
         ],
@@ -172,24 +171,23 @@ export default defineType({
 
     defineField({
       name: 'mainAspectRatio',
-      title: 'Image Shape',
+      title: 'Media Shape',
       description:
-        '🖼️ Control how your images are cropped. Square (1:1) works best for most products and looks clean. Choose "Auto" if you want images to keep their original proportions.',
+        '🖼️ Control how your media are cropped. Square (1:1) works best for most products and looks clean.',
       type: 'string',
       group: 'media',
       options: {
         list: [
           {
-            title: '1:1 — Square (⭐ Recommended for clean, consistent look)',
+            title: '1:1 — Square (Default - recommended for clean, consistent look)',
             value: '1:1',
           },
           {title: '4:3 — Classic photo shape (slightly wider)', value: '4:3'},
-          {title: '3:2 — Standard photo ratio', value: '3:2'},
+          {title: '3:2 — Default photo ratio', value: '3:2'},
           {
             title: '16:9 — Wide rectangle (good for lifestyle shots)',
             value: '16:9',
           },
-          {title: 'Auto — Keep original image proportions', value: 'auto'},
         ],
         layout: 'radio',
       },
@@ -208,10 +206,10 @@ export default defineType({
       fields: [
         defineField({
           name: 'columns',
-          title: 'Images Per Row',
+          title: 'Media Per Row',
           type: 'string',
           description:
-            '2 columns is easier to browse, 3 columns fits more images',
+            '2 columns is easier to browse, 3 columns fits more media',
           options: {
             list: [
               {
@@ -226,9 +224,9 @@ export default defineType({
         }),
         defineField({
           name: 'gap',
-          title: 'Space Between Images (pixels)',
+          title: 'Space Between Media (pixels)',
           type: 'number',
-          description: '16px gives nice spacing between images',
+          description: '16px gives nice spacing between media',
           initialValue: 16,
           validation: (Rule) => Rule.min(0).max(64),
         }),
@@ -240,7 +238,7 @@ export default defineType({
       type: 'boolean',
       title: 'Show Navigation Arrows',
       description:
-        '◀️▶️ Display left/right arrows so customers can easily switch between images (desktop only)',
+        '◀️▶️ Display left/right arrows so customers can easily switch between media (desktop only)',
       group: 'media',
       hidden: ({parent}) => parent?.galleryDisplay !== 'carousel',
       initialValue: true,
@@ -251,7 +249,7 @@ export default defineType({
       type: 'boolean',
       title: 'Show Small Preview Thumbnails',
       description:
-        '🖼️ Display a strip of small image previews so customers can jump to any photo instantly',
+        '🖼️ Display a strip of small media previews so customers can jump to any photo instantly',
       group: 'media',
       hidden: ({parent}) => parent?.galleryDisplay === 'grid',
       initialValue: true,
@@ -301,7 +299,7 @@ export default defineType({
             list: [
               {
                 title:
-                  '1:1 — Square (⭐ Recommended — matches most product images)',
+                  '1:1 — Square (⭐ Recommended — matches most product media)',
                 value: '1:1',
               },
               {title: '4:3 — Classic rectangle', value: '4:3'},
@@ -320,7 +318,7 @@ export default defineType({
       type: 'boolean',
       title: 'Enable Fullscreen View',
       description:
-        '🔍 Let customers click images to open a large fullscreen view. Recommended for seeing product details.',
+        '🔍 Let customers click media to open a large fullscreen view. Recommended for seeing product details.',
       group: 'media',
       initialValue: true,
     }),
@@ -330,7 +328,7 @@ export default defineType({
       type: 'boolean',
       title: 'Enable Zoom on Hover',
       description:
-        '🔎 When customers hover over images on desktop, they can see a zoomed-in view. Great for detailed products like jewelry or textiles.',
+        '🔎 When customers hover over media on desktop, they can see a zoomed-in view. Great for detailed products like jewelry or textiles.',
       group: 'media',
       initialValue: false,
     }),
@@ -340,7 +338,7 @@ export default defineType({
       type: 'boolean',
       title: 'Show Position Dots',
       description:
-        '⚫⚫⚫ Display dots on mobile showing which image they\'re viewing (e.g., "2 of 5")',
+        '⚫⚫⚫ Display dots on mobile showing which media they\'re viewing (e.g., "2 of 5")',
       group: 'media',
       initialValue: true,
     }),
