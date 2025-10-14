@@ -4358,7 +4358,7 @@
     }
   },
   {
-    "name": "productInformationSection",
+    "name": "productHeroSection",
     "type": "type",
     "value": {
       "type": "object",
@@ -4367,89 +4367,8 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "productInformationSection"
+            "value": "productHeroSection"
           }
-        },
-        "richtext": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "array",
-            "of": {
-              "type": "object",
-              "attributes": {
-                "_key": {
-                  "type": "objectAttribute",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              },
-              "rest": {
-                "type": "inline",
-                "name": "internationalizedArrayProductRichtextValue"
-              }
-            }
-          },
-          "optional": true
-        },
-        "desktopMediaWidth": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "union",
-            "of": [
-              {
-                "type": "string",
-                "value": "small"
-              },
-              {
-                "type": "string",
-                "value": "medium"
-              },
-              {
-                "type": "string",
-                "value": "large"
-              }
-            ]
-          },
-          "optional": true
-        },
-        "desktopMediaPosition": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "union",
-            "of": [
-              {
-                "type": "string",
-                "value": "left"
-              },
-              {
-                "type": "string",
-                "value": "right"
-              }
-            ]
-          },
-          "optional": true
-        },
-        "mediaAspectRatio": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "union",
-            "of": [
-              {
-                "type": "string",
-                "value": "square"
-              },
-              {
-                "type": "string",
-                "value": "video"
-              },
-              {
-                "type": "string",
-                "value": "auto"
-              }
-            ]
-          },
-          "optional": true
         },
         "settings": {
           "type": "objectAttribute",
@@ -6696,7 +6615,7 @@
             },
             "rest": {
               "type": "inline",
-              "name": "productInformationSection"
+              "name": "productHeroSection"
             }
           },
           {

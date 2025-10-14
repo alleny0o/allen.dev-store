@@ -12,7 +12,7 @@ import {VariantPrice} from '../product/variant-price';
 import {useProduct} from '../product/product-provider';
 
 export type PriceBlockProps = NonNullable<
-  SectionOfType<'productInformationSection'>['richtext']
+  SectionOfType<'productHeroSection'>['richtext']
 >[number] & {
   _type: 'price';
 };

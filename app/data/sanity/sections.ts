@@ -23,7 +23,7 @@ export const RELATED_PRODUCTS_SECTION_FRAGMENT = defineQuery(`{
   settings ${SECTION_SETTINGS_FRAGMENT}
 }`);
 
-export const PRODUCT_INFORMATION_SECTION_FRAGMENT = defineQuery(`{
+export const PRODUCT_HERO_SECTION_FRAGMENT = defineQuery(`{
   _key,
   _type,
   desktopMediaPosition,
@@ -180,6 +180,6 @@ export const COLLECTION_SECTIONS_FRAGMENT = () =>
 
 export const PRODUCT_SECTIONS_FRAGMENT = () =>
   defineQuery(`
-    _type == 'productInformationSection' => ${PRODUCT_INFORMATION_SECTION_FRAGMENT},
+    _type == 'productHeroSection' => ${PRODUCT_HERO_SECTION_FRAGMENT},
     _type == 'relatedProductsSection' => ${RELATED_PRODUCTS_SECTION_FRAGMENT},
   `);

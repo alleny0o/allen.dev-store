@@ -11,7 +11,7 @@ export const initialDocumentsValues = [
     sections: [
       {
         _key: nanoid(),
-        _type: 'productInformationSection',
+        _type: 'productHeroSection',
         desktopMediaPosition: 'left',
         desktopMediaWidth: 'large',
         mediaAspectRatio: 'square',

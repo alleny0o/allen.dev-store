@@ -25,7 +25,7 @@ const globalSections = [
 
 const pdpSections = [
   {
-    type: 'productInformationSection',
+    type: 'productHeroSection',
   },
   {
     type: 'relatedProductsSection',

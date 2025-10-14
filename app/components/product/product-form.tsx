@@ -5,7 +5,7 @@ import {VariantSelector} from './variant-selector';
 import {useProduct} from './product-provider';
 
 export type AddToCartButtonBlockProps = NonNullable<
-  SectionOfType<'productInformationSection'>['richtext']
+  SectionOfType<'productHeroSection'>['richtext']
 >[number] & {
   _type: 'addToCartButton';
 };

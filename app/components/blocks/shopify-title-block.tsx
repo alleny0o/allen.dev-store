@@ -4,7 +4,7 @@ import {useParams} from 'react-router';
 import {useProduct} from '../product/product-provider';
 
 export type ShopifyTitleBlockProps = NonNullable<
-  SectionOfType<'productInformationSection'>['richtext']
+  SectionOfType<'productHeroSection'>['richtext']
 >[number] & {
   _type: 'shopifyTitle';
 };

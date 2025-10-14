@@ -81,7 +81,7 @@ import collectionProductGrid from './objects/sections/collection-product-grid';
 import featuredCollectionSection from './objects/sections/featured-collection-section';
 import featuredProductSection from './objects/sections/featured-product-section';
 import imageBannerSection from './objects/sections/image-banner-section';
-import productInformationSection from './objects/sections/product-information-section';
+import productHeroSection from './objects/sections/product-hero-section';
 import relatedProductsSection from './objects/sections/related-products-section';
 import richtextSection from './objects/sections/richtext-section';
 
@@ -127,7 +127,7 @@ const sections = [
   featuredCollectionSection,
   featuredProductSection,
   imageBannerSection,
-  productInformationSection,
+  productHeroSection,
   relatedProductsSection,
   richtextSection,
 ];

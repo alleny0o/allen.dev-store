@@ -6,7 +6,7 @@ import {CollectionProductGridSection} from '~/components/sections/collection-pro
 import {FeaturedCollectionSection} from '~/components/sections/featured-collection-section';
 import {FeaturedProductSection} from '~/components/sections/featured-product-section';
 import {ImageBannerSection} from '~/components/sections/image-banner-section';
-import {ProductInformationSection} from '~/components/sections/product-information-section';
+import {ProductHeroSection} from '~/components/sections/product-hero-section';
 import {RelatedProductsSection} from '~/components/sections/related-products-section';
 import {RichtextSection} from '~/components/sections/richtext-section';
 
@@ -20,7 +20,9 @@ export const sections: {
   featuredCollectionSection: FeaturedCollectionSection,
   featuredProductSection: FeaturedProductSection,
   imageBannerSection: ImageBannerSection,
-  productInformationSection: ProductInformationSection,
+
+  productHeroSection: ProductHeroSection,
+
   relatedProductsSection: RelatedProductsSection,
   richtextSection: RichtextSection,
   socialLinksOnly: FooterSocialLinksOnly,

@@ -6,19 +6,19 @@ import {cn, getAspectRatioData} from '~/lib/utils';
 import {MediaGallery} from '../product/media-gallery';
 import {ProductDetails} from '../product/product-details';
 
-export type ProductInformationSectionProps =
-  SectionOfType<'productInformationSection'>;
+export type ProductHeroSectionProps =
+  SectionOfType<'productHeroSection'>;
 
-export function ProductInformationSection(
+export function ProductHeroSection(
   props: SectionDefaultProps & {
-    data: ProductInformationSectionProps;
+    data: ProductHeroSectionProps;
   },
 ) {
   const {data} = props;
   const aspectRatio = getAspectRatioData(data.mediaAspectRatio);
 
   return (
-    <ProductInformationGrid
+    <ProductHeroGrid
       data={stegaClean(data)}
       mediaGallery={<MediaGallery aspectRatio={aspectRatio} />}
       productDetails={<ProductDetails data={data} />}
@@ -26,12 +26,12 @@ export function ProductInformationSection(
   );
 }
 
-function ProductInformationGrid({
+function ProductHeroGrid({
   data,
   mediaGallery,
   productDetails,
 }: {
-  data: ProductInformationSectionProps;
+  data: ProductHeroSectionProps;
   mediaGallery: React.ReactNode;
   productDetails: React.ReactNode;
 }) {

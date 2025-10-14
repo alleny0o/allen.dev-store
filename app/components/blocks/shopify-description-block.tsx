@@ -2,7 +2,7 @@ import type {SectionOfType} from 'types';
 import {useProduct} from '../product/product-provider';
 
 export type ShopifyDescriptionBlockProps = NonNullable<
-  SectionOfType<'productInformationSection'>['richtext']
+  SectionOfType<'productHeroSection'>['richtext']
 >[number] & {
   _type: 'shopifyDescription';
 };

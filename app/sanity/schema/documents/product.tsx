@@ -74,7 +74,7 @@ export default defineType({
   initialValue: () => ({
     sections: [
       {
-        _type: 'productInformationSection',
+        _type: 'productHeroSection',
         _key: uuid(),
       },
     ],
