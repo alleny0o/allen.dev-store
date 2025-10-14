@@ -21,7 +21,7 @@ export type ProductSection = {
   _rev: string;
   layoutNote?: string;
   flipLayout?: boolean;
-  columnRatio?: '5:7' | '6:6' | '7:5' | '8:4';
+  columnRatio?: '5:7' | '6:6' | '7:5' | '8:4' | '9:3';
   gap?: {
     desktop?: number;
     mobile?: number;
@@ -34,7 +34,7 @@ export type ProductSection = {
     showPrice?: boolean;
   };
   galleryDisplay?: 'carousel' | 'vertical' | 'grid';
-  mainAspectRatio?: '1:1' | '4:3' | '3:2' | '16:9';
+  mainAspectRatio?: '1:1' | '4:3' | '3:2' | '16:9' | 'auto';
   gridOptions?: {
     columns?: '2' | '3';
     gap?: number;

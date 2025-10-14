@@ -29,7 +29,6 @@ export default defineType({
         '⬅️➡️ Switch sides: Put product details on the left and media on the right (normally media are on left)',
       type: 'boolean',
       group: 'layout',
-      initialValue: false,
     }),
     defineField({
       name: 'columnRatio',
@@ -42,12 +41,12 @@ export default defineType({
         list: [
           {title: '5:7 — More space for details', value: '5:7'},
           {title: '6:6 — Equal space for both', value: '6:6'},
-          {title: '7:5 — Standard (⭐ Default)', value: '7:5'},
+          {title: '7:5 — Standard (⭐ Recommended)', value: '7:5'},
           {title: '8:4 — Focus on media', value: '8:4'},
+          {title: '9:3 — Maximum media size', value: '9:3'},
         ],
         layout: 'radio',
       },
-      initialValue: '7:5',
     }),
     defineField({
       name: 'gap',
@@ -63,7 +62,6 @@ export default defineType({
           type: 'number',
           title: 'Desktop Spacing (pixels)',
           description: '40px gives a comfortable amount of space',
-          initialValue: 40,
           validation: (Rule) => Rule.min(0).max(120),
         }),
         defineField({
@@ -71,7 +69,6 @@ export default defineType({
           type: 'number',
           title: 'Mobile Spacing (pixels)',
           description: '24px works well for most mobile screens',
-          initialValue: 24,
           validation: (Rule) => Rule.min(0).max(80),
         }),
       ],
@@ -88,17 +85,16 @@ export default defineType({
       options: {
         list: [
           {
-            title: '🖼️ Show media first (Default — works for most products)',
+            title: '🖼️ Show media first (Standard — works for most products)',
             value: 'mediaFirst',
           },
           {
-            title: '🪧 Show header first (Good for text-heavy products)',
+            title: '🪧 Show title & price first (Good for text-heavy products)',
             value: 'headerFirst',
           },
         ],
         layout: 'radio',
       },
-      initialValue: 'mediaFirst',
     }),
     defineField({
       name: 'mobileHeaderContent',
@@ -115,28 +111,24 @@ export default defineType({
           type: 'boolean',
           title: 'Show Brand/Vendor Name',
           description: 'Display who makes this product',
-          initialValue: false,
         }),
         defineField({
           name: 'showTitle',
           type: 'boolean',
           title: 'Show Product Title',
           description: 'Display the product name',
-          initialValue: true,
         }),
         defineField({
           name: 'showReviews',
           type: 'boolean',
           title: 'Show Review Stars',
           description: 'Display customer rating',
-          initialValue: true,
         }),
         defineField({
           name: 'showPrice',
           type: 'boolean',
           title: 'Show Price',
           description: 'Display product price',
-          initialValue: true,
         }),
       ],
     }),
@@ -166,32 +158,31 @@ export default defineType({
         ],
         layout: 'radio',
       },
-      initialValue: 'carousel',
     }),
 
     defineField({
       name: 'mainAspectRatio',
       title: 'Media Shape',
       description:
-        '🖼️ Control how your media are cropped. Square (1:1) works best for most products and looks clean.',
+        '🖼️ Control how your media are cropped. Square (1:1) works best for most products and looks clean. Choose "Auto" if you want media to keep their original proportions.',
       type: 'string',
       group: 'media',
       options: {
         list: [
           {
-            title: '1:1 — Square (Default - recommended for clean, consistent look)',
+            title: '1:1 — Square (⭐ Recommended for clean, consistent look)',
             value: '1:1',
           },
           {title: '4:3 — Classic photo shape (slightly wider)', value: '4:3'},
-          {title: '3:2 — Default photo ratio', value: '3:2'},
+          {title: '3:2 — Standard photo ratio', value: '3:2'},
           {
             title: '16:9 — Wide rectangle (good for lifestyle shots)',
             value: '16:9',
           },
+          {title: 'Auto — Keep original media proportions', value: 'auto'},
         ],
         layout: 'radio',
       },
-      initialValue: '1:1',
     }),
 
     // 🧩 Grid Options
@@ -220,14 +211,12 @@ export default defineType({
             ],
             layout: 'radio',
           },
-          initialValue: '2',
         }),
         defineField({
           name: 'gap',
           title: 'Space Between Media (pixels)',
           type: 'number',
           description: '16px gives nice spacing between media',
-          initialValue: 16,
           validation: (Rule) => Rule.min(0).max(64),
         }),
       ],
@@ -241,7 +230,6 @@ export default defineType({
         '◀️▶️ Display left/right arrows so customers can easily switch between media (desktop only)',
       group: 'media',
       hidden: ({parent}) => parent?.galleryDisplay !== 'carousel',
-      initialValue: true,
     }),
 
     defineField({
@@ -252,7 +240,6 @@ export default defineType({
         '🖼️ Display a strip of small media previews so customers can jump to any photo instantly',
       group: 'media',
       hidden: ({parent}) => parent?.galleryDisplay === 'grid',
-      initialValue: true,
     }),
 
     defineField({
@@ -279,7 +266,6 @@ export default defineType({
             ],
             layout: 'radio',
           },
-          initialValue: 'left',
         }),
         defineField({
           name: 'borderRadius',
@@ -287,7 +273,6 @@ export default defineType({
           title: 'Rounded Corners (pixels)',
           description:
             'Add rounded corners to thumbnails. 4px gives a subtle, modern look.',
-          initialValue: 4,
           validation: (Rule) => Rule.min(0).max(20),
         }),
         defineField({
@@ -308,7 +293,6 @@ export default defineType({
             ],
             layout: 'radio',
           },
-          initialValue: '1:1',
         }),
       ],
     }),
@@ -320,7 +304,6 @@ export default defineType({
       description:
         '🔍 Let customers click media to open a large fullscreen view. Recommended for seeing product details.',
       group: 'media',
-      initialValue: true,
     }),
 
     defineField({
@@ -330,7 +313,6 @@ export default defineType({
       description:
         '🔎 When customers hover over media on desktop, they can see a zoomed-in view. Great for detailed products like jewelry or textiles.',
       group: 'media',
-      initialValue: false,
     }),
 
     defineField({
@@ -340,9 +322,40 @@ export default defineType({
       description:
         '⚫⚫⚫ Display dots on mobile showing which media they\'re viewing (e.g., "2 of 5")',
       group: 'media',
-      initialValue: true,
     }),
   ],
+
+  initialValue: {
+    flipLayout: false,
+    columnRatio: '7:5',
+    gap: {
+      desktop: 40,
+      mobile: 24,
+    },
+    mobileLayout: 'mediaFirst',
+    mobileHeaderContent: {
+      showVendor: false,
+      showTitle: true,
+      showReviews: true,
+      showPrice: true,
+    },
+    galleryDisplay: 'carousel',
+    mainAspectRatio: '1:1',
+    gridOptions: {
+      columns: '2',
+      gap: 16,
+    },
+    showArrows: true,
+    showThumbnails: true,
+    thumbnailOptions: {
+      position: 'left',
+      borderRadius: 4,
+      aspectRatio: '1:1',
+    },
+    enableModal: true,
+    enableZoom: false,
+    showDots: true,
+  },
 
   preview: {
     prepare: () => ({
