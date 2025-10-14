@@ -19,11 +19,12 @@ export type ProductSection = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  layoutNote?: string;
   flipLayout?: boolean;
-  columnRatio?: '6:6' | '7:5' | '8:4' | '9:3';
+  columnRatio?: '5:7' | '6:6' | '7:5' | '8:4' | '9:3';
   gap?: {
-    mobile?: number;
     desktop?: number;
+    mobile?: number;
   };
   mobileLayout?: 'mediaFirst' | 'headerFirst';
   mobileHeaderContent?: {
@@ -32,14 +33,22 @@ export type ProductSection = {
     showReviews?: boolean;
     showPrice?: boolean;
   };
-  stickyGallery?: boolean;
-  stickyOffset?: number;
+  galleryDisplay?: 'carousel' | 'vertical' | 'grid';
+  mainAspectRatio?: '1:1' | '4:3' | '3:2' | '16:9' | 'auto';
+  gridOptions?: {
+    columns?: '2' | '3';
+    gap?: number;
+  };
   showArrows?: boolean;
   showThumbnails?: boolean;
-  thumbnailPosition?: 'left' | 'bottom';
+  thumbnailOptions?: {
+    position?: 'left' | 'bottom';
+    borderRadius?: number;
+    aspectRatio?: '1:1' | '4:3' | '3:2' | '16:9';
+  };
   enableModal?: boolean;
-  showDots?: boolean;
   enableZoom?: boolean;
+  showDots?: boolean;
 };
 
 export type ThemeContent = {

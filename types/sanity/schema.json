@@ -34,6 +34,13 @@
           "type": "string"
         }
       },
+      "layoutNote": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "flipLayout": {
         "type": "objectAttribute",
         "value": {
@@ -46,6 +53,10 @@
         "value": {
           "type": "union",
           "of": [
+            {
+              "type": "string",
+              "value": "5:7"
+            },
             {
               "type": "string",
               "value": "6:6"
@@ -71,14 +82,14 @@
         "value": {
           "type": "object",
           "attributes": {
-            "mobile": {
+            "desktop": {
               "type": "objectAttribute",
               "value": {
                 "type": "number"
               },
               "optional": true
             },
-            "desktop": {
+            "mobile": {
               "type": "objectAttribute",
               "value": {
                 "type": "number"
@@ -143,17 +154,86 @@
         },
         "optional": true
       },
-      "stickyGallery": {
+      "galleryDisplay": {
         "type": "objectAttribute",
         "value": {
-          "type": "boolean"
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "carousel"
+            },
+            {
+              "type": "string",
+              "value": "vertical"
+            },
+            {
+              "type": "string",
+              "value": "grid"
+            }
+          ]
         },
         "optional": true
       },
-      "stickyOffset": {
+      "mainAspectRatio": {
         "type": "objectAttribute",
         "value": {
-          "type": "number"
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "1:1"
+            },
+            {
+              "type": "string",
+              "value": "4:3"
+            },
+            {
+              "type": "string",
+              "value": "3:2"
+            },
+            {
+              "type": "string",
+              "value": "16:9"
+            },
+            {
+              "type": "string",
+              "value": "auto"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "gridOptions": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "columns": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "2"
+                  },
+                  {
+                    "type": "string",
+                    "value": "3"
+                  }
+                ]
+              },
+              "optional": true
+            },
+            "gap": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "number"
+              },
+              "optional": true
+            }
+          }
         },
         "optional": true
       },
@@ -171,20 +251,61 @@
         },
         "optional": true
       },
-      "thumbnailPosition": {
+      "thumbnailOptions": {
         "type": "objectAttribute",
         "value": {
-          "type": "union",
-          "of": [
-            {
-              "type": "string",
-              "value": "left"
+          "type": "object",
+          "attributes": {
+            "position": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "left"
+                  },
+                  {
+                    "type": "string",
+                    "value": "bottom"
+                  }
+                ]
+              },
+              "optional": true
             },
-            {
-              "type": "string",
-              "value": "bottom"
+            "borderRadius": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "number"
+              },
+              "optional": true
+            },
+            "aspectRatio": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "1:1"
+                  },
+                  {
+                    "type": "string",
+                    "value": "4:3"
+                  },
+                  {
+                    "type": "string",
+                    "value": "3:2"
+                  },
+                  {
+                    "type": "string",
+                    "value": "16:9"
+                  }
+                ]
+              },
+              "optional": true
             }
-          ]
+          }
         },
         "optional": true
       },
@@ -195,14 +316,14 @@
         },
         "optional": true
       },
-      "showDots": {
+      "enableZoom": {
         "type": "objectAttribute",
         "value": {
           "type": "boolean"
         },
         "optional": true
       },
-      "enableZoom": {
+      "showDots": {
         "type": "objectAttribute",
         "value": {
           "type": "boolean"

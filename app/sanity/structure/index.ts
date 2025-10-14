@@ -45,10 +45,10 @@ export const structure: StructureResolver = (S, context) => {
           S.list()
             .title('Design')
             .items([
-              singleton(S, SINGLETONS.productSection).title('Product Section').icon(Package),
+              singleton(S, SINGLETONS.productSection).title('Product section').icon(Package),
               S.documentTypeListItem('colorScheme').showIcon(true),
               singleton(S, SINGLETONS.typography),
-              singleton(S, SINGLETONS.themeContent),
+              singleton(S, SINGLETONS.themeContent).title('Theme content'),
             ]),
         ),
 
