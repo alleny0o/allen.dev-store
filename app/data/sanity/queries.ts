@@ -6,6 +6,7 @@ import {
   FONT_FRAGMENT,
   HEADER_FRAGMENT,
   IMAGE_FRAGMENT,
+  PRODUCT_SECTION_DESIGN_FRAGMENT,
   SETTINGS_FRAGMENT,
   THEME_CONTENT_FRAGMENT,
 } from './fragments';
@@ -63,6 +64,7 @@ export const ROOT_QUERY = defineQuery(`{
   "header": *[_type == "header"][0] ${HEADER_FRAGMENT},
   "settings": *[_type == "settings"][0] ${SETTINGS_FRAGMENT},
   "themeContent": *[_type == "themeContent"][0] ${THEME_CONTENT_FRAGMENT},
+  "productSectionDesign": *[_type == "productSectionDesign"][0] ${PRODUCT_SECTION_DESIGN_FRAGMENT},
 }`);
 
 export const COLLECTION_QUERY = defineQuery(`{

@@ -260,3 +260,21 @@ export const RICHTEXT_FRAGMENT = defineQuery(`{
     }
   }
 }`);
+
+export const PRODUCT_SECTION_DESIGN_FRAGMENT = `{
+  flipLayout,
+  columnRatio,
+  gap,
+  mobileLayout,
+  mobileHeaderContent,
+  galleryDisplay,
+  mainAspectRatio,
+  gridOptions,
+  showArrows,
+  showThumbnails,
+  thumbnailOptions,
+  showThumbnailsOnMobile,
+  enableModal,
+  enableZoom,
+  showDots,
+}`;

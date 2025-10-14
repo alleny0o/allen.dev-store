@@ -1,65 +1,76 @@
 import type {SectionDefaultProps, SectionOfType} from 'types';
-
-import {stegaClean} from '@sanity/client/stega';
+import type {RootLoaderData} from '~/root';
+import {useRouteLoaderData} from 'react-router';
 
 import {cn, getAspectRatioData} from '~/lib/utils';
-import {MediaGallery} from '../../product/media-gallery';
-import {ProductDetails} from '../../product/product-details';
 
-export type ProductHeroSectionProps =
-  SectionOfType<'productHeroSection'>;
+import {MediaGallery} from '~/components/product/media-gallery';
+import {ProductDetails} from '~/components/product/product-details';
 
-export function ProductHeroSection(
-  props: SectionDefaultProps & {
-    data: ProductHeroSectionProps;
-  },
-) {
-  const {data} = props;
-  const aspectRatio = getAspectRatioData(data.mediaAspectRatio);
+/* ----------------------------- Types ----------------------------- */
+export type ProductHeroSectionProps = SectionOfType<'productHeroSection'>;
 
-  return (
-    <ProductHeroGrid
-      data={stegaClean(data)}
-      mediaGallery={<MediaGallery aspectRatio={aspectRatio} />}
-      productDetails={<ProductDetails data={data} />}
-    />
-  );
-}
-
-function ProductHeroGrid({
-  data,
-  mediaGallery,
-  productDetails,
-}: {
+type Props = SectionDefaultProps & {
   data: ProductHeroSectionProps;
-  mediaGallery: React.ReactNode;
-  productDetails: React.ReactNode;
-}) {
-  const desktopMediaPosition = data?.desktopMediaPosition;
-  const desktopMediaWidth = data?.desktopMediaWidth;
+};
+
+/* -------------------------- Component ---------------------------- */
+export function ProductHeroSection({data}: Props) {
+  const rootData = useRouteLoaderData<RootLoaderData>('root');
+  const design = rootData?.sanityRoot?.data?.productSectionDesign;
+
+  /* ------------------------- Derived values ------------------------ */
+  const isFlipped = design?.flipLayout ?? false;
+
+  const columnRatio = design?.columnRatio || '7:5';
+  const [mediaCols, detailCols] = columnRatio.split(':');
+
+  const gapDesktop = design?.gap?.desktop ?? 40;
+  const gapMobile = design?.gap?.mobile ?? 24;
+
+  /* --------------------------- Classes ----------------------------- */
+  const gridClasses = cn(
+    'grid w-full mx-auto items-start',
+    `gap-[${gapMobile}px] lg:gap-[${gapDesktop}px]`,
+    'grid-cols-1 lg:grid-cols-12'
+  );
+
+  const mediaColSpan = `lg:col-span-${mediaCols}`;
+  const detailColSpan = `lg:col-span-${detailCols}`;
+
+  /* ---------------------------- Render ----------------------------- */
+
   return (
-    <div className="lg:container">
-      <div className={cn('grid gap-10 lg:grid-cols-12')}>
-        <div
-          className={cn(
-            'lg:col-span-6',
-            desktopMediaPosition === 'right' && 'lg:order-last',
-            desktopMediaWidth === 'small' && 'lg:col-span-5',
-            desktopMediaWidth === 'large' && 'lg:col-span-7',
-          )}
-        >
-          {mediaGallery}
-        </div>
-        <div
-          className={cn(
-            'lg:col-span-6',
-            desktopMediaWidth === 'small' && 'lg:col-span-7',
-            desktopMediaWidth === 'large' && 'lg:col-span-5',
-          )}
-        >
-          {productDetails}
-        </div>
+    <section id="product-hero-section" className="py-12 lg:py-24">
+      <div className={gridClasses}>
+        {isFlipped ? (
+          <>
+            <div className={cn('order-2 lg:order-1', detailColSpan)}>
+              <ProductDetails data={data} />
+            </div>
+            <div className={cn('order-1 lg:order-2', mediaColSpan)}>
+              {/* <MediaGallery
+                data={data}
+                design={design}
+                aspectRatio={aspectRatio}
+              /> */}
+            </div>
+          </>
+        ) : (
+          <>
+            <div className={cn('order-1', mediaColSpan)}>
+              {/* <MediaGallery
+                data={data}
+                design={design}
+                aspectRatio={aspectRatio}
+              /> */}
+            </div>
+            <div className={cn('order-2', detailColSpan)}>
+              <ProductDetails data={data} />
+            </div>
+          </>
+        )}
       </div>
-    </div>
+    </section>
   );
 }
