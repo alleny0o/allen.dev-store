@@ -28,7 +28,7 @@ export default defineType({
             title: 'Medium — 768px [Tablets switch to desktop earlier]',
             value: 'md',
           },
-          {title: 'Large — 1024px [⭐ Default]', value: 'lg'},
+          {title: 'Large — 1024px [Default]', value: 'lg'},
         ],
         layout: 'radio',
       },
@@ -54,7 +54,7 @@ export default defineType({
         list: [
           {title: '5:7 — More space for details', value: '5:7'},
           {title: '6:6 — Equal space for both', value: '6:6'},
-          {title: '7:5 — Standard [⭐ Default]', value: '7:5'},
+          {title: '7:5 — Standard [Default]', value: '7:5'},
           {title: '8:4 — Focus on media', value: '8:4'},
           {title: '9:3 — Maximum media size', value: '9:3'},
         ],
@@ -162,7 +162,7 @@ export default defineType({
       options: {
         list: [
           {
-            title: 'Show media first [⭐ Default — works for most products]',
+            title: 'Show media first [Default — works for most products]',
             value: 'mediaFirst',
           },
           {
@@ -233,17 +233,14 @@ export default defineType({
       options: {
         list: [
           {
-            title: 'Carousel [⭐ Default — one media at a time with arrows]',
+            title: 'Carousel [Default — one media at a time with arrows]',
             value: 'carousel',
           },
           {
             title: 'Vertical Scroll [All media in a scrollable column]',
             value: 'vertical',
           },
-          {
-            title: 'Grid Layout [Multiple media side-by-side]',
-            value: 'grid',
-          },
+          {title: 'Grid Layout [Multiple media side-by-side]', value: 'grid'},
         ],
         layout: 'radio',
       },
@@ -262,6 +259,24 @@ export default defineType({
     }),
 
     defineField({
+      name: 'mediaBorderRadius',
+      title: 'Media Rounded Corners',
+      description: 'Rounded corners for main product images. [Default = None]',
+      type: 'string',
+      group: 'media',
+      initialValue: 'none',
+      options: {
+        list: [
+          {title: 'None [Default — sharp corners]', value: 'none'},
+          {title: 'Small [2px]', value: 'sm'},
+          {title: 'Medium [4px]', value: 'md'},
+          {title: 'Large [8px]', value: 'lg'},
+        ],
+        layout: 'radio',
+      },
+    }),
+
+    defineField({
       name: 'showArrows',
       type: 'boolean',
       title: 'Show Navigation Arrows',
@@ -273,7 +288,7 @@ export default defineType({
     defineField({
       name: 'showThumbnails',
       type: 'boolean',
-      title: 'Show Small Preview Thumbnails',
+      title: 'Show Thumbnails',
       group: 'media',
       hidden: ({parent}) => parent?.galleryDisplay === 'grid',
       initialValue: true,
@@ -296,7 +311,7 @@ export default defineType({
           initialValue: 'left',
           options: {
             list: [
-              {title: 'Left Side [⭐ Default]', value: 'left'},
+              {title: 'Left Side [Default]', value: 'left'},
               {title: 'Bottom', value: 'bottom'},
             ],
             layout: 'radio',
@@ -311,13 +326,45 @@ export default defineType({
         }),
         defineField({
           name: 'borderRadius',
-          type: 'number',
-          title: 'Rounded Corners [pixels]',
-          description: '[Default = 4px]',
-          initialValue: 4,
-          validation: (Rule) => Rule.min(0).max(20),
+          type: 'string',
+          title: 'Rounded Corners',
+          description: '[Default = None]',
+          initialValue: 'none',
+          options: {
+            list: [
+              {title: 'None [Default — sharp corners]', value: 'none'},
+              {title: 'Small [2px]', value: 'sm'},
+              {title: 'Medium [4px]', value: 'md'},
+              {title: 'Large [8px]', value: 'lg'},
+            ],
+            layout: 'radio',
+          },
         }),
       ],
+    }),
+
+    defineField({
+      name: 'mediaInteraction',
+      title: 'Media Interaction',
+      description:
+        'Choose how customers interact with product images. [Default = Lightbox]',
+      type: 'string',
+      group: 'media',
+      initialValue: 'lightbox',
+      options: {
+        list: [
+          {
+            title: 'Lightbox [Default — click to view fullscreen]',
+            value: 'lightbox',
+          },
+          {
+            title: 'Zoom on Hover [magnify without leaving page]',
+            value: 'zoom',
+          },
+          {title: 'None [no interaction]', value: 'none'},
+        ],
+        layout: 'radio',
+      },
     }),
 
     defineField({
@@ -326,22 +373,6 @@ export default defineType({
       title: 'Show Thumbnails on Mobile',
       group: 'media',
       hidden: ({parent}) => !parent?.showThumbnails,
-      initialValue: false,
-    }),
-
-    defineField({
-      name: 'enableModal',
-      type: 'boolean',
-      title: 'Enable Fullscreen View',
-      group: 'media',
-      initialValue: true,
-    }),
-
-    defineField({
-      name: 'enableZoom',
-      type: 'boolean',
-      title: 'Enable Zoom on Hover',
-      group: 'media',
       initialValue: false,
     }),
 

@@ -265,18 +265,39 @@ export const PRODUCT_SECTION_DESIGN_FRAGMENT = `{
   breakpoint,
   flipLayout,
   columnRatio,
-  gap,
-  detailsPadding,
+  gap {
+    desktop,
+    mobile
+  },
+  detailsPadding {
+    desktop {
+      x,
+      y
+    },
+    mobile {
+      x,
+      y
+    }
+  },
   mobileLayout,
-  mobileHeaderContent,
+  mobileHeaderContent {
+    showVendor,
+    showTitle,
+    showReviews,
+    showPrice
+  },
   mobileHeaderPaddingY,
   galleryDisplay,
   gridGap,
+  mediaBorderRadius,
   showArrows,
   showThumbnails,
-  thumbnailOptions,
+  thumbnailOptions {
+    position,
+    overlayOnImage,
+    borderRadius
+  },
   showThumbnailsOnMobile,
-  enableModal,
-  enableZoom,
-  showDots,
+  mediaInteraction,
+  showDots
 }`;

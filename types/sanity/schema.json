@@ -254,6 +254,31 @@
         },
         "optional": true
       },
+      "mediaBorderRadius": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "none"
+            },
+            {
+              "type": "string",
+              "value": "sm"
+            },
+            {
+              "type": "string",
+              "value": "md"
+            },
+            {
+              "type": "string",
+              "value": "lg"
+            }
+          ]
+        },
+        "optional": true
+      },
       "showArrows": {
         "type": "objectAttribute",
         "value": {
@@ -300,7 +325,25 @@
             "borderRadius": {
               "type": "objectAttribute",
               "value": {
-                "type": "number"
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "none"
+                  },
+                  {
+                    "type": "string",
+                    "value": "sm"
+                  },
+                  {
+                    "type": "string",
+                    "value": "md"
+                  },
+                  {
+                    "type": "string",
+                    "value": "lg"
+                  }
+                ]
               },
               "optional": true
             }
@@ -308,21 +351,28 @@
         },
         "optional": true
       },
+      "mediaInteraction": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "lightbox"
+            },
+            {
+              "type": "string",
+              "value": "zoom"
+            },
+            {
+              "type": "string",
+              "value": "none"
+            }
+          ]
+        },
+        "optional": true
+      },
       "showThumbnailsOnMobile": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "boolean"
-        },
-        "optional": true
-      },
-      "enableModal": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "boolean"
-        },
-        "optional": true
-      },
-      "enableZoom": {
         "type": "objectAttribute",
         "value": {
           "type": "boolean"
