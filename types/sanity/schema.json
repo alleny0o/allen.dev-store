@@ -2933,6 +2933,20 @@
         },
         "optional": true
       },
+      "containerMaxWidth": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
+        },
+        "optional": true
+      },
+      "noContainerMaxWidth": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
       "buttonsBorder": {
         "type": "objectAttribute",
         "value": {

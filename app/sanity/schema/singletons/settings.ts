@@ -1,4 +1,4 @@
-import { defineField, defineType} from 'sanity';
+import {defineField, defineType} from 'sanity';
 
 const GROUPS = [
   {
@@ -89,6 +89,30 @@ export default defineType({
         suffix: 'px',
       },
       initialValue: 0,
+    }),
+    defineField({
+      name: 'containerMaxWidth',
+      title: 'Container max width',
+      description:
+        'Maximum width for content containers in pixels (recommended: 1536-3072px)',
+      type: 'rangeSlider',
+      group: 'layout',
+      options: {
+        min: 1536,
+        max: 3584,
+        suffix: 'px',
+      },
+      initialValue: 1920,
+      hidden: ({parent}) => parent?.noContainerMaxWidth === true,
+    }),
+    defineField({
+      name: 'noContainerMaxWidth',
+      title: 'No container max width constraint',
+      description:
+        'Enable to allow containers to span the full width of the screen',
+      type: 'boolean',
+      group: 'layout',
+      initialValue: false,
     }),
     defineField({
       name: 'buttonsBorder',
