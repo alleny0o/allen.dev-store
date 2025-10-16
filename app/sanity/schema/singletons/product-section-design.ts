@@ -71,19 +71,27 @@ export default defineType({
       fields: [
         defineField({
           name: 'desktop',
-          type: 'number',
+          type: 'rangeSlider',
           title: 'Desktop Spacing [pixels]',
-          description: '40px [Default] works well for most screens.',
+          options: {
+            min: 0,
+            max: 120,
+            step: 4,
+            suffix: 'px',
+          },
           initialValue: 40,
-          validation: (Rule) => Rule.min(0).max(120),
         }),
         defineField({
           name: 'mobile',
-          type: 'number',
+          type: 'rangeSlider',
           title: 'Mobile Spacing [pixels]',
-          description: '24px [Default] works well for most mobile screens.',
+          options: {
+            min: 0,
+            max: 80,
+            step: 4,
+            suffix: 'px',
+          },
           initialValue: 24,
-          validation: (Rule) => Rule.min(0).max(80),
         }),
       ],
     }),
@@ -105,20 +113,24 @@ export default defineType({
             defineField({
               name: 'x',
               title: 'Horizontal Padding [px]',
-              type: 'number',
-              description:
-                'Space on the left and right of product details. [Default = 24px]',
+              type: 'rangeSlider',
+              options: {
+                min: 0,
+                max: 100,
+                suffix: 'px',
+              },
               initialValue: 24,
-              validation: (Rule) => Rule.min(0).max(100),
             }),
             defineField({
               name: 'y',
               title: 'Vertical Padding [px]',
-              type: 'number',
-              description:
-                'Space above and below product details. [Default = 32px]',
+              type: 'rangeSlider',
+              options: {
+                min: 0,
+                max: 100,
+                suffix: 'px',
+              },
               initialValue: 32,
-              validation: (Rule) => Rule.min(0).max(100),
             }),
           ],
         }),
@@ -130,20 +142,24 @@ export default defineType({
             defineField({
               name: 'x',
               title: 'Horizontal Padding [px]',
-              type: 'number',
-              description:
-                'Space on the left and right of product details. [Default = 16px]',
+              type: 'rangeSlider',
+              options: {
+                min: 0,
+                max: 100,
+                suffix: 'px',
+              },
               initialValue: 16,
-              validation: (Rule) => Rule.min(0).max(100),
             }),
             defineField({
               name: 'y',
               title: 'Vertical Padding [px]',
-              type: 'number',
-              description:
-                'Space above and below product details. [Default = 24px]',
+              type: 'rangeSlider',
+              options: {
+                min: 0,
+                max: 100,
+                suffix: 'px',
+              },
               initialValue: 24,
-              validation: (Rule) => Rule.min(0).max(100),
             }),
           ],
         }),
@@ -214,11 +230,15 @@ export default defineType({
       title: 'Mobile Header Vertical Padding',
       description:
         'Control top/bottom padding for the compact header [only applies when "Show title & price first" is selected]. Horizontal padding uses the same value as Product Details Padding above. [Default = 12px]',
-      type: 'number',
+      type: 'rangeSlider',
       group: 'mobile',
       hidden: ({parent}) => parent?.mobileLayout !== 'headerFirst',
+      options: {
+        min: 0,
+        max: 64,
+        suffix: 'px',
+      },
       initialValue: 12,
-      validation: (Rule) => Rule.min(0).max(60),
     }),
 
     // ==================== MEDIA GALLERY ====================
@@ -249,13 +269,18 @@ export default defineType({
     defineField({
       name: 'gridGap',
       title: 'Grid Spacing',
-      type: 'number',
+      type: 'rangeSlider',
       group: 'media',
       hidden: ({parent}) => parent?.galleryDisplay !== 'grid',
       description:
         'Space between media items in the grid [pixels]. [Default = 16px]',
       initialValue: 16,
-      validation: (Rule) => Rule.min(0).max(64),
+      options: {
+        min: 0,
+        max: 64,
+        step: 2,
+        suffix: 'px',
+      },
     }),
 
     defineField({
