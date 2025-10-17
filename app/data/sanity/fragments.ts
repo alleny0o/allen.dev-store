@@ -263,7 +263,7 @@ export const RICHTEXT_FRAGMENT = defineQuery(`{
   }
 }`);
 
-export const PRODUCT_SECTION_DESIGN_FRAGMENT = `{
+export const PRODUCT_SECTION_DESIGN_FRAGMENT = defineQuery(`{
   breakpoint,
   flipLayout,
   columnRatio,
@@ -272,14 +272,8 @@ export const PRODUCT_SECTION_DESIGN_FRAGMENT = `{
     mobile
   },
   detailsPadding {
-    desktop {
-      x,
-      y
-    },
-    mobile {
-      x,
-      y
-    }
+    desktop { x, y },
+    mobile { x, y }
   },
   mobileLayout,
   mobileHeaderContent {
@@ -302,4 +296,4 @@ export const PRODUCT_SECTION_DESIGN_FRAGMENT = `{
   showThumbnailsOnMobile,
   mediaInteraction,
   showDots
-}`;
+}`);
