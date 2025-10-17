@@ -12,6 +12,7 @@ export default defineType({
   type: 'document',
   __experimental_formPreviewTitle: false,
   groups: GROUPS,
+
   fields: [
     // ==================== LAYOUT ====================
     defineField({
@@ -33,6 +34,7 @@ export default defineType({
         layout: 'radio',
       },
     }),
+
     defineField({
       name: 'flipLayout',
       title: 'Flip Layout',
@@ -42,25 +44,24 @@ export default defineType({
       group: 'layout',
       initialValue: false,
     }),
+
+    // ✅ Updated ratio slider version
     defineField({
       name: 'columnRatio',
-      title: 'Column Width Balance',
+      title: 'Media : Details Ratio',
       description:
-        'Choose how much space media vs. details should take up. "7:5" means media get a bit more space than details. Most shops prefer the default 7:5 ratio. [Default = 7:5]',
-      type: 'string',
+        'Adjust the balance between media and product details. Higher values give more space to media. [Default = 7 : 5]',
+      type: 'rangeSlider',
       group: 'layout',
-      initialValue: '7:5',
       options: {
-        list: [
-          {title: '5:7 — More space for details', value: '5:7'},
-          {title: '6:6 — Equal space for both', value: '6:6'},
-          {title: '7:5 — Standard [Default]', value: '7:5'},
-          {title: '8:4 — Focus on media', value: '8:4'},
-          {title: '9:3 — Maximum media size', value: '9:3'},
-        ],
-        layout: 'radio',
+        min: 3,
+        max: 9,
+        step: 1,
+        suffix: '/12',
       },
+      initialValue: 7,
     }),
+
     defineField({
       name: 'gap',
       title: 'Spacing Between Columns',
@@ -73,24 +74,14 @@ export default defineType({
           name: 'desktop',
           type: 'rangeSlider',
           title: 'Desktop Spacing [pixels]',
-          options: {
-            min: 0,
-            max: 120,
-            step: 4,
-            suffix: 'px',
-          },
+          options: {min: 0, max: 120, step: 4, suffix: 'px'},
           initialValue: 40,
         }),
         defineField({
           name: 'mobile',
           type: 'rangeSlider',
           title: 'Mobile Spacing [pixels]',
-          options: {
-            min: 0,
-            max: 80,
-            step: 4,
-            suffix: 'px',
-          },
+          options: {min: 0, max: 80, step: 4, suffix: 'px'},
           initialValue: 24,
         }),
       ],
@@ -100,7 +91,7 @@ export default defineType({
       name: 'detailsPadding',
       title: 'Product Details Padding',
       description:
-        'Add inner padding around the product details section. Affects only the details area [not media]. This also controls horizontal padding for the mobile header when "Show title & price first" is enabled.',
+        'Add inner padding around the product details section. Affects only the details area [not media].',
       type: 'object',
       group: 'layout',
       options: {collapsible: true, collapsed: true},
@@ -114,22 +105,14 @@ export default defineType({
               name: 'x',
               title: 'Horizontal Padding [px]',
               type: 'rangeSlider',
-              options: {
-                min: 0,
-                max: 100,
-                suffix: 'px',
-              },
+              options: {min: 0, max: 100, suffix: 'px'},
               initialValue: 24,
             }),
             defineField({
               name: 'y',
               title: 'Vertical Padding [px]',
               type: 'rangeSlider',
-              options: {
-                min: 0,
-                max: 100,
-                suffix: 'px',
-              },
+              options: {min: 0, max: 100, suffix: 'px'},
               initialValue: 32,
             }),
           ],
@@ -143,22 +126,14 @@ export default defineType({
               name: 'x',
               title: 'Horizontal Padding [px]',
               type: 'rangeSlider',
-              options: {
-                min: 0,
-                max: 100,
-                suffix: 'px',
-              },
+              options: {min: 0, max: 100, suffix: 'px'},
               initialValue: 16,
             }),
             defineField({
               name: 'y',
               title: 'Vertical Padding [px]',
               type: 'rangeSlider',
-              options: {
-                min: 0,
-                max: 100,
-                suffix: 'px',
-              },
+              options: {min: 0, max: 100, suffix: 'px'},
               initialValue: 24,
             }),
           ],
@@ -189,11 +164,12 @@ export default defineType({
         layout: 'radio',
       },
     }),
+
     defineField({
       name: 'mobileHeaderContent',
       title: 'Customize Mobile Header',
       description:
-        'Pick what info appears in the compact header section at the top [only applies when "Show title & price first" is selected above]. Full product details will still appear below the media gallery.',
+        'Only applies when "Show title & price first" is selected above. Choose which info appears in the compact header.',
       type: 'object',
       group: 'mobile',
       hidden: ({parent}) => parent?.mobileLayout !== 'headerFirst',
@@ -225,19 +201,16 @@ export default defineType({
         }),
       ],
     }),
+
     defineField({
       name: 'mobileHeaderPaddingY',
       title: 'Mobile Header Vertical Padding',
       description:
-        'Control top/bottom padding for the compact header [only applies when "Show title & price first" is selected]. Horizontal padding uses the same value as Product Details Padding above. [Default = 12px]',
+        'Top/bottom padding for the compact header [only applies when "Show title & price first" is selected]. Default = 12px',
       type: 'rangeSlider',
       group: 'mobile',
       hidden: ({parent}) => parent?.mobileLayout !== 'headerFirst',
-      options: {
-        min: 0,
-        max: 64,
-        suffix: 'px',
-      },
+      options: {min: 0, max: 64, suffix: 'px'},
       initialValue: 12,
     }),
 
@@ -247,7 +220,7 @@ export default defineType({
       type: 'string',
       title: 'How Should Media Display?',
       description:
-        'Choose how customers browse your product photos on desktop. Mobile always uses a swipeable carousel for best experience. [Default = Carousel]',
+        'Choose how customers browse product photos on desktop. Mobile always uses a swipeable carousel. [Default = Carousel]',
       group: 'media',
       initialValue: 'carousel',
       options: {
@@ -275,30 +248,17 @@ export default defineType({
       description:
         'Space between media items in the grid [pixels]. [Default = 16px]',
       initialValue: 16,
-      options: {
-        min: 0,
-        max: 64,
-        step: 2,
-        suffix: 'px',
-      },
+      options: {min: 0, max: 64, step: 2, suffix: 'px'},
     }),
 
     defineField({
       name: 'mediaBorderRadius',
       title: 'Media Rounded Corners',
       description: 'Rounded corners for main product images. [Default = None]',
-      type: 'string',
+      type: 'rangeSlider',
       group: 'media',
-      initialValue: 'none',
-      options: {
-        list: [
-          {title: 'None [Default — sharp corners]', value: 'none'},
-          {title: 'Small [2px]', value: 'sm'},
-          {title: 'Medium [4px]', value: 'md'},
-          {title: 'Large [8px]', value: 'lg'},
-        ],
-        layout: 'radio',
-      },
+      options: {min: 0, max: 16, step: 2, suffix: 'px'},
+      initialValue: 0,
     }),
 
     defineField({
@@ -325,8 +285,8 @@ export default defineType({
       type: 'object',
       group: 'media',
       hidden: ({parent}) => parent?.galleryDisplay === 'grid',
-      description: 'Customize how your thumbnail strip looks.',
       options: {collapsible: true, collapsed: true},
+      description: 'Customize how your thumbnail strip looks.',
       fields: [
         defineField({
           name: 'position',
@@ -351,19 +311,10 @@ export default defineType({
         }),
         defineField({
           name: 'borderRadius',
-          type: 'string',
-          title: 'Rounded Corners',
-          description: '[Default = None]',
-          initialValue: 'none',
-          options: {
-            list: [
-              {title: 'None [Default — sharp corners]', value: 'none'},
-              {title: 'Small [2px]', value: 'sm'},
-              {title: 'Medium [4px]', value: 'md'},
-              {title: 'Large [8px]', value: 'lg'},
-            ],
-            layout: 'radio',
-          },
+          type: 'rangeSlider',
+          title: 'Thumbnail Rounded Corners',
+          options: {min: 0, max: 16, step: 2, suffix: 'px'},
+          initialValue: 0,
         }),
       ],
     }),
