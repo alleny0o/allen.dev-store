@@ -31,6 +31,7 @@ type Media =
 
 export function MediaGallery(props: {aspectRatio?: AspectRatioData}) {
   const {product} = useLoaderData<Route.ComponentProps['loaderData']>();
+  
   const medias = product?.media?.nodes.length
     ? flattenConnection(product.media)
     : [];
