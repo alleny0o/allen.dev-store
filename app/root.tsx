@@ -107,7 +107,7 @@ export async function loader({context, request}: Route.LoaderArgs) {
     cache: storefront.CacheLong(),
   });
 
-  // 2. Resolve locale with content language mapping
+  // 3. Resolve locale with content language mapping
   const {locale, cookie, shouldRedirect, redirectUrl} = resolveEffectiveLocale(
     request,
     localizations,
