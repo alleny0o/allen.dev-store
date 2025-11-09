@@ -4,7 +4,7 @@ import type {ShouldRevalidateFunction} from 'react-router';
 // sanity types
 import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
 
-// react-router functions & components
+// react-router
 import {
   isRouteErrorResponse,
   Link,
@@ -21,71 +21,70 @@ import {
   redirect,
 } from 'react-router';
 
-// shopify / hydrogen
+// shopify + hydrogen
 import {getShopAnalytics, Analytics, useNonce} from '@shopify/hydrogen';
 
-// route types
+// route type
 import type {Route} from './+types/root';
 
 // components
+import { AppLayout } from './components/layout';
+import {AppDocument} from './components/layout/app-document';
 import {Fonts} from './components/fonts';
 import {CssVars} from './components/css-vars';
 import {CustomAnalytics} from './components/custom-analytics';
-import {AppLayout} from './components/layout';
 import {Button} from './components/ui/button';
 
-// data / queries
-import {ROOT_QUERY} from './data/sanity/queries';
-import {ALL_LOCALIZATION_QUERY} from './data/shopify/queries';
-
 // hooks
-import {useLocalePath} from './hooks/use-locale-path';
 import {useSanityThemeContent} from './hooks/use-sanity-theme-content';
+import {useLocalePath} from './hooks/use-locale-path';
 
-// lib utilities
-import {generateFontsPreloadLinks} from './lib/fonts';
+// data
+import {ROOT_QUERY} from './data/sanity/queries';
+
+// helpers
 import {resolveShopifyPromises} from './lib/resolve-shopify-promises';
-import {seoPayload} from './lib/seo.server';
+import {generateFontsPreloadLinks} from './lib/fonts';
 import {generateFaviconUrls} from './lib/generate-favicon-urls';
-import {resolveEffectiveLocale} from './lib/locale/resolver';
+import {seoPayload} from './lib/seo.server';
 
-// styles
-import tailwindCss from './styles/tailwind.css?url';
+// locale resolver
+import {resolveLocaleServer} from './lib/locale/resolve-locale-server';
+
+// sanity loader
+import {loadSanityRoot} from './lib/sanity/load-sanity-root';
 
 // constants
 import {SANITY_STUDIO_PATH} from './sanity/constants';
 
+// styles
+import tailwindCss from './styles/tailwind.css?url';
+
 export type RootLoaderData = Route.ComponentProps['loaderData'];
 
 /**
- * This is important to avoid re-fetching root queries on sub-navigations
+ * Avoid reloading root data unless:
+ * - locale changes
+ * - non-GET form submission occurs
+ * - manual revalidation
  */
 export const shouldRevalidate: ShouldRevalidateFunction = ({
   formMethod,
   currentUrl,
   nextUrl,
 }) => {
-  // revalidate when the locale changes
   const currLocale = currentUrl.pathname.match(/^\/([a-z]{2}-[a-z]{2})/i)?.[1];
   const nextLocale = nextUrl.pathname.match(/^\/([a-z]{2}-[a-z]{2})/i)?.[1];
   if (currLocale !== nextLocale) return true;
 
-  // revalidate when a mutation is performed e.g add to cart, login...
   if (formMethod && formMethod !== 'GET') return true;
 
-  // revalidate when manually revalidating via useRevalidator
   if (currentUrl.toString() === nextUrl.toString()) return true;
 
-  // Defaulting to no revalidation for root loader data to improve performance.
-  // When using this feature, you risk your UI getting out of sync with your server.
-  // Use with caution. If you are uncomfortable with this optimization, update the
-  // line below to `return defaultShouldRevalidate` instead.
-  // For more details see: https://remix.run/docs/en/main/route/should-revalidate
   return false;
 };
 
 export const meta: Route.MetaFunction = ({loaderData}) => {
-  // Preload fonts files to avoid FOUT (flash of unstyled text)
   const fontsPreloadLinks = generateFontsPreloadLinks({
     fontsData: loaderData?.sanityRoot.data?.fonts,
   });
@@ -96,67 +95,35 @@ export const meta: Route.MetaFunction = ({loaderData}) => {
 };
 
 export async function loader({context, request}: Route.LoaderArgs) {
-  const {cart, customerAccount, env, sanity, sanityPreviewMode, storefront} =
+  const {cart, customerAccount, env, storefront, sanity, sanityPreviewMode} =
     context;
 
-  const url = new URL(request.url);
-  const isLoggedInPromise = customerAccount.isLoggedIn();
+  // ✅ Resolve locale pipeline (URL → Cookie → Header → Fallback)
+  const {locale, cookie, shouldRedirect, redirectUrl, localizations} =
+    await resolveLocaleServer(context, request);
 
-  // 1. Fetch Shopify localizations
-  const localizations = await storefront.query(ALL_LOCALIZATION_QUERY, {
-    cache: storefront.CacheLong(),
-  });
-
-  // 3. Resolve locale with content language mapping
-  const {locale, cookie, shouldRedirect, redirectUrl} = resolveEffectiveLocale(
-    request,
-    localizations,
-    url.pathname,
-  );
-
-  // 3. Handle redirect if needed
   if (shouldRedirect && redirectUrl) {
     throw redirect(redirectUrl, {
       headers: cookie ? {'Set-Cookie': cookie} : {},
     });
   }
 
-  // 4. Set Shopify storefront context for API calls
-  if (locale?.country) {
-    context.storefront.i18n.country = locale.country;
-  }
-  if (locale?.language) {
-    context.storefront.i18n.language = locale.language;
-  }
+  // ✅ Apply locale to Shopify storefront queries
+  storefront.i18n.country = locale.country;
+  storefront.i18n.language = locale.language;
 
-  // 5. Fetch Sanity root data with resolved content language
-  const sanityRoot = await sanity.loadQuery<ROOT_QUERYResult>(ROOT_QUERY, {
-    language: locale?.language.toLowerCase() || 'en',
-    defaultLanguage: 'en', // Always fallback to English
-  });
+  // ✅ Load Sanity content in correct locale
+  const {sanityRoot, seo} = await loadSanityRoot(sanity, env, request, locale);
 
-  // 6. Generate SEO data
-  const seo = seoPayload.root({
-    root: sanityRoot.data,
-    sanity: {
-      dataset: env.PUBLIC_SANITY_STUDIO_DATASET,
-      projectId: env.PUBLIC_SANITY_STUDIO_PROJECT_ID,
-    },
-    url: request.url,
-  });
-
-  // 7. Resolve Shopify promises from Sanity document
+  // Resolve product / collection Shopify promises referenced in CMS content
   const {
     collectionListPromise,
     featuredCollectionPromise,
     featuredProductPromise,
-  } = resolveShopifyPromises({
-    document: sanityRoot,
-    request,
-    storefront,
-  });
+  } = resolveShopifyPromises({document: sanityRoot, request, storefront});
 
-  // 8. Return all data with locale and localizations
+  const isLoggedInPromise = customerAccount.isLoggedIn();
+
   return {
     cart: cart.get(),
     collectionListPromise,
@@ -164,18 +131,7 @@ export async function loader({context, request}: Route.LoaderArgs) {
       checkoutDomain: env.PUBLIC_CHECKOUT_DOMAIN,
       storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
     },
-    env: {
-      /*
-       * Be careful not to expose any sensitive environment variables here.
-       */
-      NODE_ENV: env.NODE_ENV,
-      PUBLIC_STORE_DOMAIN: env.PUBLIC_STORE_DOMAIN,
-      PUBLIC_STOREFRONT_API_TOKEN: env.PUBLIC_STOREFRONT_API_TOKEN,
-      PUBLIC_STOREFRONT_API_VERSION: env.PUBLIC_STOREFRONT_API_VERSION,
-      PUBLIC_SANITY_STUDIO_DATASET: env.PUBLIC_SANITY_STUDIO_DATASET,
-      PUBLIC_SANITY_STUDIO_PROJECT_ID: env.PUBLIC_SANITY_STUDIO_PROJECT_ID,
-      SANITY_STUDIO_USE_PREVIEW_MODE: env.SANITY_STUDIO_USE_PREVIEW_MODE,
-    },
+    env,
     featuredCollectionPromise,
     featuredProductPromise,
     isLoggedIn: isLoggedInPromise,
@@ -193,15 +149,14 @@ export async function loader({context, request}: Route.LoaderArgs) {
 
 export function Layout({children}: {children: React.ReactNode}) {
   const data = useRouteLoaderData<RootLoaderData>('root');
-  const nonce = useNonce();
   const {pathname} = useLocation();
+  const nonce = useNonce();
   const isCmsRoute = pathname.includes(SANITY_STUDIO_PATH);
 
-  // Use resolved locale language or fallback to 'en'
   const language = data?.locale?.language?.toLowerCase() || 'en';
 
   return (
-    <html lang={language}>
+    <AppDocument language={language}>
       <head>
         <meta charSet="utf-8" />
         <meta content="width=device-width,initial-scale=1" name="viewport" />
@@ -215,6 +170,7 @@ export function Layout({children}: {children: React.ReactNode}) {
         <Links />
         <CssVars />
       </head>
+
       <body className="flex min-h-screen flex-col overflow-x-hidden bg-background text-foreground">
         {isCmsRoute ? (
           children
@@ -239,7 +195,7 @@ export function Layout({children}: {children: React.ReactNode}) {
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
       </body>
-    </html>
+    </AppDocument>
   );
 }
 
@@ -275,11 +231,7 @@ export function ErrorBoundary() {
             </Link>
           </Button>
         ) : (
-          <Button
-            className="mt-6"
-            onClick={() => navigate(0)}
-            variant="secondary"
-          >
+          <Button className="mt-6" onClick={() => navigate(0)} variant="secondary">
             {themeContent?.error?.reloadPage}
           </Button>
         )}

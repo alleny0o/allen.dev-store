@@ -1,4 +1,5 @@
 // app/lib/locale/sanity-languages.ts
+
 export const SUPPORTED_CONTENT_LANGUAGES: {id: string; title: string}[] = [
     {id: 'en', title: 'English'},
     {id: 'zh', title: 'Chinese'},
