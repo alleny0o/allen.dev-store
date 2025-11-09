@@ -11,6 +11,8 @@ npm run lint
 npm run format:check
 ```
 
+If format:check fails, run `npm run format` to auto-fix, then re-run checks.
+
 **Development:**
 ```bash
 npm run dev                 # Start development server with codegen
@@ -18,6 +20,8 @@ npm run build              # Build for production
 npm run preview            # Preview production build
 npm run codegen           # Generate Shopify GraphQL types
 npm run sanity:typegen    # Generate Sanity CMS types
+npm run lint:fix           # Auto-fix linting issues
+npm run format             # Auto-format code with Prettier
 ```
 
 **Code Generation and CMS Setup:**
@@ -152,3 +156,14 @@ SESSION_SECRET
 - Layout modifications via component composition  
 - Styling overrides through CSS variables and Tailwind
 - Product customization hooks for AWS integration
+
+## Important Reminders
+
+**Package Manager:** This project uses **npm** (package-lock.json present), not pnpm or yarn.
+
+**Always Run Quality Checks:** After ANY code edit, immediately run:
+1. `npm run typecheck` 
+2. `npm run lint`
+3. `npm run format:check`
+
+**Critical Import Pattern:** This is React Router v7, NOT Remix. Never use `@remix-run/*` or `react-router-dom` imports. Always use `react-router` for hooks and components.

@@ -1,9 +1,6 @@
 // react-router types
 import type {ShouldRevalidateFunction} from 'react-router';
 
-// sanity types
-import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
-
 // react-router
 import {
   isRouteErrorResponse,
