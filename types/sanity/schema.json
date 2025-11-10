@@ -61,29 +61,7 @@
       "columnRatio": {
         "type": "objectAttribute",
         "value": {
-          "type": "union",
-          "of": [
-            {
-              "type": "string",
-              "value": "5:7"
-            },
-            {
-              "type": "string",
-              "value": "6:6"
-            },
-            {
-              "type": "string",
-              "value": "7:5"
-            },
-            {
-              "type": "string",
-              "value": "8:4"
-            },
-            {
-              "type": "string",
-              "value": "9:3"
-            }
-          ]
+          "type": "number"
         },
         "optional": true
       },
@@ -257,25 +235,7 @@
       "mediaBorderRadius": {
         "type": "objectAttribute",
         "value": {
-          "type": "union",
-          "of": [
-            {
-              "type": "string",
-              "value": "none"
-            },
-            {
-              "type": "string",
-              "value": "sm"
-            },
-            {
-              "type": "string",
-              "value": "md"
-            },
-            {
-              "type": "string",
-              "value": "lg"
-            }
-          ]
+          "type": "number"
         },
         "optional": true
       },
@@ -325,25 +285,7 @@
             "borderRadius": {
               "type": "objectAttribute",
               "value": {
-                "type": "union",
-                "of": [
-                  {
-                    "type": "string",
-                    "value": "none"
-                  },
-                  {
-                    "type": "string",
-                    "value": "sm"
-                  },
-                  {
-                    "type": "string",
-                    "value": "md"
-                  },
-                  {
-                    "type": "string",
-                    "value": "lg"
-                  }
-                ]
+                "type": "number"
               },
               "optional": true
             }
@@ -4141,6 +4083,27 @@
               "name": "internationalizedArrayHeaderNavigationValue"
             }
           }
+        },
+        "optional": true
+      },
+      "layoutPreset": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "logo-left_nav-center_icons-right"
+            },
+            {
+              "type": "string",
+              "value": "logo-left_space-between_nav-icons-right"
+            },
+            {
+              "type": "string",
+              "value": "nav-left_logo-center_icons-right"
+            }
+          ]
         },
         "optional": true
       },

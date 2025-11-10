@@ -11,6 +11,10 @@ const GROUPS = [
     title: 'Announcement Bar',
   },
   {
+    name: 'layout',
+    title: 'Layout',
+  },
+  {
     name: 'settings',
     title: 'Settings',
   },
@@ -21,7 +25,9 @@ export default defineType({
   type: 'document',
   __experimental_formPreviewTitle: false,
   groups: GROUPS,
+
   fields: [
+    // announcement bar fields
     defineField({
       name: 'announcementBar',
       group: 'announcementBar',
@@ -39,11 +45,43 @@ export default defineType({
       group: 'announcementBar',
       initialValue: false,
     }),
+
+    // navigation fields
     defineField({
       name: 'menu',
       group: 'navigation',
       type: 'internationalizedArrayHeaderNavigation',
     }),
+
+    // layout fields
+    defineField({
+      name: 'layoutPreset',
+      title: 'Header Layout',
+      type: 'string',
+      group: 'layout',
+      description:
+        'Choose how the header arranges logo, navigation, and icons.',
+      options: {
+        layout: 'radio',
+        list: [
+          {
+            title: 'Logo (left) • Nav (center) • Icons (right)',
+            value: 'logo-left_nav-center_icons-right',
+          },
+          {
+            title: 'Logo (left) • Nav + Icons (right)',
+            value: 'logo-left_space-between_nav-icons-right',
+          },
+          {
+            title: 'Nav (left) • Logo (center) • Icons (right)',
+            value: 'nav-left_logo-center_icons-right',
+          },
+        ],
+      },
+      initialValue: 'logo-left_nav-center_icons-right',
+    }),
+
+    // settings fields
     defineField({
       name: 'colorScheme',
       title: 'Color scheme',

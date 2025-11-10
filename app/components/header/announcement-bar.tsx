@@ -55,7 +55,7 @@ export function AnnouncementBar() {
         <style dangerouslySetInnerHTML={{__html: colorsCssVars}} />
         <Carousel opts={{active: isActive, align: 'center'}} plugins={plugins}>
           <CarouselContent className="relative ml-0 justify-center">
-            {announcementBar?.map((item) => (
+            {announcementBar?.map((item: any) => (
               <CarouselItem key={item._key}>
                 <Item
                   _key={item._key}
