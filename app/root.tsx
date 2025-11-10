@@ -25,8 +25,7 @@ import {getShopAnalytics, Analytics, useNonce} from '@shopify/hydrogen';
 import type {Route} from './+types/root';
 
 // components
-import { AppLayout } from './components/layout';
-import {AppDocument} from './components/layout/app-document';
+import {AppLayout} from './components/layout';
 import {Fonts} from './components/fonts';
 import {CssVars} from './components/css-vars';
 import {CustomAnalytics} from './components/custom-analytics';
@@ -68,10 +67,9 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
 }) => {
   const currLocale = currentUrl.pathname.match(/^\/([a-z]{2}-[a-z]{2})/i)?.[1];
   const nextLocale = nextUrl.pathname.match(/^\/([a-z]{2}-[a-z]{2})/i)?.[1];
+
   if (currLocale !== nextLocale) return true;
-
   if (formMethod && formMethod !== 'GET') return true;
-
   if (currentUrl.toString() === nextUrl.toString()) return true;
 
   return false;
@@ -81,9 +79,7 @@ export const meta: Route.MetaFunction = ({loaderData}) => {
   const fontsPreloadLinks = generateFontsPreloadLinks({
     fontsData: loaderData?.sanityRoot.data?.fonts,
   });
-
   const faviconUrls = loaderData ? generateFaviconUrls(loaderData) : [];
-
   return [...faviconUrls, ...fontsPreloadLinks];
 };
 
@@ -145,11 +141,10 @@ export function Layout({children}: {children: React.ReactNode}) {
   const {pathname} = useLocation();
   const nonce = useNonce();
   const isCmsRoute = pathname.includes(SANITY_STUDIO_PATH);
-
   const language = data?.locale?.language?.toLowerCase() || 'en';
 
   return (
-    <AppDocument language={language}>
+    <html lang={language}>
       <head>
         <meta charSet="utf-8" />
         <meta content="width=device-width,initial-scale=1" name="viewport" />
@@ -163,7 +158,6 @@ export function Layout({children}: {children: React.ReactNode}) {
         <Links />
         <CssVars />
       </head>
-
       <body className="flex min-h-screen flex-col overflow-x-hidden bg-background text-foreground">
         {isCmsRoute ? (
           children
@@ -188,7 +182,7 @@ export function Layout({children}: {children: React.ReactNode}) {
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
       </body>
-    </AppDocument>
+    </html>
   );
 }
 
@@ -224,7 +218,11 @@ export function ErrorBoundary() {
             </Link>
           </Button>
         ) : (
-          <Button className="mt-6" onClick={() => navigate(0)} variant="secondary">
+          <Button
+            className="mt-6"
+            onClick={() => navigate(0)}
+            variant="secondary"
+          >
             {themeContent?.error?.reloadPage}
           </Button>
         )}
