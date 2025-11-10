@@ -36,14 +36,10 @@ import {Button} from './components/ui/button';
 import {useSanityThemeContent} from './hooks/use-sanity-theme-content';
 import {useLocalePath} from './hooks/use-locale-path';
 
-// data
-import {ROOT_QUERY} from './data/sanity/queries';
-
 // helpers
 import {resolveShopifyPromises} from './lib/resolve-shopify-promises';
 import {generateFontsPreloadLinks} from './lib/fonts';
 import {generateFaviconUrls} from './lib/generate-favicon-urls';
-import {seoPayload} from './lib/seo.server';
 
 // locale resolver
 import {resolveLocaleServer} from './lib/locale/resolve-locale-server';

@@ -1,5 +1,7 @@
 # CLAUDE.md
 
+- In all interactions and commit messages, be extremely concise and sacrifice grammar for the sake of concision.
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Development Commands
@@ -167,3 +169,7 @@ SESSION_SECRET
 3. `npm run format:check`
 
 **Critical Import Pattern:** This is React Router v7, NOT Remix. Never use `@remix-run/*` or `react-router-dom` imports. Always use `react-router` for hooks and components.
+
+## Plans
+
+- At the end of each plan, give me a list of unresolved questions to answer, if any. Make the questions extremely concise. Sacrifice grammar for the sake of concision.
