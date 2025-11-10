@@ -5,7 +5,8 @@ export function useLocalePath({path}: {path: string}) {
   const pathPrefix = locale.pathPrefix; // ex: "/en-us"
 
   if (pathPrefix) {
-    return `${pathPrefix}${path}`;
+    const cleanPath = path === '/' ? '' : path;
+    return `${pathPrefix}${cleanPath}`;
   }
 
   return path;
