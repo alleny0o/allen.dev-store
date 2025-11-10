@@ -72,10 +72,7 @@ const Carousel = React.forwardRef<
     const {pathname} = useLocation();
 
     const onSelect = React.useCallback((api: CarouselApi) => {
-      if (!api) {
-        return;
-      }
-
+      if (!api) return;
       setCanScrollPrev(api.canScrollPrev());
       setCanScrollNext(api.canScrollNext());
     }, []);
@@ -102,11 +99,7 @@ const Carousel = React.forwardRef<
     );
 
     React.useEffect(() => {
-      if (!api || !setApi) {
-        return;
-      }
-
-      setApi(api);
+      if (api && setApi) setApi(api);
     }, [api, setApi]);
 
     React.useEffect(() => {
@@ -114,10 +107,7 @@ const Carousel = React.forwardRef<
     }, [pathname, api]);
 
     React.useEffect(() => {
-      if (!api) {
-        return;
-      }
-
+      if (!api) return;
       onSelect(api);
       api.on('reInit', onSelect);
       api.on('select', onSelect);
@@ -143,11 +133,7 @@ const Carousel = React.forwardRef<
       >
         <div
           aria-roledescription="carousel"
-          className={cn(
-            'relative',
-            '[--slide-size:calc(100%_/_var(--slides-per-view))]',
-            className,
-          )}
+          className={cn('relative', className)}
           onKeyDownCapture={handleKeyDown}
           ref={ref}
           role="region"
@@ -168,11 +154,10 @@ const CarouselContent = React.forwardRef<
   const {carouselRef, orientation} = useCarousel();
 
   return (
-    <div className="w-full overflow-hidden" ref={carouselRef}>
+    <div className="overflow-hidden" ref={carouselRef}>
       <div
         className={cn(
-          'flex touch-pan-y [backface-visibility:hidden]',
-          'ml-[calc(var(--slide-spacing)*-1)]',
+          'flex',
           orientation === 'vertical' && 'flex-col',
           className,
         )}
@@ -191,11 +176,7 @@ const CarouselItem = React.forwardRef<
   return (
     <div
       aria-roledescription="slide"
-      className={cn(
-        'min-w-0 select-none',
-        'flex-[0_0_100%] pl-(--slide-spacing) md:flex-[0_0_var(--slide-size)]',
-        className,
-      )}
+      className={cn('min-w-0 shrink-0 grow-0 basis-full', className)}
       ref={ref}
       role="group"
       {...props}
@@ -224,7 +205,7 @@ const CarouselPrevious = React.forwardRef<
       ref={ref}
       {...props}
     >
-      <IconChevron className="size-4" direction="left" />
+      <IconChevron className="size-5" direction="left" />
       <span className="sr-only">Previous slide</span>
     </IconButton>
   );
@@ -251,7 +232,7 @@ const CarouselNext = React.forwardRef<
       ref={ref}
       {...props}
     >
-      <IconChevron className="size-4" direction="right" />
+      <IconChevron className="size-5" direction="right" />
       <span className="sr-only">Next slide</span>
     </IconButton>
   );
@@ -289,7 +270,7 @@ const CarouselPagination = React.forwardRef<
     </div>
   );
 });
-CarouselPagination.displayName = 'CarouselDots';
+CarouselPagination.displayName = 'CarouselPagination';
 
 const CarouselCounter = React.forwardRef<
   HTMLSpanElement,
@@ -336,7 +317,6 @@ function useCarouselPagination(emblaApi: EmblaCarouselType | undefined): {
 
   React.useEffect(() => {
     if (!emblaApi) return;
-
     onInit(emblaApi);
     onSelect(emblaApi);
     emblaApi.on('reInit', onInit);
