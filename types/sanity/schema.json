@@ -4093,15 +4093,19 @@
           "of": [
             {
               "type": "string",
-              "value": "logo-left_nav-center_icons-right"
+              "value": "layout-1"
             },
             {
               "type": "string",
-              "value": "logo-left_space-between_nav-icons-right"
+              "value": "layout-2"
             },
             {
               "type": "string",
-              "value": "nav-left_logo-center_icons-right"
+              "value": "layout-3"
+            },
+            {
+              "type": "string",
+              "value": "layout-4"
             }
           ]
         },

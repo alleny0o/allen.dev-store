@@ -66,19 +66,23 @@ export default defineType({
         list: [
           {
             title: 'Logo (left) • Nav (center) • Icons (right)',
-            value: 'logo-left_nav-center_icons-right',
+            value: 'layout-1',
           },
           {
             title: 'Logo (left) • Nav + Icons (right)',
-            value: 'logo-left_space-between_nav-icons-right',
+            value: 'layout-2',
           },
           {
             title: 'Nav (left) • Logo (center) • Icons (right)',
-            value: 'nav-left_logo-center_icons-right',
+            value: 'layout-3',
+          },
+          {
+            title: 'Logo + Nav (left) • Icons (right)',
+            value: 'layout-4',
           },
         ],
       },
-      initialValue: 'logo-left_nav-center_icons-right',
+      initialValue: 'layout-1',
     }),
 
     // settings fields
