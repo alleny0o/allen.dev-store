@@ -194,6 +194,7 @@ export const SETTINGS_FRAGMENT = defineQuery(`{
 }`);
 
 export const HEADER_FRAGMENT = defineQuery(`{
+  // announcement bar (intl, falls back to default language)
   "announcementBar": coalesce(
     announcementBar[_key == $language][0].value[],
     announcementBar[_key == $defaultLanguage][0].value[],
@@ -207,17 +208,30 @@ export const HEADER_FRAGMENT = defineQuery(`{
     },
   },
   announcementBarColorScheme -> ${COLOR_SCHEME_FRAGMENT},
+  announcementBarPadding,
   autoRotateAnnouncements,
-  blur,
-  colorScheme -> ${COLOR_SCHEME_FRAGMENT},
-  desktopLogoWidth,
+
+  // navigation menu (intl)
   "menu": coalesce(
     menu[_key == $language][0].value[],
     menu[_key == $defaultLanguage][0].value[],
   )[] ${LINKS_LIST_SELECTION},
-  padding,
+
+  // desktop layout structure
+  layoutPreset,
+  desktopClusterGap,
+
+  // mobile layout structure
+  mobileLayoutPreset,
+  mobileClusterGap,
+
+  // visuals + behavior
+  colorScheme -> ${COLOR_SCHEME_FRAGMENT},
+  blur,
+  sticky,
   showSeparatorLine,
-  sticky 
+  padding,
+  desktopLogoWidth,
 }`);
 
 const FONT_ASSET_FRAGMENT = defineQuery(`{
