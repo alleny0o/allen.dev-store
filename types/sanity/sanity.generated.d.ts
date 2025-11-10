@@ -815,6 +815,14 @@ export type Header = {
     } & InternationalizedArrayHeaderNavigationValue
   >;
   layoutPreset?: 'layout-1' | 'layout-2' | 'layout-3' | 'layout-4';
+  desktopClusterGap?: number;
+  mobileLayoutPreset?:
+    | 'mobile-1'
+    | 'mobile-2'
+    | 'mobile-3'
+    | 'mobile-4'
+    | 'mobile-5';
+  mobileClusterGap?: number;
   colorScheme?: {
     _ref: string;
     _type: 'reference';
@@ -825,6 +833,7 @@ export type Header = {
   sticky?: 'none' | 'onScrollUp' | 'always';
   showSeparatorLine?: boolean;
   padding?: Padding;
+  announcementBarPadding?: Padding;
   desktopLogoWidth?: number;
 };
 

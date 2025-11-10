@@ -4111,6 +4111,49 @@
         },
         "optional": true
       },
+      "desktopClusterGap": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
+        },
+        "optional": true
+      },
+      "mobileLayoutPreset": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "mobile-1"
+            },
+            {
+              "type": "string",
+              "value": "mobile-2"
+            },
+            {
+              "type": "string",
+              "value": "mobile-3"
+            },
+            {
+              "type": "string",
+              "value": "mobile-4"
+            },
+            {
+              "type": "string",
+              "value": "mobile-5"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "mobileClusterGap": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
+        },
+        "optional": true
+      },
       "colorScheme": {
         "type": "objectAttribute",
         "value": {
@@ -4177,6 +4220,14 @@
         "optional": true
       },
       "padding": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "padding"
+        },
+        "optional": true
+      },
+      "announcementBarPadding": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
