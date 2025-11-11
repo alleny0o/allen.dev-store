@@ -14,10 +14,13 @@ type AnnouncementRotatorProps = {
 type AnnouncementRotatorContextProps = {
   animation: AnimationType;
   currentIndex: number;
+  translateX: number;
+  isTransitioning: boolean;
   direction: 'next' | 'prev';
   scrollNext: () => void;
   scrollPrev: () => void;
   totalSlides: number;
+  slides: React.ReactNode[];
 };
 
 // Context creation
@@ -37,7 +40,7 @@ export function useAnnouncementRotator() {
   return context;
 }
 
-// Main component placeholder
+// Main component
 export const AnnouncementRotator: React.FC<AnnouncementRotatorProps> = (
   props,
 ) => {
@@ -55,23 +58,101 @@ export const AnnouncementRotator: React.FC<AnnouncementRotatorProps> = (
 
   // State management
   const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [translateX, setTranslateX] = React.useState(-100); // Start showing first real slide
+  const [isTransitioning, setIsTransitioning] = React.useState(false);
   const [direction, setDirection] = React.useState<'next' | 'prev'>('next');
   const [isHovered, setIsHovered] = React.useState(false);
+  const [isPausedFromInteraction, setIsPausedFromInteraction] =
+    React.useState(false);
 
-  // Navigation functions
+  const transitionTimeoutRef = React.useRef<NodeJS.Timeout>();
+  const resetTimeoutRef = React.useRef<NodeJS.Timeout>();
+
+  // Navigation function for going to next slide
   const scrollNext = React.useCallback(() => {
-    setDirection('next');
-    setCurrentIndex((prev) => (prev + 1) % totalSlides);
-  }, [totalSlides]);
+    if (totalSlides <= 1) return;
 
+    // Clear any pending timeouts
+    if (transitionTimeoutRef.current)
+      clearTimeout(transitionTimeoutRef.current);
+    if (resetTimeoutRef.current) clearTimeout(resetTimeoutRef.current);
+
+    setDirection('next');
+    setIsTransitioning(true);
+
+    const nextIndex = (currentIndex + 1) % totalSlides;
+    setCurrentIndex(nextIndex);
+
+    // Move to next position
+    setTranslateX((prev) => prev - 100);
+
+    // If we're moving to the clone of the first slide
+    if (nextIndex === 0) {
+      transitionTimeoutRef.current = setTimeout(() => {
+        setIsTransitioning(false);
+        setTranslateX(-100); // Reset to real first slide position
+        resetTimeoutRef.current = setTimeout(() => {
+          setIsTransitioning(true);
+        }, 20);
+      }, 500);
+    }
+
+    // Pause auto-rotation temporarily when user manually navigates
+    setIsPausedFromInteraction(true);
+    setTimeout(() => setIsPausedFromInteraction(false), autoRotateInterval);
+  }, [currentIndex, totalSlides, autoRotateInterval]);
+
+  // Navigation function for going to previous slide
   const scrollPrev = React.useCallback(() => {
+    if (totalSlides <= 1) return;
+
+    // Clear any pending timeouts
+    if (transitionTimeoutRef.current)
+      clearTimeout(transitionTimeoutRef.current);
+    if (resetTimeoutRef.current) clearTimeout(resetTimeoutRef.current);
+
     setDirection('prev');
-    setCurrentIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
-  }, [totalSlides]);
+    setIsTransitioning(true);
+
+    const prevIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+    setCurrentIndex(prevIndex);
+
+    // Move to previous position
+    setTranslateX((prev) => prev + 100);
+
+    // If we're moving to the clone of the last slide
+    if (prevIndex === totalSlides - 1) {
+      transitionTimeoutRef.current = setTimeout(() => {
+        setIsTransitioning(false);
+        setTranslateX(-100 * totalSlides); // Reset to real last slide position
+        resetTimeoutRef.current = setTimeout(() => {
+          setIsTransitioning(true);
+        }, 20);
+      }, 500);
+    }
+
+    // Pause auto-rotation temporarily when user manually navigates
+    setIsPausedFromInteraction(true);
+    setTimeout(() => setIsPausedFromInteraction(false), autoRotateInterval);
+  }, [currentIndex, totalSlides, autoRotateInterval]);
+
+  // Cleanup timeouts on unmount
+  React.useEffect(() => {
+    return () => {
+      if (transitionTimeoutRef.current)
+        clearTimeout(transitionTimeoutRef.current);
+      if (resetTimeoutRef.current) clearTimeout(resetTimeoutRef.current);
+    };
+  }, []);
 
   // Auto-rotation effect
   React.useEffect(() => {
-    if (!autoRotate || isHovered || totalSlides <= 1) {
+    if (
+      !autoRotate ||
+      isHovered ||
+      isPausedFromInteraction ||
+      totalSlides <= 1
+    ) {
       return;
     }
 
@@ -80,7 +161,14 @@ export const AnnouncementRotator: React.FC<AnnouncementRotatorProps> = (
     }, autoRotateInterval);
 
     return () => clearInterval(interval);
-  }, [autoRotate, isHovered, autoRotateInterval, scrollNext, totalSlides]);
+  }, [
+    autoRotate,
+    isHovered,
+    isPausedFromInteraction,
+    autoRotateInterval,
+    scrollNext,
+    totalSlides,
+  ]);
 
   // Keyboard navigation handler
   const handleKeyDown = React.useCallback(
@@ -101,14 +189,16 @@ export const AnnouncementRotator: React.FC<AnnouncementRotatorProps> = (
       value={{
         animation,
         currentIndex,
+        translateX,
+        isTransitioning,
         direction,
         scrollNext,
         scrollPrev,
         totalSlides,
+        slides,
       }}
     >
       <div
-        aria-roledescription="carousel"
         className={className}
         onKeyDown={handleKeyDown}
         onMouseEnter={() => setIsHovered(true)}

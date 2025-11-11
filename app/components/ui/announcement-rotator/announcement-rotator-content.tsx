@@ -1,16 +1,35 @@
 import * as React from 'react';
-
 import {cn} from '~/lib/utils';
-
 import {useAnnouncementRotator} from './announcement-rotator';
 
 export const AnnouncementRotatorContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({children, className, ...props}, ref) => {
-  const {animation, currentIndex, direction} = useAnnouncementRotator();
-
-  const slides = React.Children.toArray(children);
+  const {
+    animation,
+    currentIndex,
+    translateX,
+    isTransitioning,
+    totalSlides,
+    slides,
+  } = useAnnouncementRotator();
+  
+  const childSlides = React.Children.toArray(children);
+  
+  // For seamless infinite scroll, we create clones:
+  // [last slide clone] [original slides] [first slide clone]
+  const infiniteSlides = React.useMemo(() => {
+    if (animation !== 'slide' || totalSlides <= 1) {
+      return childSlides;
+    }
+    
+    return [
+      childSlides[childSlides.length - 1], // Clone of last slide
+      ...childSlides,                       // All original slides
+      childSlides[0],                       // Clone of first slide
+    ];
+  }, [childSlides, animation, totalSlides]);
 
   return (
     <div
@@ -20,17 +39,30 @@ export const AnnouncementRotatorContent = React.forwardRef<
     >
       {animation === 'slide' ? (
         <div
-          className="flex transition-transform duration-500 ease-in-out"
+          className={cn(
+            'flex',
+            isTransitioning && 'transition-transform duration-500 ease-in-out'
+          )}
           style={{
-            transform: `translateX(-${currentIndex * 100}%)`,
+            transform: `translateX(${translateX}%)`,
           }}
         >
-          {slides}
+          {infiniteSlides.map((slide, index) => (
+            <div
+              // eslint-disable-next-line react/no-array-index-key
+              key={`slide-${index}`}
+              className="min-w-full shrink-0"
+              aria-roledescription="slide"
+              role="group"
+            >
+              {slide}
+            </div>
+          ))}
         </div>
       ) : (
-        // Fade animation
+        // Fade animation - simple index-based
         <div className="relative">
-          {slides.map((slide, index) => (
+          {childSlides.map((slide, index) => (
             <div
               // eslint-disable-next-line react/no-array-index-key
               key={`announcement-${index}`}
