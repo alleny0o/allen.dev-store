@@ -1,11 +1,8 @@
 import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
-
 import {Link} from 'react-router';
 import {cx} from 'class-variance-authority';
-
 import {useColorsCssVars} from '~/hooks/use-colors-css-vars';
 import {useRootLoaderData} from '~/root';
-
 import {SanityInternalLink} from '~/components/sanity/link/sanity-internal-link';
 import {
   AnnouncementRotator,
@@ -36,26 +33,21 @@ export function AnnouncementBar() {
   });
 
   const isActive = (announcementBar?.length ?? 0) > 1;
-
   if (!announcementBar) return null;
 
   return (
     <section className="bg-background text-foreground" id="announcement-bar">
       <div className="container">
         <style dangerouslySetInnerHTML={{__html: colorsCssVars}} />
-        <AnnouncementRotator 
-          animation="fade" 
+        <AnnouncementRotator
           autoRotate={header?.autoRotateAnnouncements ?? false}
           autoRotateInterval={5000}
           className="flex items-center justify-center gap-4"
         >
-          {/* Flexible layout - you can rearrange these however you want! */}
           {isActive && (
-            <AnnouncementRotatorPrevious 
-              className="shrink-0 rounded-md p-2 transition-colors hover:bg-foreground/10"
-            />
+            <AnnouncementRotatorPrevious className="shrink-0 rounded-md" />
           )}
-          
+
           <AnnouncementRotatorContent className="flex-1">
             {announcementBar?.map((item: any) => (
               <AnnouncementRotatorItem key={item._key}>
@@ -71,9 +63,7 @@ export function AnnouncementBar() {
           </AnnouncementRotatorContent>
 
           {isActive && (
-            <AnnouncementRotatorNext 
-              className="shrink-0 rounded-md p-2 transition-colors hover:bg-foreground/10"
-            />
+            <AnnouncementRotatorNext className="shrink-0 rounded-md" />
           )}
         </AnnouncementRotator>
       </div>
@@ -83,7 +73,6 @@ export function AnnouncementBar() {
 
 function Item(props: AnnouncementBarProps) {
   if (!props.text) return null;
-
   const className = cx('flex w-full justify-center text-center');
 
   return props.link ? (

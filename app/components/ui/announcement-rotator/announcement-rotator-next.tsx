@@ -1,33 +1,33 @@
-import * as React from 'react';
-import {ChevronRight} from 'lucide-react';
-
-import {cn} from '~/lib/utils';
-
-import {useAnnouncementRotator} from './announcement-rotator';
-
-type AnnouncementRotatorNextProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
+import { ChevronRight } from 'lucide-react';
+import { useAnnouncementRotator } from './announcement-rotator';
+import React from 'react';
+import { cn } from '~/lib/utils';
 
 export const AnnouncementRotatorNext = React.forwardRef<
   HTMLButtonElement,
-  AnnouncementRotatorNextProps
->(({children, className, ...props}, ref) => {
-  const {scrollNext, totalSlides} = useAnnouncementRotator();
+  React.ButtonHTMLAttributes<HTMLButtonElement>
+>(({ children, className, disabled, ...props }, ref) => {
+  const { scrollNext, totalSlides, emblaApi } = useAnnouncementRotator();
 
-  // Don't render if only 1 slide
-  if (totalSlides <= 1) {
-    return null;
-  }
+  if (totalSlides <= 1) return null;
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    scrollNext();
+    props.onClick?.(e);
+  };
 
   return (
     <button
       className={cn('inline-flex items-center justify-center', className)}
-      onClick={scrollNext}
+      onClick={handleClick}
       ref={ref}
       type="button"
+      aria-label="Next slide"
+      disabled={disabled || !emblaApi}
       {...props}
     >
-      <span className="sr-only">Next slide</span>
-      {children || <ChevronRight className="size-4" />}
+      {children || <ChevronRight className="size-4" aria-hidden="true" />}
     </button>
   );
 });

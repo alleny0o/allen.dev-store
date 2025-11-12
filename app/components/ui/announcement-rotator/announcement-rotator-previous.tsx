@@ -1,33 +1,33 @@
-import * as React from 'react';
-import {ChevronLeft} from 'lucide-react';
-
-import {cn} from '~/lib/utils';
-
-import {useAnnouncementRotator} from './announcement-rotator';
-
-type AnnouncementRotatorPreviousProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
+import { ChevronLeft } from 'lucide-react';
+import { useAnnouncementRotator } from './announcement-rotator';
+import React from 'react';
+import { cn } from '~/lib/utils';
 
 export const AnnouncementRotatorPrevious = React.forwardRef<
   HTMLButtonElement,
-  AnnouncementRotatorPreviousProps
->(({children, className, ...props}, ref) => {
-  const {scrollPrev, totalSlides} = useAnnouncementRotator();
+  React.ButtonHTMLAttributes<HTMLButtonElement>
+>(({ children, className, disabled, ...props }, ref) => {
+  const { scrollPrev, totalSlides, emblaApi } = useAnnouncementRotator();
 
-  // Don't render if only 1 slide
-  if (totalSlides <= 1) {
-    return null;
-  }
+  if (totalSlides <= 1) return null;
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    scrollPrev();
+    props.onClick?.(e);
+  };
 
   return (
     <button
       className={cn('inline-flex items-center justify-center', className)}
-      onClick={scrollPrev}
+      onClick={handleClick}
       ref={ref}
       type="button"
+      aria-label="Previous slide"
+      disabled={disabled || !emblaApi}
       {...props}
     >
-      <span className="sr-only">Previous slide</span>
-      {children || <ChevronLeft className="size-4" />}
+      {children || <ChevronLeft className="size-4" aria-hidden="true" />}
     </button>
   );
 });

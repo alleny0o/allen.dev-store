@@ -1,178 +1,84 @@
 import * as React from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
+import type {EmblaCarouselType, EmblaOptionsType} from 'embla-carousel';
+import Autoplay from 'embla-carousel-autoplay';
+import type {AutoplayOptionsType} from 'embla-carousel-autoplay';
 
-// Type definitions
-type AnimationType = 'slide' | 'fade';
-
-type AnnouncementRotatorProps = {
-  animation: AnimationType;
-  autoRotate: boolean;
+export type AnnouncementRotatorProps = {
+  autoRotate?: boolean;
   autoRotateInterval?: number;
   children: React.ReactNode;
   className?: string;
 };
 
-type AnnouncementRotatorContextProps = {
-  animation: AnimationType;
-  currentIndex: number;
-  translateX: number;
-  isTransitioning: boolean;
-  direction: 'next' | 'prev';
+export type AnnouncementRotatorContextProps = {
+  emblaRef: ReturnType<typeof useEmblaCarousel>[0];
+  emblaApi: EmblaCarouselType | undefined;
   scrollNext: () => void;
   scrollPrev: () => void;
   totalSlides: number;
-  slides: React.ReactNode[];
 };
 
-// Context creation
 const AnnouncementRotatorContext =
   React.createContext<AnnouncementRotatorContextProps | null>(null);
 
-// Custom hook to use context
 export function useAnnouncementRotator() {
   const context = React.useContext(AnnouncementRotatorContext);
-
   if (!context) {
     throw new Error(
-      'useAnnouncementRotator must be used within an <AnnouncementRotator />',
+      'useAnnouncementRotator must be used within <AnnouncementRotator />',
     );
   }
-
   return context;
 }
 
-// Main component
-export const AnnouncementRotator: React.FC<AnnouncementRotatorProps> = (
-  props,
-) => {
-  const {
-    animation,
-    autoRotate,
-    autoRotateInterval = 5000,
-    children,
-    className,
-  } = props;
-
-  // Convert children to array for easier handling
+const AnnouncementRotatorComponent: React.FC<AnnouncementRotatorProps> = ({
+  autoRotate = false,
+  autoRotateInterval = 5000,
+  children,
+  className,
+}) => {
   const slides = React.Children.toArray(children);
   const totalSlides = slides.length;
 
-  // State management
-  const [currentIndex, setCurrentIndex] = React.useState(0);
-  const [translateX, setTranslateX] = React.useState(-100); // Start showing first real slide
-  const [isTransitioning, setIsTransitioning] = React.useState(false);
-  const [direction, setDirection] = React.useState<'next' | 'prev'>('next');
-  const [isHovered, setIsHovered] = React.useState(false);
-  const [isPausedFromInteraction, setIsPausedFromInteraction] =
-    React.useState(false);
-
-  const transitionTimeoutRef = React.useRef<NodeJS.Timeout>();
-  const resetTimeoutRef = React.useRef<NodeJS.Timeout>();
-
-  // Navigation function for going to next slide
-  const scrollNext = React.useCallback(() => {
-    if (totalSlides <= 1) return;
-
-    // Clear any pending timeouts
-    if (transitionTimeoutRef.current)
-      clearTimeout(transitionTimeoutRef.current);
-    if (resetTimeoutRef.current) clearTimeout(resetTimeoutRef.current);
-
-    setDirection('next');
-    setIsTransitioning(true);
-
-    const nextIndex = (currentIndex + 1) % totalSlides;
-    setCurrentIndex(nextIndex);
-
-    // Move to next position
-    setTranslateX((prev) => prev - 100);
-
-    // If we're moving to the clone of the first slide
-    if (nextIndex === 0) {
-      transitionTimeoutRef.current = setTimeout(() => {
-        setIsTransitioning(false);
-        setTranslateX(-100); // Reset to real first slide position
-        resetTimeoutRef.current = setTimeout(() => {
-          setIsTransitioning(true);
-        }, 20);
-      }, 500);
+  const plugins = React.useMemo(() => {
+    const list = [];
+    if (autoRotate) {
+      list.push(
+        Autoplay({
+          delay: autoRotateInterval,
+          stopOnInteraction: true,
+          stopOnMouseEnter: true,
+        } as AutoplayOptionsType),
+      );
     }
+    return list;
+  }, [autoRotate, autoRotateInterval]);
 
-    // Pause auto-rotation temporarily when user manually navigates
-    setIsPausedFromInteraction(true);
-    setTimeout(() => setIsPausedFromInteraction(false), autoRotateInterval);
-  }, [currentIndex, totalSlides, autoRotateInterval]);
+  const options = React.useMemo<EmblaOptionsType>(
+    () => ({
+      loop: true,
+      containScroll: false,
+      skipSnaps: false,
+      dragThreshold: 1,
+    }),
+    [],
+  );
 
-  // Navigation function for going to previous slide
-  const scrollPrev = React.useCallback(() => {
-    if (totalSlides <= 1) return;
+  const [emblaRef, emblaApi] = useEmblaCarousel(options, plugins);
 
-    // Clear any pending timeouts
-    if (transitionTimeoutRef.current)
-      clearTimeout(transitionTimeoutRef.current);
-    if (resetTimeoutRef.current) clearTimeout(resetTimeoutRef.current);
+  const scrollNext = React.useCallback(
+    () => emblaApi?.scrollNext(),
+    [emblaApi],
+  );
+  const scrollPrev = React.useCallback(
+    () => emblaApi?.scrollPrev(),
+    [emblaApi],
+  );
 
-    setDirection('prev');
-    setIsTransitioning(true);
-
-    const prevIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-    setCurrentIndex(prevIndex);
-
-    // Move to previous position
-    setTranslateX((prev) => prev + 100);
-
-    // If we're moving to the clone of the last slide
-    if (prevIndex === totalSlides - 1) {
-      transitionTimeoutRef.current = setTimeout(() => {
-        setIsTransitioning(false);
-        setTranslateX(-100 * totalSlides); // Reset to real last slide position
-        resetTimeoutRef.current = setTimeout(() => {
-          setIsTransitioning(true);
-        }, 20);
-      }, 500);
-    }
-
-    // Pause auto-rotation temporarily when user manually navigates
-    setIsPausedFromInteraction(true);
-    setTimeout(() => setIsPausedFromInteraction(false), autoRotateInterval);
-  }, [currentIndex, totalSlides, autoRotateInterval]);
-
-  // Cleanup timeouts on unmount
-  React.useEffect(() => {
-    return () => {
-      if (transitionTimeoutRef.current)
-        clearTimeout(transitionTimeoutRef.current);
-      if (resetTimeoutRef.current) clearTimeout(resetTimeoutRef.current);
-    };
-  }, []);
-
-  // Auto-rotation effect
-  React.useEffect(() => {
-    if (
-      !autoRotate ||
-      isHovered ||
-      isPausedFromInteraction ||
-      totalSlides <= 1
-    ) {
-      return;
-    }
-
-    const interval = setInterval(() => {
-      scrollNext();
-    }, autoRotateInterval);
-
-    return () => clearInterval(interval);
-  }, [
-    autoRotate,
-    isHovered,
-    isPausedFromInteraction,
-    autoRotateInterval,
-    scrollNext,
-    totalSlides,
-  ]);
-
-  // Keyboard navigation handler
   const handleKeyDown = React.useCallback(
-    (event: React.KeyboardEvent<HTMLDivElement>) => {
+    (event: React.KeyboardEvent) => {
+      if (!emblaApi) return;
       if (event.key === 'ArrowLeft') {
         event.preventDefault();
         scrollPrev();
@@ -181,29 +87,29 @@ export const AnnouncementRotator: React.FC<AnnouncementRotatorProps> = (
         scrollNext();
       }
     },
-    [scrollPrev, scrollNext],
+    [emblaApi, scrollPrev, scrollNext],
   );
+
+  React.useEffect(() => {
+    return () => emblaApi?.destroy();
+  }, [emblaApi]);
 
   return (
     <AnnouncementRotatorContext.Provider
       value={{
-        animation,
-        currentIndex,
-        translateX,
-        isTransitioning,
-        direction,
+        emblaRef,
+        emblaApi,
         scrollNext,
         scrollPrev,
         totalSlides,
-        slides,
       }}
     >
       <div
         className={className}
         onKeyDown={handleKeyDown}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        role="button"
+        role="region"
+        aria-roledescription="carousel"
+        aria-live="polite"
         tabIndex={0}
       >
         {children}
@@ -211,3 +117,6 @@ export const AnnouncementRotator: React.FC<AnnouncementRotatorProps> = (
     </AnnouncementRotatorContext.Provider>
   );
 };
+
+AnnouncementRotatorComponent.displayName = 'AnnouncementRotator';
+export const AnnouncementRotator = React.memo(AnnouncementRotatorComponent);
