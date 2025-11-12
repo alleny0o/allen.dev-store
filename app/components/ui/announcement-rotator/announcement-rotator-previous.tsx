@@ -1,19 +1,19 @@
 import { ChevronLeft } from 'lucide-react';
 import { useAnnouncementRotator } from './announcement-rotator';
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { cn } from '~/lib/utils';
 
-export const AnnouncementRotatorPrevious = React.forwardRef<
+export const AnnouncementRotatorPrevious = forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
 >(({ children, className, disabled, ...props }, ref) => {
-  const { scrollPrev, totalSlides, emblaApi } = useAnnouncementRotator();
+  const { scrollNext, totalSlides, emblaApi } = useAnnouncementRotator();
 
   if (totalSlides <= 1) return null;
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    scrollPrev();
+    scrollNext();
     props.onClick?.(e);
   };
 

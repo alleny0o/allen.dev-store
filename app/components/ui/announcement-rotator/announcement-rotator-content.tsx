@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { cn } from '~/lib/utils';
 import { useAnnouncementRotator } from './announcement-rotator';
 
-export const AnnouncementRotatorContent = React.forwardRef<
+export const AnnouncementRotatorContent = forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ children, className, ...props }, ref) => {

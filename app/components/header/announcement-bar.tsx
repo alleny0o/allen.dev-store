@@ -36,36 +36,46 @@ export function AnnouncementBar() {
   if (!announcementBar) return null;
 
   return (
-    <section className="bg-background text-foreground" id="announcement-bar">
-      <div className="container">
-        <style dangerouslySetInnerHTML={{__html: colorsCssVars}} />
-        <AnnouncementRotator
-          autoRotate={header?.autoRotateAnnouncements ?? false}
-          autoRotateInterval={5000}
-          className="flex items-center justify-center gap-4"
-        >
-          {isActive && (
-            <AnnouncementRotatorPrevious className="shrink-0 rounded-md" />
-          )}
+    <section className="relative bg-background text-foreground section-padding" id="announcement-bar">
+      <div className="py-1.25">
+        <div className="h-full mx-auto max-w-full px-4 md:px-6 lg:px-8">
+          <style dangerouslySetInnerHTML={{__html: colorsCssVars}} />
+          <AnnouncementRotator
+            autoRotate={header?.autoRotateAnnouncements ?? false}
+            autoRotateInterval={5000}
+            className="relative flex items-center text-[13px]"
+          >
+            {/* Arrows - Absolute positioned on left */}
+            {isActive && (
+              <div className="absolute left-0 z-10 hidden items-center gap-0 bg-transparent lg:flex">
+                <AnnouncementRotatorPrevious className="shrink-0 rounded-md" />
+                <AnnouncementRotatorNext className="shrink-0 rounded-md" />
+              </div>
+            )}
 
-          <AnnouncementRotatorContent className="flex-1">
-            {announcementBar?.map((item: any) => (
-              <AnnouncementRotatorItem key={item._key}>
-                <Item
-                  _key={item._key}
-                  externalLink={item.externalLink}
-                  link={item.link}
-                  openInNewTab={item.openInNewTab}
-                  text={item.text}
-                />
-              </AnnouncementRotatorItem>
-            ))}
-          </AnnouncementRotatorContent>
-
-          {isActive && (
-            <AnnouncementRotatorNext className="shrink-0 rounded-md" />
-          )}
-        </AnnouncementRotator>
+            {/* Announcement Content - Full width, truly centered */}
+            <AnnouncementRotatorContent className="w-full px-4 md:px-6 lg:px-8 select-none overflow-visible">
+              {announcementBar?.map((item: any) => (
+                <AnnouncementRotatorItem key={item._key}>
+                  <Item
+                    _key={item._key}
+                    externalLink={item.externalLink}
+                    link={item.link}
+                    openInNewTab={item.openInNewTab}
+                    text={item.text}
+                  />
+                </AnnouncementRotatorItem>
+              ))}
+            </AnnouncementRotatorContent>
+          </AnnouncementRotator>
+        </div>
+      </div>
+      
+      {/* Utility Links - Absolute positioned on right, hidden on md and smaller */}
+      <div className="absolute right-4 md:right-6 lg:right-8 top-0 bottom-0 z-10 hidden items-center justify-end gap-3 bg-transparent pl-4 lg:flex border-l border-current text-[13px]">
+        <span className="cursor-pointer">Help</span>
+        <span className="cursor-pointer">Account</span>
+        <span className="cursor-pointer">🇺🇸 US</span>
       </div>
     </section>
   );
@@ -73,39 +83,36 @@ export function AnnouncementBar() {
 
 function Item(props: AnnouncementBarProps) {
   if (!props.text) return null;
-  const className = cx('flex w-full justify-center text-center');
+  const wrapperClassName = cx('flex w-full justify-center text-center');
+  const linkClassName = cx('underline underline-offset-4 decoration-current');
 
   return props.link ? (
-    <SanityInternalLink
-      className={cx(['group', className])}
-      data={{
-        _key: props.link.slug?.current ?? '',
-        _type: 'internalLink',
-        anchor: null,
-        link: props.link,
-        name: props.text,
-      }}
-    >
-      <LinkWrapper>{props.text}</LinkWrapper>
-    </SanityInternalLink>
+    <div className={wrapperClassName}>
+      <SanityInternalLink
+        className={linkClassName}
+        data={{
+          _key: props.link.slug?.current ?? '',
+          _type: 'internalLink',
+          anchor: null,
+          link: props.link,
+          name: props.text,
+        }}
+      >
+        {props.text}
+      </SanityInternalLink>
+    </div>
   ) : props.externalLink ? (
-    <Link
-      className={cx(['group', className])}
-      rel={props.openInNewTab ? 'noopener noreferrer' : ''}
-      target={props.openInNewTab ? '_blank' : undefined}
-      to={props.externalLink}
-    >
-      <LinkWrapper>{props.text}</LinkWrapper>
-    </Link>
+    <div className={wrapperClassName}>
+      <Link
+        className={linkClassName}
+        rel={props.openInNewTab ? 'noopener noreferrer' : ''}
+        target={props.openInNewTab ? '_blank' : undefined}
+        to={props.externalLink}
+      >
+        {props.text}
+      </Link>
+    </div>
   ) : (
-    <p className={className}>{props.text}</p>
-  );
-}
-
-function LinkWrapper({children}: {children: React.ReactNode}) {
-  return (
-    <p className="flex items-center text-sm underline-offset-4 group-hover:underline">
-      <span className="relative z-2 block bg-background pr-2">{children}</span>
-    </p>
+    <p className={wrapperClassName}>{props.text}</p>
   );
 }

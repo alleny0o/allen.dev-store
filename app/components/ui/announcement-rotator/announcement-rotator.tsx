@@ -104,12 +104,14 @@ const AnnouncementRotatorComponent: React.FC<AnnouncementRotatorProps> = ({
         totalSlides,
       }}
     >
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div
         className={className}
         onKeyDown={handleKeyDown}
         role="region"
         aria-roledescription="carousel"
         aria-live="polite"
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
       >
         {children}
