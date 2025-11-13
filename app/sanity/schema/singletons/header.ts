@@ -64,12 +64,12 @@ export default defineType({
       type: 'rangeSlider',
       group: 'announcementBar',
       options: {
-        min: 12,
-        max: 24,
+        min: 10,
+        max: 15,
         suffix: 'px',
       },
-      initialValue: 14,
-      validation: (Rule) => Rule.min(12).max(24),
+      initialValue: 13,
+      validation: (Rule) => Rule.min(10).max(15),
     }),
 
     //
