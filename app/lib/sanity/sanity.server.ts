@@ -21,7 +21,13 @@ import {
 import {getSanityClient} from './sanity-client.server';
 import {hashQuery} from './utils';
 
-const DEFAULT_CACHE_STRATEGY = CacheLong();
+/**
+ * Cache strategy: CacheNone() in dev for instant updates, CacheLong() in prod for performance.
+ * Preview mode always bypasses cache (see loadQuery implementation).
+ */
+const DEFAULT_CACHE_STRATEGY = process.env.NODE_ENV === 'development' 
+  ? CacheNone() 
+  : CacheLong();
 
 export type CreateSanityLoaderOptions = {
   /**
