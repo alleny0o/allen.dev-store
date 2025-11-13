@@ -37,7 +37,7 @@ export function AnnouncementBar() {
 
   return (
     <section className="relative bg-background text-foreground section-padding overflow-hidden" id="announcement-bar">
-      <div className="py-1.25">
+      <div className="py-0.5">
         <div className="h-full mx-auto max-w-full px-4 md:px-6 lg:px-8">
           <style dangerouslySetInnerHTML={{__html: colorsCssVars}} />
           <AnnouncementRotator
