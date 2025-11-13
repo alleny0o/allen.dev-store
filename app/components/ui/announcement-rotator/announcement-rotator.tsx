@@ -34,7 +34,7 @@ export function useAnnouncementRotator() {
 
 const AnnouncementRotatorComponent: React.FC<AnnouncementRotatorProps> = ({
   autoRotate = false,
-  autoRotateInterval = 5000,
+  autoRotateInterval = 7000,
   children,
   className,
 }) => {
@@ -47,8 +47,6 @@ const AnnouncementRotatorComponent: React.FC<AnnouncementRotatorProps> = ({
       list.push(
         Autoplay({
           delay: autoRotateInterval,
-          stopOnInteraction: true,
-          stopOnMouseEnter: true,
         } as AutoplayOptionsType),
       );
     }

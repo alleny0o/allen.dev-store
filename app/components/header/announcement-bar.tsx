@@ -57,7 +57,6 @@ export function AnnouncementBar() {
         <div style={{fontSize: `${textSize}px`}}>
           <AnnouncementRotator
             autoRotate={header?.autoRotateAnnouncements ?? false}
-            autoRotateInterval={6000}
             className="relative"
           >
             {/* Arrows - Absolute positioned on left, spans full section height */}
@@ -125,7 +124,7 @@ export function AnnouncementBar() {
 
 function Item(props: AnnouncementBarProps) {
   if (!props.text) return null;
-  const wrapperClassName = cx('flex w-full justify-center text-center');
+  const wrapperClassName = cx('flex justify-center text-center');
   const linkClassName = cx('underline underline-offset-[2px]');
 
   return props.link ? (
@@ -155,6 +154,6 @@ function Item(props: AnnouncementBarProps) {
       </Link>
     </div>
   ) : (
-    <p className={wrapperClassName}>{props.text}</p>
+    <p className="inline-block text-center">{props.text}</p>
   );
 }

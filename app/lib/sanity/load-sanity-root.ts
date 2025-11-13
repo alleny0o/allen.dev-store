@@ -6,10 +6,11 @@
  */
 import {seoPayload} from '../../lib/seo.server';
 import {ROOT_QUERY} from '../../data/sanity/queries';
-import {stegaClean} from '@sanity/client/stega';
+import {SanityLoader} from './sanity.server';
+import {CacheLong, CacheNone} from '@shopify/hydrogen';
 
 export async function loadSanityRoot(
-  sanity: any,
+  sanity: SanityLoader,
   env: any,
   request: Request,
   locale: any,
