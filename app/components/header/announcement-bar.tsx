@@ -36,7 +36,7 @@ export function AnnouncementBar() {
   if (!announcementBar) return null;
 
   return (
-    <section className="relative bg-background text-foreground section-padding" id="announcement-bar">
+    <section className="relative bg-background text-foreground section-padding overflow-hidden" id="announcement-bar">
       <div className="py-1.25">
         <div className="h-full mx-auto max-w-full px-4 md:px-6 lg:px-8">
           <style dangerouslySetInnerHTML={{__html: colorsCssVars}} />
@@ -47,15 +47,15 @@ export function AnnouncementBar() {
           >
             {/* Arrows - Absolute positioned on left */}
             {isActive && (
-              <div className="absolute left-0 z-10 hidden items-center gap-0 bg-transparent lg:flex">
+              <div className="bg-background absolute left-0 z-10 hidden items-center gap-0 lg:flex pointer-events-auto">
                 <AnnouncementRotatorPrevious className="shrink-0 rounded-md" />
                 <AnnouncementRotatorNext className="shrink-0 rounded-md" />
               </div>
             )}
 
             {/* Announcement Content - Full width, truly centered */}
-            <AnnouncementRotatorContent className="w-full px-4 md:px-6 lg:px-8 select-none overflow-visible">
-              {announcementBar?.map((item: any) => (
+            <AnnouncementRotatorContent className="w-full lg:px-16 select-none cursor-grab active:cursor-grabbing [&>div]:pointer-events-auto [&>div]:overflow-visible">
+              {announcementBar.map((item: AnnouncementBarProps) => (
                 <AnnouncementRotatorItem key={item._key}>
                   <Item
                     _key={item._key}
@@ -71,11 +71,11 @@ export function AnnouncementBar() {
         </div>
       </div>
       
-      {/* Utility Links - Absolute positioned on right, hidden on md and smaller */}
-      <div className="absolute right-4 md:right-6 lg:right-8 top-0 bottom-0 z-10 hidden items-center justify-end gap-3 bg-transparent pl-4 lg:flex border-l border-current text-[13px]">
+      {/* Utility Links - Absolute positioned on right, hidden on lg and smaller */}
+      <div className="bg-background absolute right-4 lg:right-8 top-0 bottom-0 z-10 hidden lg:flex items-center justify-end gap-4 pl-4 border-l border-current text-[13px] pointer-events-auto">
         <span className="cursor-pointer">Help</span>
         <span className="cursor-pointer">Account</span>
-        <span className="cursor-pointer">🇺🇸 US</span>
+        <span className="cursor-pointer">US</span>
       </div>
     </section>
   );
@@ -84,7 +84,7 @@ export function AnnouncementBar() {
 function Item(props: AnnouncementBarProps) {
   if (!props.text) return null;
   const wrapperClassName = cx('flex w-full justify-center text-center');
-  const linkClassName = cx('underline underline-offset-4 decoration-current');
+  const linkClassName = cx('underline underline-offset-[2px]');
 
   return props.link ? (
     <div className={wrapperClassName}>

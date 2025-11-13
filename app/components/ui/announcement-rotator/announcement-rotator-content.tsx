@@ -10,7 +10,7 @@ export const AnnouncementRotatorContent = forwardRef<
 
   return (
     <div className={cn('overflow-hidden', className)} ref={emblaRef} {...props}>
-      <div className="flex" style={{ backfaceVisibility: 'hidden' }} ref={ref}>
+      <div className="flex overflow-visible" style={{ backfaceVisibility: 'hidden' }} ref={ref}>
         {children}
       </div>
     </div>
