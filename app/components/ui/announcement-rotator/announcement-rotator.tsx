@@ -1,8 +1,7 @@
 import * as React from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
-import type {EmblaCarouselType, EmblaOptionsType} from 'embla-carousel';
+import type {EmblaCarouselType} from 'embla-carousel';
 import Autoplay from 'embla-carousel-autoplay';
-import type {AutoplayOptionsType} from 'embla-carousel-autoplay';
 
 export type AnnouncementRotatorProps = {
   autoRotate?: boolean;
@@ -13,14 +12,20 @@ export type AnnouncementRotatorProps = {
 
 export type AnnouncementRotatorContextProps = {
   emblaRef: ReturnType<typeof useEmblaCarousel>[0];
-  emblaApi: EmblaCarouselType | undefined;
   scrollNext: () => void;
   scrollPrev: () => void;
   totalSlides: number;
+  currentSlide: number;
+  canScrollNext: boolean;
+  canScrollPrev: boolean;
+};
+
+type AnnouncementRotatorInternalContextProps = AnnouncementRotatorContextProps & {
+  emblaApi: EmblaCarouselType | undefined;
 };
 
 const AnnouncementRotatorContext =
-  React.createContext<AnnouncementRotatorContextProps | null>(null);
+  React.createContext<AnnouncementRotatorInternalContextProps | null>(null);
 
 export function useAnnouncementRotator() {
   const context = React.useContext(AnnouncementRotatorContext);
@@ -34,62 +39,39 @@ export function useAnnouncementRotator() {
 
 const AnnouncementRotatorComponent: React.FC<AnnouncementRotatorProps> = ({
   autoRotate = false,
-  autoRotateInterval = 7000,
+  autoRotateInterval = 5000,
   children,
   className,
 }) => {
-  const slides = React.Children.toArray(children);
-  const totalSlides = slides.length;
+  const totalSlides = React.Children.count(children);
 
-  const plugins = React.useMemo(() => {
-    const list = [];
-    if (autoRotate) {
-      list.push(
+  const plugins = autoRotate
+    ? [
         Autoplay({
           delay: autoRotateInterval,
-        } as AutoplayOptionsType),
-      );
-    }
-    return list;
-  }, [autoRotate, autoRotateInterval]);
+          stopOnInteraction: false,
+          stopOnMouseEnter: true,
+        }),
+      ]
+    : [];
 
-  const options = React.useMemo<EmblaOptionsType>(
-    () => ({
-      loop: true,
-      containScroll: false,
-      skipSnaps: false,
-      dragThreshold: 1,
-    }),
-    [],
-  );
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, plugins);
+  const [currentSlide, setCurrentSlide] = React.useState(0);
 
-  const [emblaRef, emblaApi] = useEmblaCarousel(options, plugins);
-
-  const scrollNext = React.useCallback(
-    () => emblaApi?.scrollNext(),
-    [emblaApi],
-  );
-  const scrollPrev = React.useCallback(
-    () => emblaApi?.scrollPrev(),
-    [emblaApi],
-  );
-
-  const handleKeyDown = React.useCallback(
-    (event: React.KeyboardEvent) => {
-      if (!emblaApi) return;
-      if (event.key === 'ArrowLeft') {
-        event.preventDefault();
-        scrollPrev();
-      } else if (event.key === 'ArrowRight') {
-        event.preventDefault();
-        scrollNext();
-      }
-    },
-    [emblaApi, scrollPrev, scrollNext],
-  );
+  const scrollNext = () => emblaApi?.scrollNext();
+  const scrollPrev = () => emblaApi?.scrollPrev();
 
   React.useEffect(() => {
-    return () => emblaApi?.destroy();
+    if (!emblaApi) return;
+
+    const onSelect = () => setCurrentSlide(emblaApi.selectedScrollSnap());
+    
+    onSelect();
+    emblaApi.on('select', onSelect);
+
+    return () => {
+      emblaApi.off('select', onSelect);
+    };
   }, [emblaApi]);
 
   return (
@@ -100,20 +82,12 @@ const AnnouncementRotatorComponent: React.FC<AnnouncementRotatorProps> = ({
         scrollNext,
         scrollPrev,
         totalSlides,
+        currentSlide,
+        canScrollNext: emblaApi?.canScrollNext() ?? false,
+        canScrollPrev: emblaApi?.canScrollPrev() ?? false,
       }}
     >
-      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-      <div
-        className={className}
-        onKeyDown={handleKeyDown}
-        role="region"
-        aria-roledescription="carousel"
-        aria-live="polite"
-        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-        tabIndex={0}
-      >
-        {children}
-      </div>
+      <div className={className}>{children}</div>
     </AnnouncementRotatorContext.Provider>
   );
 };

@@ -85,7 +85,7 @@ export function AnnouncementBar() {
 
             {/* Carousel viewport with padding to make entire area swipeable */}
             <AnnouncementRotatorContent
-              className="cursor-grab select-none active:cursor-grabbing [&>div]:pointer-events-auto [&>div]:overflow-visible"
+              className="select-none [&>div]:pointer-events-auto [&>div]:overflow-visible"
               style={{
                 paddingTop: `calc(${paddingTop}px + 2px)`,
                 paddingBottom: `calc(${paddingBottom}px + 2px)`,

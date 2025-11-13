@@ -7,7 +7,7 @@ export const AnnouncementRotatorNext = forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
 >(({ children, className, disabled, ...props }, ref) => {
-  const { scrollPrev, totalSlides, emblaApi } = useAnnouncementRotator();
+  const { scrollPrev, totalSlides, emblaApi, canScrollNext } = useAnnouncementRotator();
 
   if (totalSlides <= 1) return null;
 
@@ -24,7 +24,7 @@ export const AnnouncementRotatorNext = forwardRef<
       ref={ref}
       type="button"
       aria-label="Next slide"
-      disabled={disabled || !emblaApi}
+      disabled={disabled || !emblaApi || !canScrollNext}
       {...props}
     >
       {children || <ChevronRight className="size-4" aria-hidden="true" />}
