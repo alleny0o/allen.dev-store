@@ -206,18 +206,24 @@ export const HEADER_FRAGMENT = defineQuery(`{
       text,
     },
   },
+
   announcementBarColorScheme -> ${COLOR_SCHEME_FRAGMENT},
   autoRotateAnnouncements,
-  blur,
-  colorScheme -> ${COLOR_SCHEME_FRAGMENT},
-  desktopLogoWidth,
+  announcementBarPadding,
+  showAnnouncementArrows,
+  announcementBarTextSize,
+
   "menu": coalesce(
     menu[_key == $language][0].value[],
     menu[_key == $defaultLanguage][0].value[],
   )[] ${LINKS_LIST_SELECTION},
+
+  colorScheme -> ${COLOR_SCHEME_FRAGMENT},
+  blur,
+  desktopLogoWidth,
   padding,
   showSeparatorLine,
-  sticky 
+  sticky
 }`);
 
 const FONT_ASSET_FRAGMENT = defineQuery(`{

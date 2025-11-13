@@ -22,6 +22,11 @@ export default defineType({
   __experimental_formPreviewTitle: false,
   groups: GROUPS,
   fields: [
+    //
+    // ─────────────────────────────────────────────
+    // ANNOUNCEMENT BAR FIELDS
+    // ─────────────────────────────────────────────
+    //
     defineField({
       name: 'announcementBar',
       group: 'announcementBar',
@@ -35,15 +40,54 @@ export default defineType({
     }),
     defineField({
       name: 'autoRotateAnnouncements',
+      title: 'Auto rotate announcements',
       type: 'boolean',
       group: 'announcementBar',
       initialValue: false,
     }),
     defineField({
+      name: 'showAnnouncementArrows',
+      title: 'Show navigation arrows',
+      type: 'boolean',
+      group: 'announcementBar',
+      initialValue: true,
+    }),
+    defineField({
+      name: 'announcementBarPadding',
+      title: 'Announcement bar padding',
+      type: 'padding',
+      group: 'announcementBar',
+    }),
+    defineField({
+      name: 'announcementBarTextSize',
+      title: 'Announcement bar text size',
+      type: 'rangeSlider',
+      group: 'announcementBar',
+      options: {
+        min: 12,
+        max: 24,
+        suffix: 'px',
+      },
+      initialValue: 14,
+      validation: (Rule) => Rule.min(12).max(24),
+    }),
+
+    //
+    // ─────────────────────────────────────────────
+    // NAVIGATION FIELDS
+    // ─────────────────────────────────────────────
+    //
+    defineField({
       name: 'menu',
       group: 'navigation',
       type: 'internationalizedArrayHeaderNavigation',
     }),
+
+    //
+    // ─────────────────────────────────────────────
+    // SETTINGS FIELDS
+    // ─────────────────────────────────────────────
+    //
     defineField({
       name: 'colorScheme',
       title: 'Color scheme',
@@ -99,6 +143,7 @@ export default defineType({
       validation: (Rule) => Rule.min(0).max(400),
     }),
   ],
+
   preview: {
     prepare: () => ({title: 'Header'}),
   },

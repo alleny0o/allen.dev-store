@@ -42,7 +42,7 @@ export function AnnouncementBar() {
           <style dangerouslySetInnerHTML={{__html: colorsCssVars}} />
           <AnnouncementRotator
             autoRotate={header?.autoRotateAnnouncements ?? false}
-            autoRotateInterval={5000}
+            autoRotateInterval={6000}
             className="relative flex items-center text-[13px]"
           >
             {/* Arrows - Absolute positioned on left */}
