@@ -20,9 +20,10 @@ export type AnnouncementRotatorContextProps = {
   canScrollPrev: boolean;
 };
 
-type AnnouncementRotatorInternalContextProps = AnnouncementRotatorContextProps & {
-  emblaApi: EmblaCarouselType | undefined;
-};
+type AnnouncementRotatorInternalContextProps =
+  AnnouncementRotatorContextProps & {
+    emblaApi: EmblaCarouselType | undefined;
+  };
 
 const AnnouncementRotatorContext =
   React.createContext<AnnouncementRotatorInternalContextProps | null>(null);
@@ -45,28 +46,50 @@ const AnnouncementRotatorComponent: React.FC<AnnouncementRotatorProps> = ({
 }) => {
   const totalSlides = React.Children.count(children);
 
-  const plugins = autoRotate
-    ? [
-        Autoplay({
-          delay: autoRotateInterval,
-          stopOnInteraction: false,
-          stopOnMouseEnter: true,
-        }),
-      ]
-    : [];
+  // --- Stable autoplay instance ---
+  const autoplay = React.useMemo(() => {
+    return Autoplay({
+      delay: autoRotateInterval,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true,
+    });
+  }, [autoRotateInterval]);
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, plugins);
+  const plugins = autoRotate ? [autoplay] : [];
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {loop: true, align: 'start'},
+    plugins,
+  );
+
   const [currentSlide, setCurrentSlide] = React.useState(0);
+  const [canScrollNext, setCanScrollNext] = React.useState(false);
+  const [canScrollPrev, setCanScrollPrev] = React.useState(false);
 
-  const scrollNext = () => emblaApi?.scrollNext();
-  const scrollPrev = () => emblaApi?.scrollPrev();
+  // NOTE: Embla’s visual slide motion feels reversed in our announcement bar layout.
+  // By default, emblaApi.scrollNext() moves the track to the *right*, which visually
+  // looks like moving to the *previous* slide in our design. To keep the UX intuitive
+  // (Next = move left, Prev = move right), we intentionally invert the controls below.
+  //
+  // scrollNext → emblaApi.scrollPrev()
+  // scrollPrev → emblaApi.scrollNext()
+  //
+  // This keeps button labels, autoplay behavior, and slide indexing consistent with
+  // expected carousel semantics while preserving the desired visual animation direction.
+  const scrollNext = () => emblaApi?.scrollPrev();
+  const scrollPrev = () => emblaApi?.scrollNext();
 
+  // --- Handle slide selection and nav state ---
   React.useEffect(() => {
     if (!emblaApi) return;
 
-    const onSelect = () => setCurrentSlide(emblaApi.selectedScrollSnap());
-    
-    onSelect();
+    const onSelect = () => {
+      setCurrentSlide(emblaApi.selectedScrollSnap());
+      setCanScrollNext(emblaApi.canScrollNext());
+      setCanScrollPrev(emblaApi.canScrollPrev());
+    };
+
+    onSelect(); // Sync initial UI state
     emblaApi.on('select', onSelect);
 
     return () => {
@@ -83,8 +106,8 @@ const AnnouncementRotatorComponent: React.FC<AnnouncementRotatorProps> = ({
         scrollPrev,
         totalSlides,
         currentSlide,
-        canScrollNext: emblaApi?.canScrollNext() ?? false,
-        canScrollPrev: emblaApi?.canScrollPrev() ?? false,
+        canScrollNext,
+        canScrollPrev,
       }}
     >
       <div className={className}>{children}</div>
