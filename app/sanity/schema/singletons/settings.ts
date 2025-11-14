@@ -99,20 +99,11 @@ export default defineType({
       group: 'layout',
       options: {
         min: 1536,
-        max: 3584,
+        max: 2500,
         suffix: 'px',
       },
       initialValue: 1920,
-      hidden: ({parent}) => parent?.noContainerMaxWidth === true,
-    }),
-    defineField({
-      name: 'noContainerMaxWidth',
-      title: 'No container max width constraint',
-      description:
-        'Enable to allow containers to span the full width of the screen',
-      type: 'boolean',
-      group: 'layout',
-      initialValue: false,
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'buttonsBorder',

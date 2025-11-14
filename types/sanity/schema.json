@@ -1524,13 +1524,6 @@
         },
         "optional": true
       },
-      "noContainerMaxWidth": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "boolean"
-        },
-        "optional": true
-      },
       "buttonsBorder": {
         "type": "objectAttribute",
         "value": {

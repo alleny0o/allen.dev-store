@@ -177,7 +177,6 @@ export const SETTINGS_FRAGMENT = defineQuery(`{
   logo ${IMAGE_FRAGMENT},
   mediaBorder,
   mediaShadow,
-  noContainerMaxWidth,
   pinterest,
   productCards,
   showCurrencyCodes,

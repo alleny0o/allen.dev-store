@@ -57,6 +57,7 @@
 
 @utility container {
   margin-inline: auto;
+  max-width: var(--site-container-max-width, 1536px);
   padding-inline: 1rem;
 
   @variant md {

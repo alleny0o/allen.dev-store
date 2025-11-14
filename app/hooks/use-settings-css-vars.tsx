@@ -20,6 +20,7 @@ export function useSettingsCssVars() {
 
   const cssVars = `
   :root {
+    --site-container-max-width: ${settings?.containerMaxWidth || 1536}px;
     --badges-corner-radius: ${settings?.badgesCornerRadius || 0}px;
     --space-between-template-sections: ${settings?.spaceBetweenTemplateSections || 0}px;
     --grid-horizontal-space: ${settings?.grid?.horizontalSpace || 0}px;
