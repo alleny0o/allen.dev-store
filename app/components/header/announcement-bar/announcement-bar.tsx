@@ -1,10 +1,8 @@
 import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
-import {Link} from 'react-router';
-import {cx} from 'class-variance-authority';
 import {ChevronLeft, ChevronRight} from 'lucide-react';
 import {useColorsCssVars} from '~/hooks/use-colors-css-vars';
 import {useRootLoaderData} from '~/root';
-import {SanityInternalLink} from '~/components/sanity/link/sanity-internal-link';
+
 import {
   AnnouncementRotator,
   AnnouncementRotatorContent,
@@ -13,7 +11,9 @@ import {
   AnnouncementRotatorPrevious,
 } from '~/components/ui/announcement-rotator';
 
-type AnnouncementBarProps = NonNullable<
+import {AnnouncementItem} from './announcement-item';
+
+type AnnouncementBarEntry = NonNullable<
   NonNullable<ROOT_QUERYResult['header']>['announcementBar']
 >[number];
 
@@ -23,6 +23,15 @@ export function AnnouncementBar() {
   const header = data?.header;
   const announcementBar = header?.announcementBar;
 
+  const textSize = header?.announcementBarTextSize ?? 13;
+
+  const paddingTop = header?.announcementBarPadding?.top ?? 0;
+  const paddingBottom = header?.announcementBarPadding?.bottom ?? 0;
+
+  const isActive =
+    header?.showAnnouncementArrows && (announcementBar?.length ?? 0) > 1;
+
+  // MUST be called before any conditional return
   const colorsCssVars = useColorsCssVars({
     selector: `#announcement-bar`,
     settings: {
@@ -33,18 +42,12 @@ export function AnnouncementBar() {
     },
   });
 
-  const textSize = header?.announcementBarTextSize ?? 13;
-
-  // Extract padding values (in pixels)
-  const paddingTop = header?.announcementBarPadding?.top ?? 0;
-  const paddingBottom = header?.announcementBarPadding?.bottom ?? 0;
-
-  const isActive = header?.showAnnouncementArrows && ((announcementBar?.length ?? 0) > 1);
+  // safe early return now
   if (!announcementBar) return null;
 
   return (
     <section
-      className="container relative overflow-hidden bg-background text-foreground"
+      className="relative container overflow-hidden bg-background text-foreground"
       id="announcement-bar"
       style={
         {
@@ -59,7 +62,6 @@ export function AnnouncementBar() {
             autoRotate={header?.autoRotateAnnouncements ?? false}
             className="relative"
           >
-            {/* Arrows - Absolute positioned on left, spans full section height */}
             {isActive && (
               <div className="pointer-events-auto absolute top-0 bottom-0 left-0 z-10 hidden items-center gap-0 bg-background lg:flex">
                 <AnnouncementRotatorPrevious className="shrink-0 rounded-md">
@@ -71,6 +73,7 @@ export function AnnouncementBar() {
                     aria-hidden="true"
                   />
                 </AnnouncementRotatorPrevious>
+
                 <AnnouncementRotatorNext className="shrink-0 rounded-md">
                   <ChevronRight
                     style={{
@@ -83,7 +86,6 @@ export function AnnouncementBar() {
               </div>
             )}
 
-            {/* Carousel viewport with padding to make entire area swipeable */}
             <AnnouncementRotatorContent
               className="select-none [&>div]:pointer-events-auto [&>div]:overflow-visible"
               style={{
@@ -91,16 +93,10 @@ export function AnnouncementBar() {
                 paddingBottom: `calc(${paddingBottom}px + 2px)`,
               }}
             >
-              {announcementBar.map((item: AnnouncementBarProps) => (
+              {announcementBar.map((item: AnnouncementBarEntry) => (
                 <AnnouncementRotatorItem key={item._key}>
                   <div className="flex items-center justify-center lg:px-16">
-                    <Item
-                      _key={item._key}
-                      externalLink={item.externalLink}
-                      link={item.link}
-                      openInNewTab={item.openInNewTab}
-                      text={item.text}
-                    />
+                    <AnnouncementItem {...item} />
                   </div>
                 </AnnouncementRotatorItem>
               ))}
@@ -109,7 +105,6 @@ export function AnnouncementBar() {
         </div>
       </div>
 
-      {/* Utility Links - Absolute positioned on right, spans full section height */}
       <div
         className="pointer-events-auto absolute top-0 right-4 bottom-0 z-10 hidden items-center justify-end gap-4 border-l border-current bg-background pl-4 lg:right-8 lg:flex"
         style={{fontSize: `${textSize}px`}}
@@ -119,41 +114,5 @@ export function AnnouncementBar() {
         <span className="cursor-pointer">US</span>
       </div>
     </section>
-  );
-}
-
-function Item(props: AnnouncementBarProps) {
-  if (!props.text) return null;
-  const wrapperClassName = cx('flex justify-center text-center');
-  const linkClassName = cx('underline underline-offset-[2px]');
-
-  return props.link ? (
-    <div className={wrapperClassName}>
-      <SanityInternalLink
-        className={linkClassName}
-        data={{
-          _key: props.link.slug?.current ?? '',
-          _type: 'internalLink',
-          anchor: null,
-          link: props.link,
-          name: props.text,
-        }}
-      >
-        {props.text}
-      </SanityInternalLink>
-    </div>
-  ) : props.externalLink ? (
-    <div className={wrapperClassName}>
-      <Link
-        className={linkClassName}
-        rel={props.openInNewTab ? 'noopener noreferrer' : ''}
-        target={props.openInNewTab ? '_blank' : undefined}
-        to={props.externalLink}
-      >
-        {props.text}
-      </Link>
-    </div>
-  ) : (
-    <p className="inline-block text-center">{props.text}</p>
   );
 }
