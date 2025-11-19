@@ -206,6 +206,11 @@ export const HEADER_FRAGMENT = defineQuery(`{
     },
   },
 
+  "utilityLinks": coalesce(
+    utilityLinks[_key == $language][0].value[],
+    utilityLinks[_key == $defaultLanguage][0].value[],
+  )[] ${LINKS_LIST_SELECTION},
+
   announcementBarColorScheme -> ${COLOR_SCHEME_FRAGMENT},
   autoRotateAnnouncements,
   announcementBarPadding,
@@ -219,7 +224,14 @@ export const HEADER_FRAGMENT = defineQuery(`{
 
   colorScheme -> ${COLOR_SCHEME_FRAGMENT},
   blur,
+  desktopLayout,
+  mobileLayout,
   desktopLogoWidth,
+  showLocalizationSelector,
+  showWishlist,
+  accountStyleDesktop,
+  cartStyleDesktop,
+  cartStyleMobile,
   padding,
   showSeparatorLine,
   sticky

@@ -22,14 +22,17 @@ export function AnnouncementBar() {
   const data = sanityRoot?.data;
   const header = data?.header;
   const announcementBar = header?.announcementBar;
+  const utilityLinks = header?.utilityLinks;
 
   const textSize = header?.announcementBarTextSize ?? 13;
 
   const paddingTop = header?.announcementBarPadding?.top ?? 0;
   const paddingBottom = header?.announcementBarPadding?.bottom ?? 0;
 
-  const isActive =
+  const isArrowsActive =
     header?.showAnnouncementArrows && (announcementBar?.length ?? 0) > 1;
+  
+  const isUtilitiesActive = (utilityLinks?.length ?? 0) > 0;
 
   // MUST be called before any conditional return
   const colorsCssVars = useColorsCssVars({
@@ -55,14 +58,14 @@ export function AnnouncementBar() {
         } as React.CSSProperties
       }
     >
-      <div className={`${isActive ? 'lg:px-8' : 'lg:pr-8'}`}>
+      <div className={`${isArrowsActive && isUtilitiesActive ? 'lg:px-8' : ''} ${isArrowsActive ? 'lg:pl-8' : ''} ${isUtilitiesActive ? 'lg:pr-8' : ''}`}>
         <style dangerouslySetInnerHTML={{__html: colorsCssVars}} />
         <div style={{fontSize: `${textSize}px`}}>
           <AnnouncementRotator
             autoRotate={header?.autoRotateAnnouncements ?? false}
             className="relative"
           >
-            {isActive && (
+            {isArrowsActive && (
               <div className="pointer-events-auto absolute top-0 bottom-0 left-0 z-10 hidden items-center gap-0 bg-background lg:flex">
                 <AnnouncementRotatorPrevious className="shrink-0 rounded-md">
                   <ChevronLeft
@@ -105,14 +108,18 @@ export function AnnouncementBar() {
         </div>
       </div>
 
-      <div
-        className="pointer-events-auto absolute top-0 right-4 bottom-0 z-10 hidden items-center justify-end gap-4 border-l border-current bg-background pl-4 lg:right-8 lg:flex"
-        style={{fontSize: `${textSize}px`}}
-      >
-        <span className="cursor-pointer">Help</span>
-        <span className="cursor-pointer">Account</span>
-        <span className="cursor-pointer">US</span>
-      </div>
+      {isUtilitiesActive && (
+        <div
+          className="pointer-events-auto absolute top-0 right-4 bottom-0 z-10 hidden items-center justify-end gap-4 border-l border-current bg-background pl-4 lg:right-8 lg:flex"
+          style={{fontSize: `${textSize}px`}}
+        >
+          {utilityLinks?.map((link: any) => (
+            <span key={link._key} className="cursor-pointer">
+              {link.name}
+            </span>
+          ))}
+        </div>
+      )}
     </section>
   );
 }

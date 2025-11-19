@@ -38,6 +38,14 @@ export default defineType({
       type: 'internationalizedArrayAnnouncementBar',
     }),
     defineField({
+      name: 'utilityLinks',
+      title: 'Utility links',
+      description:
+        'Links shown on the right side (e.g., Help, Stocklists, Services)',
+      type: 'internationalizedArrayLink',
+      group: 'announcementBar',
+    }),
+    defineField({
       name: 'announcementBarColorScheme',
       title: 'Color scheme',
       type: 'reference',
@@ -103,8 +111,10 @@ export default defineType({
             value: 'splitRight',
           },
         ],
+        layout: 'radio',
       },
       initialValue: 'classic',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'mobileLayout',
@@ -126,8 +136,10 @@ export default defineType({
             value: 'brandLeft',
           },
         ],
+        layout: 'radio',
       },
       initialValue: 'menuLeft',
+      validation: (Rule) => Rule.required(),
     }),
 
     // Settings: Logo
@@ -147,6 +159,14 @@ export default defineType({
 
     // Settings: Actions
     defineField({
+      name: 'showLocalizationSelector',
+      title: 'Show localization selector',
+      description: 'Displays country and language selector',
+      type: 'boolean',
+      group: 'settings',
+      initialValue: false,
+    }),
+    defineField({
       name: 'showWishlist',
       title: 'Show wishlist action',
       type: 'boolean',
@@ -164,8 +184,10 @@ export default defineType({
           {title: 'Icon', value: 'icon'},
           {title: 'Text (Account)', value: 'text'},
         ],
+        layout: 'radio',
       },
       initialValue: 'icon',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'cartStyleDesktop',
@@ -177,8 +199,10 @@ export default defineType({
           {title: 'Icon', value: 'icon'},
           {title: 'Text (Cart)', value: 'text'},
         ],
+        layout: 'radio',
       },
       initialValue: 'icon',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'cartStyleMobile',
@@ -190,8 +214,10 @@ export default defineType({
           {title: 'Icon', value: 'icon'},
           {title: 'Text ([count])', value: 'text'},
         ],
+        layout: 'radio',
       },
       initialValue: 'icon',
+      validation: (Rule) => Rule.required(),
     }),
 
     // Settings: Appearance
@@ -235,8 +261,10 @@ export default defineType({
           {title: 'On scroll up', value: 'onScrollUp'},
           {title: 'Always', value: 'always'},
         ],
+        layout: 'radio',
       },
       initialValue: 'none',
+      validation: (Rule) => Rule.required(),
     }),
   ],
 

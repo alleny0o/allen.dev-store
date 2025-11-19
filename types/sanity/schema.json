@@ -2778,11 +2778,27 @@
           "type": "string"
         }
       },
+      "menu": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayHeaderNavigation"
+        },
+        "optional": true
+      },
       "announcementBar": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
           "name": "internationalizedArrayAnnouncementBar"
+        },
+        "optional": true
+      },
+      "utilityLinks": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayLink"
         },
         "optional": true
       },
@@ -2830,14 +2846,6 @@
         },
         "optional": true
       },
-      "announcementBarPadding": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "padding"
-        },
-        "optional": true
-      },
       "announcementBarTextSize": {
         "type": "objectAttribute",
         "value": {
@@ -2846,11 +2854,130 @@
         },
         "optional": true
       },
-      "menu": {
+      "announcementBarPadding": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "internationalizedArrayHeaderNavigation"
+          "name": "padding"
+        },
+        "optional": true
+      },
+      "desktopLayout": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "classic"
+            },
+            {
+              "type": "string",
+              "value": "centerLogo"
+            },
+            {
+              "type": "string",
+              "value": "threeColumn"
+            },
+            {
+              "type": "string",
+              "value": "splitRight"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "mobileLayout": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "balanced"
+            },
+            {
+              "type": "string",
+              "value": "menuLeft"
+            },
+            {
+              "type": "string",
+              "value": "brandLeft"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "desktopLogoWidth": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "rangeSlider"
+        },
+        "optional": true
+      },
+      "showLocalizationSelector": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
+      "showWishlist": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
+      "accountStyleDesktop": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "icon"
+            },
+            {
+              "type": "string",
+              "value": "text"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "cartStyleDesktop": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "icon"
+            },
+            {
+              "type": "string",
+              "value": "text"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "cartStyleMobile": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "icon"
+            },
+            {
+              "type": "string",
+              "value": "text"
+            }
+          ]
         },
         "optional": true
       },
@@ -2891,6 +3018,21 @@
         },
         "optional": true
       },
+      "showSeparatorLine": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
+      "padding": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "padding"
+        },
+        "optional": true
+      },
       "sticky": {
         "type": "objectAttribute",
         "value": {
@@ -2909,29 +3051,6 @@
               "value": "always"
             }
           ]
-        },
-        "optional": true
-      },
-      "showSeparatorLine": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "boolean"
-        },
-        "optional": true
-      },
-      "padding": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "padding"
-        },
-        "optional": true
-      },
-      "desktopLogoWidth": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "rangeSlider"
         },
         "optional": true
       }
@@ -2970,7 +3089,7 @@
     }
   },
   {
-    "name": "internationalizedArrayHeaderNavigation",
+    "name": "internationalizedArrayLink",
     "type": "type",
     "value": {
       "type": "array",
@@ -2986,7 +3105,7 @@
         },
         "rest": {
           "type": "inline",
-          "name": "internationalizedArrayHeaderNavigationValue"
+          "name": "internationalizedArrayLinkValue"
         }
       }
     }
@@ -3009,6 +3128,28 @@
         "rest": {
           "type": "inline",
           "name": "internationalizedArrayAnnouncementBarValue"
+        }
+      }
+    }
+  },
+  {
+    "name": "internationalizedArrayHeaderNavigation",
+    "type": "type",
+    "value": {
+      "type": "array",
+      "of": {
+        "type": "object",
+        "attributes": {
+          "_key": {
+            "type": "objectAttribute",
+            "value": {
+              "type": "string"
+            }
+          }
+        },
+        "rest": {
+          "type": "inline",
+          "name": "internationalizedArrayHeaderNavigationValue"
         }
       }
     }
@@ -7046,6 +7187,30 @@
               }
             }
           }
+        }
+      }
+    }
+  },
+  {
+    "name": "internationalizedArrayLinkValue",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "internationalizedArrayLinkValue"
+          }
+        },
+        "value": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "link"
+          },
+          "optional": true
         }
       }
     }
