@@ -47,7 +47,7 @@ export function AnnouncementBar() {
 
   return (
     <section
-      className="relative container overflow-hidden bg-background text-foreground"
+      className="relative container overflow-hidden bg-background px-0! text-foreground sm:px-0! md:px-0!"
       id="announcement-bar"
       style={
         {
@@ -55,7 +55,7 @@ export function AnnouncementBar() {
         } as React.CSSProperties
       }
     >
-      <div className={isActive ? 'lg:px-8' : 'lg:pr-8'}>
+      <div className={`${isActive ? 'lg:px-8' : 'lg:pr-8'}`}>
         <style dangerouslySetInnerHTML={{__html: colorsCssVars}} />
         <div style={{fontSize: `${textSize}px`}}>
           <AnnouncementRotator
