@@ -7,5 +7,6 @@ export default defineField({
     defineArrayMember({type: 'internalLink'}),
     defineArrayMember({type: 'externalLink'}),
     defineArrayMember({type: 'nestedNavigation'}),
+    defineArrayMember({type: 'megaMenu'}),
   ],
 });

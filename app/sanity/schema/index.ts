@@ -94,6 +94,7 @@ import home from './singletons/home';
 import settings from './singletons/settings';
 import themeContent from './singletons/theme-content';
 import productSectionDesign from './singletons/product-section-design';
+import megaMenu from './objects/navigation/mega-menu';
 
 // ─────────────────────────────────────────────
 // 📦 Schema Groups
@@ -161,6 +162,7 @@ const objects = [
   internalLink,
   link,
   nestedNavigation,
+  megaMenu,
 
   // Font
   fontAsset,
