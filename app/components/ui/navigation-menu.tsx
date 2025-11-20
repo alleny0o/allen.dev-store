@@ -55,7 +55,7 @@ const NavigationMenuTrigger = forwardRef<
   >
     {children}
     <IconChevron
-      className="relative top-[1px] ml-1 size-3 transition duration-200 group-data-[state=open]:rotate-180"
+      className="relative top-px ml-1 size-3 transition duration-200 group-data-[state=open]:rotate-180"
       direction="down"
     />
   </NavigationMenuPrimitive.Trigger>
@@ -85,15 +85,15 @@ const NavigationMenuViewport = forwardRef<
 >(({className, ...props}, ref) => (
   <div
     className={cn(
-      'absolute top-full left-0 flex w-full translate-x-[var(--viewport-position)] transition-transform',
+      'absolute top-full left-0 flex w-full translate-x-(--viewport-position) transition-transform',
     )}
   >
     <NavigationMenuPrimitive.Viewport
       className={cn(
-        'relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden bg-popover text-popover-foreground data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]',
+        'relative mt-1.5 h-(--radix-navigation-menu-viewport-height) w-full origin-[top_center] overflow-hidden bg-popover text-popover-foreground data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:zoom-in-90 md:w-(--radix-navigation-menu-viewport-width)',
         'rounded-(--dropdown-popup-border-corner-radius)',
-        '[border-width:var(--dropdown-popup-border-thickness)] border-[rgb(var(--border)_/_var(--dropdown-popup-border-opacity))]',
-        '[box-shadow:rgb(var(--shadow)_/_var(--dropdown-popup-shadow-opacity))_var(--dropdown-popup-shadow-horizontal-offset)_var(--dropdown-popup-shadow-vertical-offset)_var(--dropdown-popup-shadow-blur-radius)_0px]',
+        '[border-width:var(--dropdown-popup-border-thickness)] border-[rgb(var(--border)/var(--dropdown-popup-border-opacity))]',
+        '[box-shadow:rgb(var(--shadow)/var(--dropdown-popup-shadow-opacity))_var(--dropdown-popup-shadow-horizontal-offset)_var(--dropdown-popup-shadow-vertical-offset)_var(--dropdown-popup-shadow-blur-radius)_0px]',
         className,
       )}
       ref={ref}

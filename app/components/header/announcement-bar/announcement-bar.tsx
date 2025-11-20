@@ -90,7 +90,7 @@ export function AnnouncementBar() {
             )}
 
             <AnnouncementRotatorContent
-              className="select-none [&>div]:pointer-events-auto [&>div]:overflow-visible"
+              className={`select-none [&>div]:pointer-events-auto [&>div]:overflow-visible ${isArrowsActive && !isUtilitiesActive ? 'lg:pr-8' : ''} ${!isArrowsActive && isUtilitiesActive ? 'lg:pl-8' : ''}`}
               style={{
                 paddingTop: `calc(${paddingTop}px + 2px)`,
                 paddingBottom: `calc(${paddingBottom}px + 2px)`,

@@ -1,25 +1,23 @@
-import type {CSSProperties} from 'react';
-import {Link} from 'react-router';
-
 import {useRootLoaderData} from '~/root';
-import {useLocalePath} from '~/hooks/use-locale-path';
 import {useColorsCssVars} from '~/hooks/use-colors-css-vars';
 
-import {ClientOnly} from '~/components/client-only';
-import {DesktopNavigation} from '~/components/navigation/desktop-navigation';
-import {MobileNavigation} from '~/components/navigation/mobile-navigation.client';
-import {MobileNavigationTrigger} from '~/components/navigation/mobile-navigation-trigger';
-// import {CartDrawer} from '../layout/cart-drawer.client';
-
-import {Logo} from './header-logo';
 import {HeaderWrapper} from './header-wrapper';
+
+// Desktop Layouts
+import {ClassicLayout} from './layouts/desktop/classic-layout';
+import {CenterLogoLayout} from './layouts/desktop/center-logo-layout';
+import {ThreeColumnLayout} from './layouts/desktop/three-column-layout';
+import {SplitRightLayout} from './layouts/desktop/split-right-layout';
+
+// Mobile Layouts
+import {BalancedLayout} from './layouts/mobile/balanced-layout';
+import {MenuLeftLayout} from './layouts/mobile/menu-left-layout';
+import {BrandLeftLayout} from './layouts/mobile/brand-left-layout';
 
 export function Header() {
   const {sanityRoot} = useRootLoaderData();
   const data = sanityRoot?.data;
   const header = data?.header;
-
-  const homePath = useLocalePath({path: '/'});
 
   const logoWidth = header?.desktopLogoWidth
     ? `${header.desktopLogoWidth}px`
@@ -30,35 +28,41 @@ export function Header() {
     settings: header,
   });
 
+  const desktopLayout = header?.desktopLayout || 'classic';
+  const mobileLayout = header?.mobileLayout || 'menuLeft';
+
   return (
     <HeaderWrapper>
       <style dangerouslySetInnerHTML={{__html: colorsCssVars}} />
 
       <div className="container">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link className="group" prefetch="intent" to={homePath}>
-            <Logo
-              className="h-auto w-(--logoWidth)"
-              sizes={logoWidth}
-              style={
-                {
-                  '--logoWidth': logoWidth || 'auto',
-                } as CSSProperties
-              }
-            />
-          </Link>
+        {/* Desktop Layout - only show on lg+ screens */}
+        <div className="hidden lg:block">
+          {desktopLayout === 'classic' && (
+            <ClassicLayout logoWidth={logoWidth} menu={header?.menu} />
+          )}
+          {desktopLayout === 'centerLogo' && (
+            <CenterLogoLayout logoWidth={logoWidth} menu={header?.menu} />
+          )}
+          {desktopLayout === 'threeColumn' && (
+            <ThreeColumnLayout logoWidth={logoWidth} menu={header?.menu} />
+          )}
+          {desktopLayout === 'splitRight' && (
+            <SplitRightLayout logoWidth={logoWidth} menu={header?.menu} />
+          )}
+        </div>
 
-          {/* Right side */}
-          <div className="flex items-center">
-            <DesktopNavigation data={header?.menu} />
-
-            {/* <CartDrawer /> */}
-
-            <ClientOnly fallback={<MobileNavigationTrigger />}>
-              {() => <MobileNavigation data={header?.menu} />}
-            </ClientOnly>
-          </div>
+        {/* Mobile Layout - only show below lg screens */}
+        <div className="lg:hidden">
+          {mobileLayout === 'balanced' && (
+            <BalancedLayout logoWidth={logoWidth} menu={header?.menu} />
+          )}
+          {mobileLayout === 'menuLeft' && (
+            <MenuLeftLayout logoWidth={logoWidth} menu={header?.menu} />
+          )}
+          {mobileLayout === 'brandLeft' && (
+            <BrandLeftLayout logoWidth={logoWidth} menu={header?.menu} />
+          )}
         </div>
       </div>
     </HeaderWrapper>
