@@ -46,6 +46,7 @@ import internalButton from './objects/navigation/internal-button';
 import internalLink from './objects/navigation/internal-link';
 import link from './objects/navigation/link';
 import nestedNavigation from './objects/navigation/nested-navigation';
+import megaMenu from './objects/navigation/mega-menu';
 
 // ─────────────────────────────────────────────
 // 🅰️ Objects: Font
@@ -94,7 +95,6 @@ import home from './singletons/home';
 import settings from './singletons/settings';
 import themeContent from './singletons/theme-content';
 import productSectionDesign from './singletons/product-section-design';
-import megaMenu from './objects/navigation/mega-menu';
 
 // ─────────────────────────────────────────────
 // 📦 Schema Groups

@@ -1,11 +1,10 @@
 // mega-menu.ts
 import {LayoutGrid} from 'lucide-react';
-import {defineArrayMember, defineField, defineType} from 'sanity';
+import {defineArrayMember, defineField } from 'sanity';
 
-export default defineType({
+export default defineField({
   type: 'object',
   name: 'megaMenu',
-  title: 'Mega Menu',
   icon: LayoutGrid,
   fields: [
     defineField({

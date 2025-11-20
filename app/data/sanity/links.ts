@@ -47,8 +47,38 @@ export const NESTED_NAVIGATION_FRAGMENT = defineQuery(`{
   name,
 }`);
 
+export const MEGA_MENU_FRAGMENT = defineQuery(`{
+  _key,
+  _type,
+  name,
+  link -> ${LINK_REFERENCE_FRAGMENT},
+  content[] {
+    _type == "linkSection" => {
+      _key,
+      _type,
+      heading,
+      headingLink -> ${LINK_REFERENCE_FRAGMENT},
+      links[] {
+        _type == "externalLink" => ${EXTERNAL_LINK_FRAGMENT},
+        _type == "internalLink" => ${INTERNAL_LINK_FRAGMENT},
+      }
+    },
+    _type == "imageBlock" => {
+      _key,
+      _type,
+      image,
+      alt,
+      heading,
+      description,
+      link -> ${LINK_REFERENCE_FRAGMENT},
+      linkText,
+    }
+  }
+}`);
+
 export const LINKS_LIST_SELECTION = defineQuery(`{
   _type == "externalLink" => ${EXTERNAL_LINK_FRAGMENT},
   _type == "internalLink" => ${INTERNAL_LINK_FRAGMENT},
   _type == "nestedNavigation" => ${NESTED_NAVIGATION_FRAGMENT},
+  _type == "megaMenu" => ${MEGA_MENU_FRAGMENT},
 }`);
