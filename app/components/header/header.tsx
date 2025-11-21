@@ -35,7 +35,7 @@ export function Header() {
     <HeaderWrapper>
       <style dangerouslySetInnerHTML={{__html: colorsCssVars}} />
 
-      <div className="container">
+      <div className="w-full h-full">
         {/* Desktop Layout - only show on lg+ screens */}
         <div className="hidden lg:block">
           {desktopLayout === 'classic' && (

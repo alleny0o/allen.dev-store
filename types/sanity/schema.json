@@ -4362,6 +4362,155 @@
         },
         "optional": true
       },
+      "nav": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "capitalize": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "boolean"
+              },
+              "optional": true
+            },
+            "baseSize": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            },
+            "letterSpacing": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            },
+            "lineHeight": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
+      "announcement": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "capitalize": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "boolean"
+              },
+              "optional": true
+            },
+            "baseSize": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            },
+            "letterSpacing": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            },
+            "lineHeight": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
+      "logo": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "font": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "array",
+                "of": {
+                  "type": "object",
+                  "attributes": {
+                    "_key": {
+                      "type": "objectAttribute",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "rest": {
+                    "type": "inline",
+                    "name": "fontCategory"
+                  }
+                }
+              },
+              "optional": true
+            },
+            "capitalize": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "boolean"
+              },
+              "optional": true
+            },
+            "italic": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "boolean"
+              },
+              "optional": true
+            },
+            "baseSize": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            },
+            "letterSpacing": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            },
+            "lineHeight": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
       "extra": {
         "type": "objectAttribute",
         "value": {

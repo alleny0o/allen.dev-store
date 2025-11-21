@@ -47,6 +47,9 @@ export const ROOT_QUERY = defineQuery(`{
   "fonts": *[_type == "typography"][0] {
     body ${FONT_FRAGMENT},
     heading ${FONT_FRAGMENT},
+    nav,
+    announcement,
+    logo ${FONT_FRAGMENT},
     extra ${FONT_FRAGMENT},
   },
   "footer": *[_type == 'footer'][0] {

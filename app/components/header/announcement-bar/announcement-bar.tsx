@@ -24,17 +24,19 @@ export function AnnouncementBar() {
   const announcementBar = header?.announcementBar;
   const utilityLinks = header?.utilityLinks;
 
-  const textSize = header?.announcementBarTextSize ?? 13;
+  // NEW: typography — only used for spacing, not sizing icons
+  const announcementSize =
+    sanityRoot?.data?.fonts?.announcement?.baseSize ?? 13;
 
   const paddingTop = header?.announcementBarPadding?.top ?? 0;
   const paddingBottom = header?.announcementBarPadding?.bottom ?? 0;
 
   const isArrowsActive =
     header?.showAnnouncementArrows && (announcementBar?.length ?? 0) > 1;
-  
+
   const isUtilitiesActive = (utilityLinks?.length ?? 0) > 0;
 
-  // MUST be called before any conditional return
+  // MUST stay
   const colorsCssVars = useColorsCssVars({
     selector: `#announcement-bar`,
     settings: {
@@ -45,22 +47,27 @@ export function AnnouncementBar() {
     },
   });
 
-  // safe early return now
   if (!announcementBar) return null;
 
   return (
     <section
       className="relative container overflow-hidden bg-background px-0! text-foreground sm:px-0! md:px-0!"
       id="announcement-bar"
+      // Make announcementSize available as a CSS var
       style={
         {
-          '--announcement-bar-text-size': `${textSize}px`,
+          '--announcement-size': `${announcementSize}px`,
         } as React.CSSProperties
       }
     >
-      <div className={`${isArrowsActive && isUtilitiesActive ? 'lg:px-8' : ''} ${isArrowsActive ? 'lg:pl-8' : ''} ${isUtilitiesActive ? 'lg:pr-8' : ''}`}>
+      <div
+        className={`${isArrowsActive && isUtilitiesActive ? 'lg:px-(--container-padding)' : ''} ${
+          isArrowsActive ? 'lg:pl-(--container-padding)' : ''
+        } ${isUtilitiesActive ? 'lg:pr-(--container-padding)' : ''}`}
+      >
         <style dangerouslySetInnerHTML={{__html: colorsCssVars}} />
-        <div style={{fontSize: `${textSize}px`}}>
+
+        <div className="announcement-text">
           <AnnouncementRotator
             autoRotate={header?.autoRotateAnnouncements ?? false}
             className="relative"
@@ -69,20 +76,14 @@ export function AnnouncementBar() {
               <div className="pointer-events-auto absolute top-0 bottom-0 left-0 z-10 hidden items-center gap-0 bg-background lg:flex">
                 <AnnouncementRotatorPrevious className="shrink-0 rounded-md">
                   <ChevronLeft
-                    style={{
-                      width: `${textSize + 4}px`,
-                      height: `${textSize + 4}px`,
-                    }}
+                    className="announcement-arrow"
                     aria-hidden="true"
                   />
                 </AnnouncementRotatorPrevious>
 
                 <AnnouncementRotatorNext className="shrink-0 rounded-md">
                   <ChevronRight
-                    style={{
-                      width: `${textSize + 4}px`,
-                      height: `${textSize + 4}px`,
-                    }}
+                    className="announcement-arrow"
                     aria-hidden="true"
                   />
                 </AnnouncementRotatorNext>
@@ -90,7 +91,9 @@ export function AnnouncementBar() {
             )}
 
             <AnnouncementRotatorContent
-              className={`select-none [&>div]:pointer-events-auto [&>div]:overflow-visible ${isArrowsActive && !isUtilitiesActive ? 'lg:pr-8' : ''} ${!isArrowsActive && isUtilitiesActive ? 'lg:pl-8' : ''}`}
+              className={`select-none [&>div]:pointer-events-auto [&>div]:overflow-visible ${
+                isArrowsActive && !isUtilitiesActive ? 'lg:pr-8' : ''
+              } ${!isArrowsActive && isUtilitiesActive ? 'lg:pl-8' : ''}`}
               style={{
                 paddingTop: `calc(${paddingTop}px + 2px)`,
                 paddingBottom: `calc(${paddingBottom}px + 2px)`,
@@ -98,7 +101,7 @@ export function AnnouncementBar() {
             >
               {announcementBar.map((item: AnnouncementBarEntry) => (
                 <AnnouncementRotatorItem key={item._key}>
-                  <div className="flex items-center justify-center lg:px-16">
+                  <div className="flex items-center justify-center lg:px-[var(--container-padding)*2]">
                     <AnnouncementItem {...item} />
                   </div>
                 </AnnouncementRotatorItem>
@@ -110,8 +113,7 @@ export function AnnouncementBar() {
 
       {isUtilitiesActive && (
         <div
-          className="pointer-events-auto absolute top-0 right-4 bottom-0 z-10 hidden items-center justify-end gap-4 border-l border-current bg-background pl-4 lg:right-8 lg:flex"
-          style={{fontSize: `${textSize}px`}}
+          className="pointer-events-auto absolute top-0 right-4 bottom-0 z-10 hidden items-center justify-end gap-4 border-l border-current bg-background pl-4 lg:right-8 lg:flex announcement-text"
         >
           {utilityLinks?.map((link: any) => (
             <span key={link._key} className="cursor-pointer">

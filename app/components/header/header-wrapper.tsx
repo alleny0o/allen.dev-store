@@ -18,7 +18,7 @@ export function HeaderWrapper({children}: {children: React.ReactNode}) {
   const sticky = stegaClean(header?.sticky);
 
   const headerClassName = cx(
-    'bg-background section-padding text-foreground',
+    'container bg-background section-padding text-foreground',
     sticky !== 'none' && 'sticky top-0 z-50',
     blur &&
       'bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/85',
