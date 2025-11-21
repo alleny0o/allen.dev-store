@@ -8,15 +8,13 @@ import {Logo} from '../../header-logo';
 
 type SplitRightLayoutProps = {
   logoWidth?: string;
-  menu?: any;
 };
 
-export function SplitRightLayout({logoWidth, menu}: SplitRightLayoutProps) {
+export function SplitRightLayout({logoWidth}: SplitRightLayoutProps) {
   const homePath = useLocalePath({path: '/'});
 
   return (
     <div className="flex items-center justify-between">
-      {/* Left: Logo */}
       <Link className="group" prefetch="intent" to={homePath}>
         <Logo
           className="h-auto w-(--logoWidth)"
@@ -29,13 +27,11 @@ export function SplitRightLayout({logoWidth, menu}: SplitRightLayoutProps) {
         />
       </Link>
 
-      {/* Right group: Nav + Actions together */}
       <div className="flex items-center gap-8">
-        <DesktopNavigation data={menu} />
+        <DesktopNavigation />
 
         <div className="flex items-center">
-          {/* <CartDrawer /> */}
-          {/* TODO: Add other desktop actions */}
+          {/* actions */}
         </div>
       </div>
     </div>

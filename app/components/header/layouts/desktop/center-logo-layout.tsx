@@ -8,7 +8,7 @@ import {Logo} from '../../header-logo';
 
 type CenterLogoLayoutProps = {
   logoWidth?: string;
-  menu?: any;
+  menu?: any; // passed from Header
 };
 
 export function CenterLogoLayout({logoWidth, menu}: CenterLogoLayoutProps) {
@@ -18,7 +18,7 @@ export function CenterLogoLayout({logoWidth, menu}: CenterLogoLayoutProps) {
     <div className="grid grid-cols-3 items-center">
       {/* Left: Nav */}
       <div className="flex min-w-0 items-center justify-start">
-        <DesktopNavigation data={menu} />
+        <DesktopNavigation />
       </div>
 
       {/* Center: Logo */}
@@ -38,8 +38,7 @@ export function CenterLogoLayout({logoWidth, menu}: CenterLogoLayoutProps) {
 
       {/* Right: Actions */}
       <div className="flex min-w-0 items-center justify-end">
-        {/* <CartDrawer /> */}
-        {/* TODO: Add other desktop actions */}
+        {/* Actions go here */}
       </div>
     </div>
   );

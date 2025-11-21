@@ -1,7 +1,9 @@
 import {useRootLoaderData} from '~/root';
 import {useColorsCssVars} from '~/hooks/use-colors-css-vars';
+import {sanitizeString} from '~/utils/sanitize';
 
 import {HeaderWrapper} from './header-wrapper';
+import {HeaderContext} from './header-context';
 
 // Desktop Layouts
 import {ClassicLayout} from './layouts/desktop/classic-layout';
@@ -28,43 +30,45 @@ export function Header() {
     settings: header,
   });
 
-  const desktopLayout = header?.desktopLayout || 'classic';
-  const mobileLayout = header?.mobileLayout || 'menuLeft';
+  const desktopLayout = sanitizeString(header?.desktopLayout, 'classic');
+  const mobileLayout = sanitizeString(header?.mobileLayout, 'menuLeft');
 
   return (
-    <HeaderWrapper>
-      <style dangerouslySetInnerHTML={{__html: colorsCssVars}} />
+    <HeaderContext.Provider value={header}>
+      <HeaderWrapper>
+        <style dangerouslySetInnerHTML={{__html: colorsCssVars}} />
 
-      <div className="w-full h-full">
-        {/* Desktop Layout - only show on lg+ screens */}
-        <div className="hidden lg:block">
-          {desktopLayout === 'classic' && (
-            <ClassicLayout logoWidth={logoWidth} menu={header?.menu} />
-          )}
-          {desktopLayout === 'centerLogo' && (
-            <CenterLogoLayout logoWidth={logoWidth} menu={header?.menu} />
-          )}
-          {desktopLayout === 'threeColumn' && (
-            <ThreeColumnLayout logoWidth={logoWidth} menu={header?.menu} />
-          )}
-          {desktopLayout === 'splitRight' && (
-            <SplitRightLayout logoWidth={logoWidth} menu={header?.menu} />
-          )}
-        </div>
+        <div className="h-full w-full">
+          {/* Desktop Layout - only show on lg+ screens */}
+          <div className="hidden lg:block">
+            {desktopLayout === 'classic' && (
+              <ClassicLayout logoWidth={logoWidth} />
+            )}
+            {desktopLayout === 'centerLogo' && (
+              <CenterLogoLayout logoWidth={logoWidth} />
+            )}
+            {desktopLayout === 'threeColumn' && (
+              <ThreeColumnLayout logoWidth={logoWidth} />
+            )}
+            {desktopLayout === 'splitRight' && (
+              <SplitRightLayout logoWidth={logoWidth} />
+            )}
+          </div>
 
-        {/* Mobile Layout - only show below lg screens */}
-        <div className="lg:hidden">
-          {mobileLayout === 'balanced' && (
-            <BalancedLayout logoWidth={logoWidth} menu={header?.menu} />
-          )}
-          {mobileLayout === 'menuLeft' && (
-            <MenuLeftLayout logoWidth={logoWidth} menu={header?.menu} />
-          )}
-          {mobileLayout === 'brandLeft' && (
-            <BrandLeftLayout logoWidth={logoWidth} menu={header?.menu} />
-          )}
+          {/* Mobile Layout - only show on smaller screens */}
+          <div className="lg:hidden">
+            {mobileLayout === 'balanced' && (
+              <BalancedLayout logoWidth={logoWidth} />
+            )}
+            {mobileLayout === 'menuLeft' && (
+              <MenuLeftLayout logoWidth={logoWidth} />
+            )}
+            {mobileLayout === 'brandLeft' && (
+              <BrandLeftLayout logoWidth={logoWidth} />
+            )}
+          </div>
         </div>
-      </div>
-    </HeaderWrapper>
+      </HeaderWrapper>
+    </HeaderContext.Provider>
   );
 }

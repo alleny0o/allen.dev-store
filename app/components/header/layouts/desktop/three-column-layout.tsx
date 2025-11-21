@@ -8,15 +8,13 @@ import {Logo} from '../../header-logo';
 
 type ThreeColumnLayoutProps = {
   logoWidth?: string;
-  menu?: any;
 };
 
-export function ThreeColumnLayout({logoWidth, menu}: ThreeColumnLayoutProps) {
+export function ThreeColumnLayout({logoWidth}: ThreeColumnLayoutProps) {
   const homePath = useLocalePath({path: '/'});
 
   return (
     <div className="grid grid-cols-3 items-center">
-      {/* Left: Logo */}
       <div className="flex min-w-0 items-center justify-start">
         <Link className="group" prefetch="intent" to={homePath}>
           <Logo
@@ -31,15 +29,12 @@ export function ThreeColumnLayout({logoWidth, menu}: ThreeColumnLayoutProps) {
         </Link>
       </div>
 
-      {/* Center: Nav */}
       <div className="flex min-w-0 items-center justify-center">
-        <DesktopNavigation data={menu} />
+        <DesktopNavigation />
       </div>
 
-      {/* Right: Actions */}
       <div className="flex min-w-0 items-center justify-end">
-        {/* <CartDrawer /> */}
-        {/* TODO: Add other desktop actions */}
+        {/* actions */}
       </div>
     </div>
   );

@@ -5,14 +5,17 @@ import {useLocalePath} from '~/hooks/use-locale-path';
 import {DesktopNavigation} from '~/components/navigation/desktop-navigation';
 
 import {Logo} from '../../header-logo';
+import {useHeaderSettings} from '~/components/header/header-context';
 
 type ClassicLayoutProps = {
   logoWidth?: string;
-  menu?: any; // We can type this better later
 };
 
-export function ClassicLayout({logoWidth, menu}: ClassicLayoutProps) {
+export function ClassicLayout({logoWidth}: ClassicLayoutProps) {
   const homePath = useLocalePath({path: '/'});
+  const header = useHeaderSettings(); // ⬅️ Get full header object
+
+  const menu = header.menu ?? [];
 
   return (
     <div className="flex items-center justify-between">
@@ -30,13 +33,17 @@ export function ClassicLayout({logoWidth, menu}: ClassicLayoutProps) {
           />
         </Link>
 
-        <DesktopNavigation data={menu} />
+        {/* No more props — DesktopNavigation reads from context */}
+        <DesktopNavigation />
       </div>
 
       {/* Right: Actions */}
       <div className="flex items-center">
+        {/* Example future actions */}
+        {/* <Search /> */}
+        {/* <Account /> */}
+        {/* <Wishlist /> */}
         {/* <CartDrawer /> */}
-        {/* TODO: Add other desktop actions (search, account, wishlist, cart, localization) */}
       </div>
     </div>
   );

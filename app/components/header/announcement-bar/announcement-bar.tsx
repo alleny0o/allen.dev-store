@@ -24,7 +24,6 @@ export function AnnouncementBar() {
   const announcementBar = header?.announcementBar;
   const utilityLinks = header?.utilityLinks;
 
-  // NEW: typography — only used for spacing, not sizing icons
   const announcementSize =
     sanityRoot?.data?.fonts?.announcement?.baseSize ?? 13;
 
@@ -92,8 +91,8 @@ export function AnnouncementBar() {
 
             <AnnouncementRotatorContent
               className={`select-none [&>div]:pointer-events-auto [&>div]:overflow-visible ${
-                isArrowsActive && !isUtilitiesActive ? 'lg:pr-8' : ''
-              } ${!isArrowsActive && isUtilitiesActive ? 'lg:pl-8' : ''}`}
+                isArrowsActive && !isUtilitiesActive ? 'lg:pr-(--container-padding)' : ''
+              } ${!isArrowsActive && isUtilitiesActive ? 'lg:pl-(--container-padding)' : ''}`}
               style={{
                 paddingTop: `calc(${paddingTop}px + 2px)`,
                 paddingBottom: `calc(${paddingBottom}px + 2px)`,
@@ -112,9 +111,7 @@ export function AnnouncementBar() {
       </div>
 
       {isUtilitiesActive && (
-        <div
-          className="pointer-events-auto absolute top-0 right-4 bottom-0 z-10 hidden items-center justify-end gap-4 border-l border-current bg-background pl-4 lg:right-8 lg:flex announcement-text"
-        >
+        <div className="announcement-text pointer-events-auto absolute top-0 right-4 bottom-0 z-10 hidden items-center justify-end gap-4 border-l border-current bg-background pl-4 lg:right-8 lg:flex">
           {utilityLinks?.map((link: any) => (
             <span key={link._key} className="cursor-pointer">
               {link.name}

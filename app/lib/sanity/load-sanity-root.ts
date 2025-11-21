@@ -7,7 +7,6 @@
 import {seoPayload} from '../../lib/seo.server';
 import {ROOT_QUERY} from '../../data/sanity/queries';
 import {SanityLoader} from './sanity.server';
-import {CacheLong, CacheNone} from '@shopify/hydrogen';
 
 export async function loadSanityRoot(
   sanity: SanityLoader,

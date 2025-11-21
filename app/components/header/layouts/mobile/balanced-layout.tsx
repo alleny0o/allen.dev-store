@@ -7,14 +7,16 @@ import {MobileNavigation} from '~/components/navigation/mobile-navigation.client
 import {MobileNavigationTrigger} from '~/components/navigation/mobile-navigation-trigger';
 
 import {Logo} from '../../header-logo';
+import {useHeaderSettings} from '~/components/header/header-context';
 
 type BalancedLayoutProps = {
   logoWidth?: string;
-  menu?: any;
 };
 
-export function BalancedLayout({logoWidth, menu}: BalancedLayoutProps) {
+export function BalancedLayout({logoWidth}: BalancedLayoutProps) {
   const homePath = useLocalePath({path: '/'});
+  const header = useHeaderSettings(); // full header object
+  const menu = header.menu ?? [];
 
   return (
     <div className="flex items-center justify-between">
@@ -23,7 +25,7 @@ export function BalancedLayout({logoWidth, menu}: BalancedLayoutProps) {
         <ClientOnly fallback={<MobileNavigationTrigger />}>
           {() => <MobileNavigation data={menu} />}
         </ClientOnly>
-        {/* TODO: Search icon */}
+        {/* search */}
       </div>
 
       {/* Center: Logo */}
@@ -41,7 +43,7 @@ export function BalancedLayout({logoWidth, menu}: BalancedLayoutProps) {
 
       {/* Right: Actions */}
       <div className="flex items-center gap-4">
-        {/* TODO: Cart, Account, etc */}
+        {/* actions */}
       </div>
     </div>
   );

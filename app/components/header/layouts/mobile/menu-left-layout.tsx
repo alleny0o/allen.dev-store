@@ -7,18 +7,19 @@ import {MobileNavigation} from '~/components/navigation/mobile-navigation.client
 import {MobileNavigationTrigger} from '~/components/navigation/mobile-navigation-trigger';
 
 import {Logo} from '../../header-logo';
+import {useHeaderSettings} from '~/components/header/header-context';
 
 type MenuLeftLayoutProps = {
   logoWidth?: string;
-  menu?: any;
 };
 
-export function MenuLeftLayout({logoWidth, menu}: MenuLeftLayoutProps) {
+export function MenuLeftLayout({logoWidth}: MenuLeftLayoutProps) {
   const homePath = useLocalePath({path: '/'});
+  const header = useHeaderSettings();
+  const menu = header.menu ?? [];
 
   return (
     <div className="flex items-center justify-between">
-      {/* Left: Menu + Logo together */}
       <div className="flex items-center gap-4">
         <ClientOnly fallback={<MobileNavigationTrigger />}>
           {() => <MobileNavigation data={menu} />}
@@ -37,9 +38,8 @@ export function MenuLeftLayout({logoWidth, menu}: MenuLeftLayoutProps) {
         </Link>
       </div>
 
-      {/* Right: Actions */}
       <div className="flex items-center gap-4">
-        {/* TODO: Cart, Account, Search, etc */}
+        {/* actions */}
       </div>
     </div>
   );

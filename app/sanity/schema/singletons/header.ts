@@ -29,6 +29,18 @@ export default defineType({
       group: 'navigation',
       type: 'internationalizedArrayHeaderNavigation',
     }),
+    defineField({
+      name: 'menuItemGap',
+      title: 'Menu item gap',
+      type: 'rangeSlider',
+      group: 'navigation',
+      options: {
+        min: 0,
+        max: 50,
+        suffix: 'px',
+      },
+      initialValue: 20,
+    }),
 
     // Announcement Bar Fields
     defineField({
@@ -65,19 +77,6 @@ export default defineType({
       type: 'boolean',
       group: 'announcementBar',
       initialValue: true,
-    }),
-    defineField({
-      name: 'announcementBarTextSize',
-      title: 'Text size',
-      type: 'rangeSlider',
-      group: 'announcementBar',
-      options: {
-        min: 10,
-        max: 15,
-        suffix: 'px',
-      },
-      initialValue: 13,
-      validation: (Rule) => Rule.min(10).max(15),
     }),
     defineField({
       name: 'announcementBarPadding',

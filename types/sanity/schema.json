@@ -2786,6 +2786,14 @@
         },
         "optional": true
       },
+      "menuItemGap": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "rangeSlider"
+        },
+        "optional": true
+      },
       "announcementBar": {
         "type": "objectAttribute",
         "value": {
@@ -2843,14 +2851,6 @@
         "type": "objectAttribute",
         "value": {
           "type": "boolean"
-        },
-        "optional": true
-      },
-      "announcementBarTextSize": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "rangeSlider"
         },
         "optional": true
       },

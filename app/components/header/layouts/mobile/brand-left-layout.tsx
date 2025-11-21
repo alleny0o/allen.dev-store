@@ -7,14 +7,16 @@ import {MobileNavigation} from '~/components/navigation/mobile-navigation.client
 import {MobileNavigationTrigger} from '~/components/navigation/mobile-navigation-trigger';
 
 import {Logo} from '../../header-logo';
+import {useHeaderSettings} from '~/components/header/header-context';
 
 type BrandLeftLayoutProps = {
   logoWidth?: string;
-  menu?: any;
 };
 
-export function BrandLeftLayout({logoWidth, menu}: BrandLeftLayoutProps) {
+export function BrandLeftLayout({logoWidth}: BrandLeftLayoutProps) {
   const homePath = useLocalePath({path: '/'});
+  const header = useHeaderSettings();
+  const menu = header.menu ?? [];
 
   return (
     <div className="flex items-center justify-between">
@@ -31,11 +33,11 @@ export function BrandLeftLayout({logoWidth, menu}: BrandLeftLayoutProps) {
         />
       </Link>
 
-      {/* Right: Actions cluster (Search, Cart, Account, Menu) */}
+      {/* Right: Actions cluster */}
       <div className="flex items-center gap-4">
-        {/* TODO: Search icon */}
-        {/* TODO: Cart */}
-        {/* TODO: Account */}
+        {/* search */}
+        {/* cart */}
+        {/* account */}
 
         <ClientOnly fallback={<MobileNavigationTrigger />}>
           {() => <MobileNavigation data={menu} />}

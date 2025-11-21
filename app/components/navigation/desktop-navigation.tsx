@@ -1,35 +1,26 @@
-import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
-
 import {SanityExternalLink} from '../sanity/link/sanity-external-link';
 import {SanityInternalLink} from '../sanity/link/sanity-internal-link';
-import {cn} from 'app/lib/utils';
+import {useHeaderSettings} from '~/components/header/header-context';
 
-export type NavigationProps = NonNullable<ROOT_QUERYResult['header']>['menu'];
-
-export function DesktopNavigation(props: {data?: NavigationProps}) {
-  const items = props.data ?? [];
+export function DesktopNavigation() {
+  const header = useHeaderSettings();
+  const items = header.menu ?? [];
+  const gap = header.menuItemGap ?? 20;
 
   if (!items.length) return null;
 
   return (
     <nav id="header-nav" aria-label="Main Navigation">
-      <ul className="flex items-center gap-2">
+      <ul className="flex items-center" style={{gap: `${gap}px`}}>
         {items.map((item) => (
           <li key={item._key} className="list-none">
             {item._type === 'internalLink' && (
-              <SanityInternalLink
-                data={item}
-              />
+              <SanityInternalLink data={item} className="nav-text" />
             )}
 
             {item._type === 'externalLink' && (
-              <SanityExternalLink
-                data={item}
-              />
+              <SanityExternalLink data={item} className="nav-text" />
             )}
-
-            {/* if it's nestedNavigation, ignore it / skip it */}
-            {/* or render nothing, whatever you prefer */}
           </li>
         ))}
       </ul>
