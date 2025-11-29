@@ -1,6 +1,7 @@
 import {useRootLoaderData} from '~/root';
 import {useColorsCssVars} from '~/hooks/use-colors-css-vars';
 import {sanitizeString} from '~/utils/sanitize';
+import type { ROOT_QUERYResult } from 'types/sanity/sanity.generated';
 
 import {HeaderWrapper} from './header-wrapper';
 import {HeaderContext} from './header-context';
@@ -18,7 +19,7 @@ import {BrandLeftLayout} from './layouts/mobile/brand-left-layout';
 
 export function Header() {
   const {sanityRoot} = useRootLoaderData();
-  const data = sanityRoot?.data;
+  const data = sanityRoot?.data as ROOT_QUERYResult | undefined;
   const header = data?.header;
 
   const logoWidth = header?.desktopLogoWidth
@@ -34,7 +35,7 @@ export function Header() {
   const mobileLayout = sanitizeString(header?.mobileLayout, 'menuLeft');
 
   return (
-    <HeaderContext.Provider value={header}>
+    <HeaderContext.Provider value={header ?? null}>
       <HeaderWrapper>
         <style dangerouslySetInnerHTML={{__html: colorsCssVars}} />
 

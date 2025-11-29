@@ -1,5 +1,6 @@
-import {SanityExternalLink} from '../sanity/link/sanity-external-link';
-import {SanityInternalLink} from '../sanity/link/sanity-internal-link';
+import {SanityExternalLink} from '../../sanity/link/sanity-external-link';
+import {SanityInternalLink} from '../../sanity/link/sanity-internal-link';
+import {MegaMenu} from './mega/mega-menu';
 import {useHeaderSettings} from '~/components/header/header-context';
 
 export function DesktopNavigation() {
@@ -20,6 +21,10 @@ export function DesktopNavigation() {
 
             {item._type === 'externalLink' && (
               <SanityExternalLink data={item} className="nav-text" />
+            )}
+
+            {item._type === 'megaMenu' && (
+              <MegaMenu data={item} />
             )}
           </li>
         ))}

@@ -73,6 +73,7 @@ export function defineSanityConfig(
           'richtext',
           'bannerRichtext',
           'link',
+          'links',
         ],
         buttonLocations: ['field'],
       }),

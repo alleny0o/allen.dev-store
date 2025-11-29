@@ -22,7 +22,11 @@ export default defineType({
   __experimental_formPreviewTitle: false,
   groups: GROUPS,
   fields: [
-    // Navigation Fields
+    //
+    // ────────────────────────────────────────────
+    // NAVIGATION
+    // ────────────────────────────────────────────
+    //
     defineField({
       name: 'menu',
       title: 'Menu',
@@ -42,7 +46,11 @@ export default defineType({
       initialValue: 20,
     }),
 
-    // Announcement Bar Fields
+    //
+    // ────────────────────────────────────────────
+    // ANNOUNCEMENT BAR – content + behavior
+    // ────────────────────────────────────────────
+    //
     defineField({
       name: 'announcementBar',
       title: 'Announcement bar content',
@@ -54,16 +62,11 @@ export default defineType({
       title: 'Utility links',
       description:
         'Links shown on the right side (e.g., Help, Stocklists, Services)',
-      type: 'internationalizedArrayLink',
+      type: 'internationalizedArrayLinks',
       group: 'announcementBar',
     }),
-    defineField({
-      name: 'announcementBarColorScheme',
-      title: 'Color scheme',
-      type: 'reference',
-      group: 'announcementBar',
-      to: [{type: 'colorScheme'}],
-    }),
+
+    // Behavior settings that are Announcement-Bar-specific
     defineField({
       name: 'autoRotateAnnouncements',
       title: 'Auto rotate announcements',
@@ -78,14 +81,14 @@ export default defineType({
       group: 'announcementBar',
       initialValue: true,
     }),
-    defineField({
-      name: 'announcementBarPadding',
-      title: 'Padding',
-      type: 'padding',
-      group: 'announcementBar',
-    }),
 
-    // Settings: Layout
+    //
+    // ────────────────────────────────────────────
+    // SETTINGS — Global header settings
+    // ────────────────────────────────────────────
+    //
+
+    // Layout
     defineField({
       name: 'desktopLayout',
       title: 'Desktop header layout',
@@ -93,22 +96,10 @@ export default defineType({
       group: 'settings',
       options: {
         list: [
-          {
-            title: 'LOGO - NAV   <->   ACTIONS',
-            value: 'classic',
-          },
-          {
-            title: 'NAV   <->   LOGO   <->   ACTIONS',
-            value: 'centerLogo',
-          },
-          {
-            title: 'LOGO   <->   NAV   <->   ACTIONS',
-            value: 'threeColumn',
-          },
-          {
-            title: 'LOGO   <->   NAV - ACTIONS',
-            value: 'splitRight',
-          },
+          {title: 'LOGO - NAV   <->   ACTIONS', value: 'classic'},
+          {title: 'NAV   <->   LOGO   <->   ACTIONS', value: 'centerLogo'},
+          {title: 'LOGO   <->   NAV   <->   ACTIONS', value: 'threeColumn'},
+          {title: 'LOGO   <->   NAV - ACTIONS', value: 'splitRight'},
         ],
         layout: 'radio',
       },
@@ -122,18 +113,9 @@ export default defineType({
       group: 'settings',
       options: {
         list: [
-          {
-            title: '☰ 🔍   <->   LOGO   <->   ACTIONS',
-            value: 'balanced',
-          },
-          {
-            title: '☰ LOGO   <->   ACTIONS',
-            value: 'menuLeft',
-          },
-          {
-            title: 'LOGO   <->   🔍 🛒 👤 ☰  (ACTIONS cluster)',
-            value: 'brandLeft',
-          },
+          {title: '☰ 🔍   <->   LOGO   <->   ACTIONS', value: 'balanced'},
+          {title: '☰ LOGO   <->   ACTIONS', value: 'menuLeft'},
+          {title: 'LOGO   <->   🔍 🛒 👤 ☰', value: 'brandLeft'},
         ],
         layout: 'radio',
       },
@@ -141,7 +123,7 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
 
-    // Settings: Logo
+    // Logo
     defineField({
       name: 'desktopLogoWidth',
       title: 'Desktop logo width',
@@ -156,7 +138,7 @@ export default defineType({
       validation: (Rule) => Rule.min(0).max(400),
     }),
 
-    // Settings: Actions
+    // Actions visibility
     defineField({
       name: 'showLocalizationSelector',
       title: 'Show localization selector',
@@ -172,6 +154,8 @@ export default defineType({
       group: 'settings',
       initialValue: false,
     }),
+
+    // Actions styling
     defineField({
       name: 'accountStyleDesktop',
       title: 'Desktop account display',
@@ -219,7 +203,9 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
 
-    // Settings: Appearance
+    //
+    // Appearance — Global + announcement bar (moved here)
+    //
     defineField({
       name: 'colorScheme',
       title: 'Color scheme',
@@ -248,7 +234,24 @@ export default defineType({
       group: 'settings',
     }),
 
-    // Settings: Behavior
+    // (MOVED into Settings)
+    defineField({
+      name: 'announcementBarColorScheme',
+      title: 'Announcement bar color scheme',
+      type: 'reference',
+      group: 'settings',
+      to: [{type: 'colorScheme'}],
+    }),
+    defineField({
+      name: 'announcementBarPadding',
+      title: 'Announcement bar padding',
+      type: 'padding',
+      group: 'settings',
+    }),
+
+    //
+    // Behavior
+    //
     defineField({
       name: 'sticky',
       title: 'Sticky header',

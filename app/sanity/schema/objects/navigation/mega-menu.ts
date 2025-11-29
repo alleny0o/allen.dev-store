@@ -1,31 +1,36 @@
 // mega-menu.ts
 import {LayoutGrid} from 'lucide-react';
-import {defineArrayMember, defineField } from 'sanity';
+import {defineArrayMember, defineField} from 'sanity';
 
 export default defineField({
   type: 'object',
   name: 'megaMenu',
   icon: LayoutGrid,
+  title: 'Mega Menu',
+
   fields: [
     defineField({
       name: 'name',
       title: 'Menu Item Name',
       type: 'string',
-      description: 'The text shown in the main navigation',
       validation: (Rule) => Rule.required(),
     }),
+
+    // Optional parent link — RECOMMENDED to keep
     defineField({
       name: 'link',
       title: 'Main Link (Optional)',
       type: 'link',
-      description: 'Where clicking the menu item goes',
+      description: 'Where clicking the parent menu item goes',
     }),
+
     defineField({
       name: 'content',
       title: 'Mega Menu Content',
       type: 'array',
-      description:
-        'Add link sections and images. Automatically arranges in 4 columns, wrapping to next row after every 4 items.',
+      description: 'At least one link section or image block is required.',
+      validation: (Rule) =>
+        Rule.required().min(1).error('Add at least one block to the mega menu.'),
       of: [
         // Link Section
         defineArrayMember({
@@ -36,15 +41,12 @@ export default defineField({
             defineField({
               name: 'heading',
               type: 'string',
-              title: 'Heading',
-              description: 'e.g., "Men\'s Clothing", "Accessories"',
               validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: 'headingLink',
               type: 'link',
               title: 'Heading Link (Optional)',
-              description: 'Make the heading clickable',
             }),
             defineField({
               name: 'links',
@@ -86,35 +88,29 @@ export default defineField({
             defineField({
               name: 'heading',
               type: 'string',
-              title: 'Heading',
               validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: 'description',
               type: 'text',
-              title: 'Description (Optional)',
               rows: 2,
             }),
             defineField({
               name: 'link',
               type: 'link',
-              title: 'Link (Optional)',
+              validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: 'linkText',
               type: 'string',
-              title: 'Link Text (Optional)',
-              description: 'e.g., "Shop Now", "Discover More"',
+              description: 'e.g. "Shop Now"',
             }),
           ],
           preview: {
-            select: {
-              media: 'image',
-              heading: 'heading',
-            },
-            prepare({media, heading}) {
+            select: {media: 'image', title: 'heading'},
+            prepare({media, title}) {
               return {
-                title: heading || 'Untitled Image',
+                title: title || 'Image Block',
                 subtitle: 'Image Block',
                 media,
               };
@@ -124,14 +120,16 @@ export default defineField({
       ],
     }),
   ],
+
   preview: {
     select: {
       title: 'name',
+      count: 'content.length',
     },
-    prepare({title}) {
+    prepare({title, count}) {
       return {
-        title: title || 'Untitled Mega Menu',
-        subtitle: 'Mega Menu',
+        title,
+        subtitle: `${count || 0} content blocks`,
       };
     },
   },

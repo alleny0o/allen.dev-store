@@ -45,7 +45,7 @@ import headerNavigation from './objects/navigation/header-navigation';
 import internalButton from './objects/navigation/internal-button';
 import internalLink from './objects/navigation/internal-link';
 import link from './objects/navigation/link';
-import nestedNavigation from './objects/navigation/nested-navigation';
+import links from './objects/navigation/links';
 import megaMenu from './objects/navigation/mega-menu';
 
 // ─────────────────────────────────────────────
@@ -161,7 +161,7 @@ const objects = [
   internalButton,
   internalLink,
   link,
-  nestedNavigation,
+  links,
   megaMenu,
 
   // Font

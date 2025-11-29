@@ -3,9 +3,6 @@ import {useCallback, useState} from 'react';
 import {useDevice} from '~/hooks/use-device';
 import {cn} from '~/lib/utils';
 
-import type {NavigationProps} from './desktop-navigation';
-import type {SanityNestedNavigationProps} from './nested-navigation';
-
 import {IconChevron} from '../icons/icon-chevron';
 import {SanityExternalLink} from '../sanity/link/sanity-external-link';
 import {SanityInternalLink} from '../sanity/link/sanity-internal-link';
@@ -22,7 +19,7 @@ const mobileMenuLinkClass = cn(
   'flex w-full items-center gap-2 rounded-xs px-4 py-2 transition-colors pointer-coarse:active:bg-accent pointer-coarse:active:text-accent-foreground pointer-fine:hover:bg-accent pointer-fine:hover:text-accent-foreground',
 );
 
-export function MobileNavigation(props: {data?: NavigationProps}) {
+export function MobileNavigation(props: {data?: any}) {
   const [open, setOpen] = useState(false);
   const device = useDevice();
   const handleClose = useCallback(() => setOpen(false), []);
@@ -54,9 +51,6 @@ export function MobileNavigation(props: {data?: NavigationProps}) {
                 )}
                 {item._type === 'externalLink' && (
                   <SanityExternalLink data={item} />
-                )}
-                {item._type === 'nestedNavigation' && (
-                  <MobileNavigationNested data={item} onClose={handleClose} />
                 )}
               </li>
             ))}
@@ -92,76 +86,4 @@ function MobileNavigationContent(props: {
       </div>
     </DrawerContent>
   );
-}
-
-function MobileNavigationNested(props: {
-  data?: SanityNestedNavigationProps;
-  onClose: () => void;
-}) {
-  const {data, onClose} = props;
-  const [open, setOpen] = useState(false);
-  const device = useDevice();
-  const handleClose = useCallback(() => {
-    onClose();
-    setOpen(false);
-  }, [onClose]);
-
-  if (!data) return null;
-
-  const {childLinks} = data;
-
-  return data.name && childLinks && childLinks.length > 0 ? (
-    <DrawerNestedRoot
-      direction={device === 'desktop' ? 'right' : 'bottom'}
-      onOpenChange={setOpen}
-      open={open}
-    >
-      <DrawerTrigger className={mobileMenuLinkClass}>
-        {data.name}
-        <span>
-          <IconChevron className="size-5" direction="right" />
-        </span>
-      </DrawerTrigger>
-      <MobileNavigationContent
-        className={cn([
-          'h-[calc(var(--dialog-content-height)*.95)]',
-          'lg:h-(--dialog-content-height) lg:max-w-[calc(var(--dialog-content-max-width)*.95)]',
-        ])}
-      >
-        {childLinks &&
-          childLinks.length > 0 &&
-          childLinks.map((child) => (
-            <li key={child._key}>
-              {child._type === 'internalLink' ? (
-                <SanityInternalLink
-                  className={mobileMenuLinkClass}
-                  data={child}
-                  onClick={handleClose}
-                />
-              ) : child._type === 'externalLink' ? (
-                <SanityExternalLink
-                  className={mobileMenuLinkClass}
-                  data={child}
-                />
-              ) : null}
-            </li>
-          ))}
-      </MobileNavigationContent>
-    </DrawerNestedRoot>
-  ) : data.link && data.name && (!childLinks || childLinks.length === 0) ? (
-    // Render internal link if no child links
-    <SanityInternalLink
-      className={mobileMenuLinkClass}
-      data={{
-        _key: data._key,
-        _type: 'internalLink',
-        anchor: null,
-        link: data.link,
-        name: data.name,
-      }}
-      onClick={handleClose}
-    >
-      {data.name}
-    </SanityInternalLink>
-  ) : null;
 }

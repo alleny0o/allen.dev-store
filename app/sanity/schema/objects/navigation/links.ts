@@ -1,11 +1,10 @@
-import {defineArrayMember, defineField} from 'sanity';
+import {defineField, defineArrayMember} from 'sanity';
 
 export default defineField({
-  name: 'headerNavigation',
+  name: 'links',
   type: 'array',
   of: [
     defineArrayMember({type: 'internalLink'}),
     defineArrayMember({type: 'externalLink'}),
-    defineArrayMember({type: 'megaMenu'}),
   ],
 });

@@ -27,26 +27,6 @@ export const EXTERNAL_LINK_FRAGMENT = defineQuery(`{
   openInNewTab,
 }`);
 
-export const NESTED_NAVIGATION_FRAGMENT = defineQuery(`{
-  _key,
-  _type,
-  childLinks[] {
-    _type == "externalLink" => ${EXTERNAL_LINK_FRAGMENT},
-    _type == "internalLink" => ${INTERNAL_LINK_FRAGMENT},
-  },
-  link -> {
-    'documentType': _type,
-    'slug': coalesce(
-      slug,
-      store.slug
-    ) {
-      _type,
-      current
-    },
-  },
-  name,
-}`);
-
 export const MEGA_MENU_FRAGMENT = defineQuery(`{
   _key,
   _type,
@@ -79,6 +59,5 @@ export const MEGA_MENU_FRAGMENT = defineQuery(`{
 export const LINKS_LIST_SELECTION = defineQuery(`{
   _type == "externalLink" => ${EXTERNAL_LINK_FRAGMENT},
   _type == "internalLink" => ${INTERNAL_LINK_FRAGMENT},
-  _type == "nestedNavigation" => ${NESTED_NAVIGATION_FRAGMENT},
   _type == "megaMenu" => ${MEGA_MENU_FRAGMENT},
 }`);

@@ -13,19 +13,25 @@ import {
 
 import {AnnouncementItem} from './announcement-item';
 
+import {SanityInternalLink} from '~/components/sanity/link/sanity-internal-link';
+import {SanityExternalLink} from '~/components/sanity/link/sanity-external-link';
+
 type AnnouncementBarEntry = NonNullable<
   NonNullable<ROOT_QUERYResult['header']>['announcementBar']
 >[number];
 
+type UtilityLink = NonNullable<
+  NonNullable<ROOT_QUERYResult['header']>['utilityLinks']
+>[number];
+
 export function AnnouncementBar() {
   const {sanityRoot} = useRootLoaderData();
-  const data = sanityRoot?.data;
+  const data = sanityRoot?.data as ROOT_QUERYResult | undefined;
   const header = data?.header;
   const announcementBar = header?.announcementBar;
   const utilityLinks = header?.utilityLinks;
 
-  const announcementSize =
-    sanityRoot?.data?.fonts?.announcement?.baseSize ?? 13;
+  const announcementSize = data?.fonts?.announcement?.baseSize ?? 13;
 
   const paddingTop = header?.announcementBarPadding?.top ?? 0;
   const paddingBottom = header?.announcementBarPadding?.bottom ?? 0;
@@ -35,7 +41,6 @@ export function AnnouncementBar() {
 
   const isUtilitiesActive = (utilityLinks?.length ?? 0) > 0;
 
-  // MUST stay
   const colorsCssVars = useColorsCssVars({
     selector: `#announcement-bar`,
     settings: {
@@ -91,7 +96,9 @@ export function AnnouncementBar() {
 
             <AnnouncementRotatorContent
               className={`select-none [&>div]:pointer-events-auto [&>div]:overflow-visible ${
-                isArrowsActive && !isUtilitiesActive ? 'lg:pr-(--container-padding)' : ''
+                isArrowsActive && !isUtilitiesActive
+                  ? 'lg:pr-(--container-padding)'
+                  : ''
               } ${!isArrowsActive && isUtilitiesActive ? 'lg:pl-(--container-padding)' : ''}`}
               style={{
                 paddingTop: `calc(${paddingTop}px + 2px)`,
@@ -111,11 +118,20 @@ export function AnnouncementBar() {
       </div>
 
       {isUtilitiesActive && (
-        <div className="announcement-text pointer-events-auto absolute top-0 right-4 bottom-0 z-10 hidden items-center justify-end gap-4 border-l border-current bg-background pl-4 lg:right-8 lg:flex">
-          {utilityLinks?.map((link: any) => (
-            <span key={link._key} className="cursor-pointer">
-              {link.name}
-            </span>
+        <div className="announcement-text pointer-events-auto absolute top-0 right-(--container-padding) bottom-0 z-10 hidden items-center justify-end gap-4 border-l border-current bg-background pl-4 lg:flex">
+          {utilityLinks?.map((link: UtilityLink) => (
+            <>
+              {link._type === 'internalLink' && (
+                <SanityInternalLink data={link} className="cursor-pointer">
+                  {link.name}
+                </SanityInternalLink>
+              )}
+              {link._type === 'externalLink' && (
+                <SanityExternalLink data={link} className="cursor-pointer">
+                  {link.name}
+                </SanityExternalLink>
+              )}
+            </>
           ))}
         </div>
       )}
