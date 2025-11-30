@@ -18,7 +18,7 @@ export function ClassicLayout({logoWidth}: ClassicLayoutProps) {
   const menu = header.menu ?? [];
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="h-full w-full flex items-center justify-between">
       {/* Left group: Logo + Nav together */}
       <div className="flex items-center gap-8">
         <Link className="group" prefetch="intent" to={homePath}>

@@ -1,3 +1,4 @@
+// sanity-external-link.tsx
 import {cn} from '~/lib/utils';
 
 export function SanityExternalLink(props: {

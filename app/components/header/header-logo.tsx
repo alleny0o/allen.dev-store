@@ -1,4 +1,5 @@
 import {useRootLoaderData} from '~/root';
+import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
 
 import {SanityImage} from '../sanity/sanity-image';
 
@@ -10,7 +11,7 @@ export function Logo(props: {
   style?: React.CSSProperties;
 }) {
   const {sanityRoot} = useRootLoaderData();
-  const data = sanityRoot?.data;
+  const data = sanityRoot?.data as ROOT_QUERYResult | undefined;
   const sanitySettings = data?.settings;
   const logo = sanitySettings?.logo;
   const siteName = sanitySettings?.siteName;

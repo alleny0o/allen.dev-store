@@ -1,3 +1,5 @@
+import React from 'react';
+
 import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
 import {ChevronLeft, ChevronRight} from 'lucide-react';
 import {useColorsCssVars} from '~/hooks/use-colors-css-vars';
@@ -120,7 +122,7 @@ export function AnnouncementBar() {
       {isUtilitiesActive && (
         <div className="announcement-text pointer-events-auto absolute top-0 right-(--container-padding) bottom-0 z-10 hidden items-center justify-end gap-4 border-l border-current bg-background pl-4 lg:flex">
           {utilityLinks?.map((link: UtilityLink) => (
-            <>
+            <React.Fragment key={link._key}>
               {link._type === 'internalLink' && (
                 <SanityInternalLink data={link} className="cursor-pointer">
                   {link.name}
@@ -131,7 +133,7 @@ export function AnnouncementBar() {
                   {link.name}
                 </SanityExternalLink>
               )}
-            </>
+            </React.Fragment>
           ))}
         </div>
       )}

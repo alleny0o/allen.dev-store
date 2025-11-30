@@ -1,3 +1,4 @@
+// sanity-internal-link.tsx
 import type {Anchor} from 'types/sanity/sanity.generated';
 
 import {Link} from 'react-router';

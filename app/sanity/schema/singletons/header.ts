@@ -40,10 +40,34 @@ export default defineType({
       group: 'navigation',
       options: {
         min: 0,
-        max: 50,
+        max: 16,
         suffix: 'px',
       },
-      initialValue: 20,
+      initialValue: 8,
+    }),
+    defineField({
+      name: 'menuItemPaddingX',
+      title: 'Menu item horizontal padding',
+      type: 'rangeSlider',
+      group: 'navigation',
+      options: {
+        min: 0,
+        max: 30,
+        suffix: 'px',
+      },
+      initialValue: 4,
+    }),
+    defineField({
+      name: 'menuItemPaddingY',
+      title: 'Menu item vertical padding',
+      type: 'rangeSlider',
+      group: 'navigation',
+      options: {
+        min: 0,
+        max: 30,
+        suffix: 'px',
+      },
+      initialValue: 4,
     }),
 
     //

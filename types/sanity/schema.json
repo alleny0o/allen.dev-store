@@ -2794,6 +2794,22 @@
         },
         "optional": true
       },
+      "menuItemPaddingX": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "rangeSlider"
+        },
+        "optional": true
+      },
+      "menuItemPaddingY": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "rangeSlider"
+        },
+        "optional": true
+      },
       "announcementBar": {
         "type": "objectAttribute",
         "value": {

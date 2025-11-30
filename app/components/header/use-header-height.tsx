@@ -1,9 +1,10 @@
+import { ROOT_QUERYResult } from 'types/sanity/sanity.generated';
 import {getImageDimensions} from '@sanity/asset-utils';
 import {useRootLoaderData} from '~/root';
 
 export function useHeaderHeight() {
   const {sanityRoot} = useRootLoaderData();
-  const data = sanityRoot?.data;
+  const data = sanityRoot?.data as ROOT_QUERYResult | undefined;
   const header = data?.header;
 
   const headerPadding = {

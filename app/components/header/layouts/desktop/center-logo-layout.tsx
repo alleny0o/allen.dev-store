@@ -11,13 +11,13 @@ type CenterLogoLayoutProps = {
   menu?: any; // passed from Header
 };
 
-export function CenterLogoLayout({logoWidth, menu}: CenterLogoLayoutProps) {
+export function CenterLogoLayout({logoWidth}: CenterLogoLayoutProps) {
   const homePath = useLocalePath({path: '/'});
 
   return (
-    <div className="grid grid-cols-3 items-center">
+    <div className="grid h-full w-full grid-cols-3 items-center">
       {/* Left: Nav */}
-      <div className="flex min-w-0 items-center justify-start">
+      <div className="flex h-full min-w-0 items-center justify-start">
         <DesktopNavigation />
       </div>
 

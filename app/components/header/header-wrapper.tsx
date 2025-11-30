@@ -1,3 +1,4 @@
+import { ROOT_QUERYResult } from 'types/sanity/sanity.generated';
 import React from 'react';
 import {cx} from 'class-variance-authority';
 import {stegaClean} from '@sanity/client/stega';
@@ -10,7 +11,7 @@ import {HeaderHeightCssVars} from './header-height-css-vars';
 
 export function HeaderWrapper({children}: {children: React.ReactNode}) {
   const {sanityRoot} = useRootLoaderData();
-  const data = sanityRoot?.data;
+  const data = sanityRoot?.data as ROOT_QUERYResult | undefined;
   const header = data?.header;
 
   const showSeparatorLine = header?.showSeparatorLine;

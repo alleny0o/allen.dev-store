@@ -1,7 +1,8 @@
+import type { ROOT_QUERYResult } from 'types/sanity/sanity.generated';
+
 import {useRootLoaderData} from '~/root';
 import {useColorsCssVars} from '~/hooks/use-colors-css-vars';
 import {sanitizeString} from '~/utils/sanitize';
-import type { ROOT_QUERYResult } from 'types/sanity/sanity.generated';
 
 import {HeaderWrapper} from './header-wrapper';
 import {HeaderContext} from './header-context';

@@ -222,6 +222,8 @@ export const HEADER_FRAGMENT = defineQuery(`{
     menu[_key == $defaultLanguage][0].value[],
   )[] ${LINKS_LIST_SELECTION},
   menuItemGap,
+  menuItemPaddingX,
+  menuItemPaddingY,
 
   colorScheme -> ${COLOR_SCHEME_FRAGMENT},
   blur,
