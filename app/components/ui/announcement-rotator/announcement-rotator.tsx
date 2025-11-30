@@ -2,12 +2,14 @@ import * as React from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import type {EmblaCarouselType} from 'embla-carousel';
 import Autoplay from 'embla-carousel-autoplay';
+import Fade from 'embla-carousel-fade';
 
 export type AnnouncementRotatorProps = {
   autoRotate?: boolean;
   autoRotateInterval?: number;
   children: React.ReactNode;
   className?: string;
+  transitionMode?: 'slide' | 'fade'; // New prop
 };
 
 export type AnnouncementRotatorContextProps = {
@@ -18,6 +20,7 @@ export type AnnouncementRotatorContextProps = {
   currentSlide: number;
   canScrollNext: boolean;
   canScrollPrev: boolean;
+  transitionMode: 'slide' | 'fade'; // Add to context
 };
 
 type AnnouncementRotatorInternalContextProps =
@@ -43,6 +46,7 @@ const AnnouncementRotatorComponent: React.FC<AnnouncementRotatorProps> = ({
   autoRotateInterval = 5000,
   children,
   className,
+  transitionMode = 'slide', // Default to slide
 }) => {
   const totalSlides = React.Children.count(children);
 
@@ -55,7 +59,20 @@ const AnnouncementRotatorComponent: React.FC<AnnouncementRotatorProps> = ({
     });
   }, [autoRotateInterval]);
 
-  const plugins = autoRotate ? [autoplay] : [];
+  // Build plugins array based on mode
+  const plugins = React.useMemo(() => {
+    const pluginList = [];
+
+    if (transitionMode === 'fade') {
+      pluginList.push(Fade());
+    }
+
+    if (autoRotate) {
+      pluginList.push(autoplay);
+    }
+
+    return pluginList;
+  }, [transitionMode, autoRotate, autoplay]);
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {loop: true, align: 'start'},
@@ -66,16 +83,6 @@ const AnnouncementRotatorComponent: React.FC<AnnouncementRotatorProps> = ({
   const [canScrollNext, setCanScrollNext] = React.useState(false);
   const [canScrollPrev, setCanScrollPrev] = React.useState(false);
 
-  // NOTE: Embla’s visual slide motion feels reversed in our announcement bar layout.
-  // By default, emblaApi.scrollNext() moves the track to the *right*, which visually
-  // looks like moving to the *previous* slide in our design. To keep the UX intuitive
-  // (Next = move left, Prev = move right), we intentionally invert the controls below.
-  //
-  // scrollNext → emblaApi.scrollPrev()
-  // scrollPrev → emblaApi.scrollNext()
-  //
-  // This keeps button labels, autoplay behavior, and slide indexing consistent with
-  // expected carousel semantics while preserving the desired visual animation direction.
   const scrollNext = () => emblaApi?.scrollPrev();
   const scrollPrev = () => emblaApi?.scrollNext();
 
@@ -89,7 +96,7 @@ const AnnouncementRotatorComponent: React.FC<AnnouncementRotatorProps> = ({
       setCanScrollPrev(emblaApi.canScrollPrev());
     };
 
-    onSelect(); // Sync initial UI state
+    onSelect();
     emblaApi.on('select', onSelect);
 
     return () => {
@@ -108,6 +115,7 @@ const AnnouncementRotatorComponent: React.FC<AnnouncementRotatorProps> = ({
         currentSlide,
         canScrollNext,
         canScrollPrev,
+        transitionMode,
       }}
     >
       <div className={className}>{children}</div>

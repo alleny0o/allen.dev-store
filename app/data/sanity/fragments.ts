@@ -212,6 +212,7 @@ export const HEADER_FRAGMENT = defineQuery(`{
   )[] ${LINKS_LIST_SELECTION},
 
   announcementBarColorScheme -> ${COLOR_SCHEME_FRAGMENT},
+  fadeTransition,
   autoRotateAnnouncements,
   announcementBarPadding,
   showAnnouncementArrows,

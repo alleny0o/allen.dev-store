@@ -76,6 +76,7 @@ export function AnnouncementBar() {
         <div className="announcement-text">
           <AnnouncementRotator
             autoRotate={header?.autoRotateAnnouncements ?? false}
+            transitionMode={header?.fadeTransition ? 'fade' : 'slide'}
             className="relative"
           >
             {isArrowsActive && (

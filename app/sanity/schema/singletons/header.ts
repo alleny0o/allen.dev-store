@@ -92,6 +92,14 @@ export default defineType({
 
     // Behavior settings that are Announcement-Bar-specific
     defineField({
+      name: 'fadeTransition',
+      title: 'Use fade transition',
+      description: 'Fade between announcements instead of sliding',
+      type: 'boolean',
+      group: 'announcementBar',
+      initialValue: false,
+    }),
+    defineField({
       name: 'autoRotateAnnouncements',
       title: 'Auto rotate announcements',
       type: 'boolean',

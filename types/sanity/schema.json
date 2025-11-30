@@ -2826,6 +2826,13 @@
         },
         "optional": true
       },
+      "fadeTransition": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
       "autoRotateAnnouncements": {
         "type": "objectAttribute",
         "value": {
