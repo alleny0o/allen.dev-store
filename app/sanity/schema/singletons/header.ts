@@ -260,10 +260,17 @@ export default defineType({
       initialValue: true,
     }),
     defineField({
-      name: 'padding',
-      title: 'Header padding',
-      type: 'padding',
+      name: 'headerMinHeight',
+      title: 'Header minimum height',
+      description: 'Minimum height of the header. Content can expand it if needed.',
+      type: 'rangeSlider',
       group: 'settings',
+      options: {
+        min: 0,
+        max: 100,
+        suffix: 'px',
+      },
+      initialValue: 0,
     }),
 
     // (MOVED into Settings)

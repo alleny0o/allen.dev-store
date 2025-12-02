@@ -3010,11 +3010,11 @@
         },
         "optional": true
       },
-      "padding": {
+      "headerMinHeight": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "padding"
+          "name": "rangeSlider"
         },
         "optional": true
       },

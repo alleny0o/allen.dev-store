@@ -25,32 +25,37 @@ export function DesktopNavigation() {
     <nav 
       id="header-nav" 
       aria-label="Main Navigation" 
-      className="[&_a.nav-text]:px-(--nav-padding-x) [&_a.nav-text]:py-(--nav-padding-y)"
+      className="h-full [&_a.nav-text]:px-(--nav-padding-x) [&_a.nav-text]:py-(--nav-padding-y)"
       style={navStyles}
     >
-      <ul className="flex items-center" style={{ gap: 'var(--nav-gap)' }}>
+      <ul className="flex items-center h-full" style={{ gap: 'var(--nav-gap)' }}>
         {items.map((item) => (
-          <li key={item._key} className="flex items-center shrink-0">
-            {item._type === 'internalLink' && (
-              <SanityInternalLink 
-                data={item} 
-                className="nav-text"
-              />
-            )}
+          <li 
+            key={item._key} 
+            className="h-full shrink-0"
+          >
+            <div className="h-full flex items-center">
+              {item._type === 'internalLink' && (
+                <SanityInternalLink 
+                  data={item} 
+                  className="nav-text"
+                />
+              )}
 
-            {item._type === 'externalLink' && (
-              <SanityExternalLink 
-                data={item} 
-                className="nav-text"
-              />
-            )}
+              {item._type === 'externalLink' && (
+                <SanityExternalLink 
+                  data={item} 
+                  className="nav-text"
+                />
+              )}
 
-            {item._type === 'megaMenu' && (
-              <MegaMenu 
-                data={item} 
-                className="nav-text"
-              />
-            )}
+              {item._type === 'megaMenu' && (
+                <MegaMenu 
+                  data={item} 
+                  className="nav-text"
+                />
+              )}
+            </div>
           </li>
         ))}
       </ul>

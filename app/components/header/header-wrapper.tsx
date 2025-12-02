@@ -1,5 +1,6 @@
+// header-wrapper.tsx
 import { ROOT_QUERYResult } from 'types/sanity/sanity.generated';
-import React from 'react';
+import React, {type CSSProperties} from 'react';
 import {cx} from 'class-variance-authority';
 import {stegaClean} from '@sanity/client/stega';
 
@@ -17,9 +18,10 @@ export function HeaderWrapper({children}: {children: React.ReactNode}) {
   const showSeparatorLine = header?.showSeparatorLine;
   const blur = header?.blur;
   const sticky = stegaClean(header?.sticky);
-
+  const headerMinHeight = header?.headerMinHeight ?? 80;
+  
   const headerClassName = cx(
-    'container bg-background section-padding text-foreground',
+    'container bg-background text-foreground min-h-[var(--header-min-height)]',
     sticky !== 'none' && 'sticky top-0 z-50',
     blur &&
       'bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/85',
@@ -28,14 +30,20 @@ export function HeaderWrapper({children}: {children: React.ReactNode}) {
     }),
   );
 
+  const headerStyle = {
+    '--header-min-height': `${headerMinHeight}px`,
+  } as CSSProperties;
+
   return (
     <>
       {sticky === 'onScrollUp' ? (
-        <HeaderAnimation className={headerClassName}>
+        <HeaderAnimation className={headerClassName} style={headerStyle}>
           {children}
         </HeaderAnimation>
       ) : (
-        <header className={headerClassName}>{children}</header>
+        <header className={headerClassName} style={headerStyle}>
+          {children}
+        </header>
       )}
 
       <HeaderHeightCssVars />

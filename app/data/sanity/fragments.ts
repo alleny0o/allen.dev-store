@@ -236,7 +236,7 @@ export const HEADER_FRAGMENT = defineQuery(`{
   accountStyleDesktop,
   cartStyleDesktop,
   cartStyleMobile,
-  padding,
+  headerMinHeight,
   showSeparatorLine,
   sticky
 }`);

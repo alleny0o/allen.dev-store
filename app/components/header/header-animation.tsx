@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+// header-animation.tsx
+import React, {useEffect, useState, type CSSProperties} from 'react';
 import {useLocation} from 'react-router';
 import {
   m,
@@ -15,8 +16,9 @@ import {useHeaderHeight} from './use-header-height';
 export function HeaderAnimation(props: {
   children: React.ReactNode;
   className: string;
+  style?: CSSProperties;
 }) {
-  const {children, className} = props;
+  const {children, className, style} = props;
 
   const {pathname} = useLocation();
   const {desktopHeaderHeight} = useHeaderHeight();
@@ -76,7 +78,6 @@ export function HeaderAnimation(props: {
     },
   };
 
-  // Same behavior as your original HeaderAnimation
   return (
     <m.header
       animate={activeVariant}
@@ -86,6 +87,7 @@ export function HeaderAnimation(props: {
         duration: 0.2,
       }}
       variants={variants}
+      style={style}
     >
       {children}
     </m.header>

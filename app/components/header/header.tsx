@@ -1,3 +1,4 @@
+// header.tsx
 import type { ROOT_QUERYResult } from 'types/sanity/sanity.generated';
 
 import {useRootLoaderData} from '~/root';
@@ -17,6 +18,7 @@ import {SplitRightLayout} from './layouts/desktop/split-right-layout';
 import {BalancedLayout} from './layouts/mobile/balanced-layout';
 import {MenuLeftLayout} from './layouts/mobile/menu-left-layout';
 import {BrandLeftLayout} from './layouts/mobile/brand-left-layout';
+import header from '~/sanity/schema/singletons/header';
 
 export function Header() {
   const {sanityRoot} = useRootLoaderData();
