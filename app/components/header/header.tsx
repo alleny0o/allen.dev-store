@@ -8,6 +8,9 @@ import {sanitizeString} from '~/utils/sanitize';
 import {HeaderWrapper} from './header-wrapper';
 import {HeaderContext} from './header-context';
 
+import { MegaMenuProvider } from '../navigation/desktop/mega-menu/mega-menu-context';
+import { MegaMenuDropdown } from '../navigation/desktop/mega-menu/mega-menu-dropdown';
+
 // Desktop Layouts
 import {ClassicLayout} from './layouts/desktop/classic-layout';
 import {CenterLogoLayout} from './layouts/desktop/center-logo-layout';
@@ -18,7 +21,6 @@ import {SplitRightLayout} from './layouts/desktop/split-right-layout';
 import {BalancedLayout} from './layouts/mobile/balanced-layout';
 import {MenuLeftLayout} from './layouts/mobile/menu-left-layout';
 import {BrandLeftLayout} from './layouts/mobile/brand-left-layout';
-import header from '~/sanity/schema/singletons/header';
 
 export function Header() {
   const {sanityRoot} = useRootLoaderData();
@@ -42,36 +44,40 @@ export function Header() {
       <HeaderWrapper>
         <style dangerouslySetInnerHTML={{__html: colorsCssVars}} />
 
-        <div className="h-full w-full">
-          {/* Desktop Layout - only show on lg+ screens */}
-          <div className="hidden lg:block">
-            {desktopLayout === 'classic' && (
-              <ClassicLayout logoWidth={logoWidth} />
-            )}
-            {desktopLayout === 'centerLogo' && (
-              <CenterLogoLayout logoWidth={logoWidth} />
-            )}
-            {desktopLayout === 'threeColumn' && (
-              <ThreeColumnLayout logoWidth={logoWidth} />
-            )}
-            {desktopLayout === 'splitRight' && (
-              <SplitRightLayout logoWidth={logoWidth} />
-            )}
+        <MegaMenuProvider>
+          <div className="h-full w-full">
+            {/* Desktop Layout - only show on lg+ screens */}
+            <div className="hidden lg:block">
+              {desktopLayout === 'classic' && (
+                <ClassicLayout logoWidth={logoWidth} />
+              )}
+              {desktopLayout === 'centerLogo' && (
+                <CenterLogoLayout logoWidth={logoWidth} />
+              )}
+              {desktopLayout === 'threeColumn' && (
+                <ThreeColumnLayout logoWidth={logoWidth} />
+              )}
+              {desktopLayout === 'splitRight' && (
+                <SplitRightLayout logoWidth={logoWidth} />
+              )}
+            </div>
+
+            {/* Mobile Layout - only show on smaller screens */}
+            <div className="lg:hidden">
+              {mobileLayout === 'balanced' && (
+                <BalancedLayout logoWidth={logoWidth} />
+              )}
+              {mobileLayout === 'menuLeft' && (
+                <MenuLeftLayout logoWidth={logoWidth} />
+              )}
+              {mobileLayout === 'brandLeft' && (
+                <BrandLeftLayout logoWidth={logoWidth} />
+              )}
+            </div>
           </div>
 
-          {/* Mobile Layout - only show on smaller screens */}
-          <div className="lg:hidden">
-            {mobileLayout === 'balanced' && (
-              <BalancedLayout logoWidth={logoWidth} />
-            )}
-            {mobileLayout === 'menuLeft' && (
-              <MenuLeftLayout logoWidth={logoWidth} />
-            )}
-            {mobileLayout === 'brandLeft' && (
-              <BrandLeftLayout logoWidth={logoWidth} />
-            )}
-          </div>
-        </div>
+          <MegaMenuDropdown />
+        </MegaMenuProvider>
       </HeaderWrapper>
     </HeaderContext.Provider>
   );

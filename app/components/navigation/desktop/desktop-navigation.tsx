@@ -1,19 +1,28 @@
 // desktop-navigation.tsx
-import {SanityExternalLink} from '../../sanity/link/sanity-external-link';
-import {SanityInternalLink} from '../../sanity/link/sanity-internal-link';
-import {MegaMenu} from './mega/mega-menu';
 import {useHeaderSettings} from '~/components/header/header-context';
+
+import {
+  HeaderMenu,
+  InternalLinkType,
+  ExternalLinkType,
+  MegaMenuType,
+} from '../types';
+
+import {InternalLinkItem} from './link-items/internal-link-item';
+import {ExternalLinkItem} from './link-items/external-link-item';
+import {MegaMenuItem} from './link-items/mega-menu-item';
+
 import type {CSSProperties} from 'react';
 
-export function DesktopNavigation() {
+export const DesktopNavigation = () => {
   const header = useHeaderSettings();
-  const items = header.menu ?? [];
+  const items: HeaderMenu = header.menu ?? [];
 
   if (!items.length) return null;
 
-  const gap = header.menuItemGap !== undefined ? header.menuItemGap : 8;
-  const paddingX = header.menuItemPaddingX !== undefined ? header.menuItemPaddingX : 4;
-  const paddingY = header.menuItemPaddingY !== undefined ? header.menuItemPaddingY : 4;
+  const gap = header.menuItemGap ?? 8;
+  const paddingX = header.menuItemPaddingX ?? 4;
+  const paddingY = header.menuItemPaddingY ?? 4;
 
   const navStyles = {
     '--nav-gap': `${gap}px`,
@@ -22,43 +31,41 @@ export function DesktopNavigation() {
   } as CSSProperties;
 
   return (
-    <nav 
-      id="header-nav" 
-      aria-label="Main Navigation" 
+    <nav
+      id="header-nav"
+      aria-label="Main Navigation"
       className="h-full [&_a.nav-text]:px-(--nav-padding-x) [&_a.nav-text]:py-(--nav-padding-y)"
       style={navStyles}
     >
-      <ul className="flex items-center h-full" style={{ gap: 'var(--nav-gap)' }}>
-        {items.map((item) => (
-          <li 
-            key={item._key} 
-            className="h-full shrink-0"
-          >
-            <div className="h-full flex items-center">
-              {item._type === 'internalLink' && (
-                <SanityInternalLink 
-                  data={item} 
-                  className="nav-text"
+      <ul className="flex h-full items-center" style={{gap: 'var(--nav-gap)'}}>
+        {items.map((item) => {
+          switch (item._type) {
+            case 'internalLink':
+              return (
+                <InternalLinkItem
+                  key={item._key}
+                  item={item as InternalLinkType}
                 />
-              )}
+              );
 
-              {item._type === 'externalLink' && (
-                <SanityExternalLink 
-                  data={item} 
-                  className="nav-text"
+            case 'externalLink':
+              return (
+                <ExternalLinkItem
+                  key={item._key}
+                  item={item as ExternalLinkType}
                 />
-              )}
+              );
 
-              {item._type === 'megaMenu' && (
-                <MegaMenu 
-                  data={item} 
-                  className="nav-text"
-                />
-              )}
-            </div>
-          </li>
-        ))}
+            case 'megaMenu':
+              return (
+                <MegaMenuItem key={item._key} item={item as MegaMenuType} />
+              );
+
+            default:
+              return null;
+          }
+        })}
       </ul>
     </nav>
   );
-}
+};
