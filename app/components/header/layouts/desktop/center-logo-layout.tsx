@@ -8,7 +8,6 @@ import {Logo} from '../../header-logo';
 
 type CenterLogoLayoutProps = {
   logoWidth?: string;
-  menu?: any; // passed from Header
 };
 
 export function CenterLogoLayout({logoWidth}: CenterLogoLayoutProps) {
@@ -22,7 +21,7 @@ export function CenterLogoLayout({logoWidth}: CenterLogoLayoutProps) {
       </div>
 
       {/* Center: Logo */}
-      <div className="flex items-center justify-center">
+      <div className="flex h-full items-center justify-center">
         <Link className="group" prefetch="intent" to={homePath}>
           <Logo
             className="h-auto w-(--logoWidth)"
@@ -37,7 +36,7 @@ export function CenterLogoLayout({logoWidth}: CenterLogoLayoutProps) {
       </div>
 
       {/* Right: Actions */}
-      <div className="flex min-w-0 items-center justify-end">
+      <div className="flex h-full min-w-0 items-center justify-end">
         {/* Actions go here */}
       </div>
     </div>

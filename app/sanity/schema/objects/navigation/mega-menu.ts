@@ -19,9 +19,22 @@ export default defineField({
     // Optional parent link — RECOMMENDED to keep
     defineField({
       name: 'link',
-      title: 'Main Link (Optional)',
+      title: 'Main Link',
       type: 'link',
       description: 'Where clicking the parent menu item goes',
+
+      hidden: ({document}) => !document?.allowMegaMenuParentLinks,
+
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const allow = context.document?.allowMegaMenuParentLinks;
+
+          if (allow && !value) {
+            return 'A link is required when parent navigation links are enabled.';
+          }
+
+          return true;
+        }),
     }),
 
     defineField({

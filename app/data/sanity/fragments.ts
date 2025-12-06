@@ -193,6 +193,7 @@ export const SETTINGS_FRAGMENT = defineQuery(`{
 }`);
 
 export const HEADER_FRAGMENT = defineQuery(`{
+  // Announcement bar (localized)
   "announcementBar": coalesce(
     announcementBar[_key == $language][0].value[],
     announcementBar[_key == $defaultLanguage][0].value[],
@@ -206,11 +207,13 @@ export const HEADER_FRAGMENT = defineQuery(`{
     },
   },
 
+  // Utility links (localized)
   "utilityLinks": coalesce(
     utilityLinks[_key == $language][0].value[],
     utilityLinks[_key == $defaultLanguage][0].value[],
   )[] ${LINKS_LIST_SELECTION},
 
+  // Announcement bar appearance
   announcementBarColorScheme -> ${COLOR_SCHEME_FRAGMENT},
   fadeTransition,
   autoRotateAnnouncements,
@@ -218,6 +221,7 @@ export const HEADER_FRAGMENT = defineQuery(`{
   showAnnouncementArrows,
   announcementBarTextSize,
 
+  // Navigation menu (localized)
   "menu": coalesce(
     menu[_key == $language][0].value[],
     menu[_key == $defaultLanguage][0].value[],
@@ -226,19 +230,38 @@ export const HEADER_FRAGMENT = defineQuery(`{
   menuItemPaddingX,
   menuItemPaddingY,
 
+  // Header appearance
   colorScheme -> ${COLOR_SCHEME_FRAGMENT},
   blur,
+  showSeparatorLine,
+
+  // Layout (desktop + mobile)
   desktopLayout,
   mobileLayout,
   desktopLogoWidth,
+  headerMinHeight,
+
+  // Actions (account, wishlist, cart, localization)
   showLocalizationSelector,
   showWishlist,
   accountStyleDesktop,
   cartStyleDesktop,
   cartStyleMobile,
-  headerMinHeight,
-  showSeparatorLine,
-  sticky
+
+  // Mega menu appearance
+  megaMenuColorScheme -> ${COLOR_SCHEME_FRAGMENT},
+  megaMenuPadding,
+  megaMenuShowSeparatorLine,
+
+  // Mega menu behavior
+  megaMenuBehavior,
+  allowMegaMenuParentLinks,
+  megaMenuDisableScroll,
+  megaMenuShowOverlay,
+  megaMenuOverlayOpacity,
+
+  // Global behavior
+  sticky,
 }`);
 
 const FONT_ASSET_FRAGMENT = defineQuery(`{
