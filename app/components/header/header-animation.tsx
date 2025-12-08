@@ -17,8 +17,9 @@ export function HeaderAnimation(props: {
   children: React.ReactNode;
   className: string;
   style?: CSSProperties;
+  id?: string;
 }) {
-  const {children, className, style} = props;
+  const {children, className, style, id} = props;
 
   const {pathname} = useLocation();
   const {desktopHeaderHeight} = useHeaderHeight();
@@ -80,6 +81,7 @@ export function HeaderAnimation(props: {
 
   return (
     <m.header
+      id={id}
       animate={activeVariant}
       className={cn(className)}
       initial="visible"

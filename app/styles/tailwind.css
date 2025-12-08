@@ -3,13 +3,18 @@
 @plugin "tailwindcss-animate";
 @plugin "@tailwindcss/typography";
 
+/**
+ * THEME CONFIGURATION
+ * Base theme tokens including fonts, animations, and keyframes.
+ */
+
 @theme {
-  /* Fonts (used by Tailwind for font- utilities) */
+  /* Font families (referenced by Tailwind's font- utilities) */
   --font-heading: var(--heading-font-family);
   --font-body: var(--body-font-family);
   --font-extra: var(--extra-font-family);
 
-  /* Animation */
+  /* Animations */
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
 
@@ -32,8 +37,13 @@
   }
 }
 
+/**
+ * INLINE THEME COLORS
+ * Converts CSS custom properties to Tailwind-compatible color tokens.
+ * These are generated dynamically from Sanity color schemes.
+ */
+
 @theme inline {
-  /* Colors */
   --color-background: rgb(var(--background));
   --color-foreground: rgb(var(--foreground));
   --color-border: rgb(var(--border));
@@ -55,10 +65,15 @@
   --color-destructive-foreground: rgb(var(--destructive-foreground));
 }
 
+/**
+ * CUSTOM UTILITIES
+ * Reusable utility classes for layout, spacing, and UI elements.
+ */
+
+/* Container with responsive padding */
 @utility container {
   margin-inline: auto;
   max-width: var(--site-container-max-width, 1536px);
-
   padding-inline: var(--container-padding, 1rem);
 
   @variant md {
@@ -74,6 +89,7 @@
   }
 }
 
+/* Section padding with responsive scaling */
 @utility section-padding {
   padding-bottom: calc(var(--paddingBottom) * 0.75);
   padding-top: calc(var(--paddingTop) * 0.75);
@@ -84,8 +100,16 @@
   }
 }
 
+/* Separator line with dynamic opacity and height */
+@utility separator-line {
+  border-bottom-width: var(--separator-height);
+  border-bottom-color: rgb(var(--border) / calc(var(--separator-opacity) / 100));
+}
+
+/* Touch-friendly hitbox (minimum 44x44px for accessibility) */
 @utility touch-hitbox {
   position: relative;
+  
   &::before {
     content: '';
     position: absolute;
@@ -101,7 +125,13 @@
   }
 }
 
+/**
+ * BASE STYLES
+ * Global element styles and typography system.
+ */
+
 @layer base {
+  /* Universal border and focus styles */
   * {
     border-color: var(--color-border);
 
@@ -110,6 +140,7 @@
     }
   }
 
+  /* Body typography from Sanity settings */
   body {
     font-family: var(--body-font-family), var(--body-font-type);
     font-size: calc(var(--body-base-size) * 1px);
@@ -119,17 +150,14 @@
     -moz-osx-font-smoothing: var(--body-font-moz-osx-font-smoothing);
   }
 
+  /* Clickable elements */
   button,
   [role='button'] {
     cursor: pointer;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  /* Heading styles (shared properties) */
+  h1, h2, h3, h4, h5, h6 {
     font-family: var(--heading-font-family), var(--heading-font-type);
     letter-spacing: calc(var(--heading-letter-spacing) * 1px);
     line-height: var(--heading-line-height);
@@ -138,31 +166,15 @@
     -moz-osx-font-smoothing: var(--heading-font-moz-osx-font-smoothing);
   }
 
-  h1 {
-    font-size: calc(var(--heading-base-size) * 1px);
-  }
+  /* Heading scale (proportional sizing) */
+  h1 { font-size: calc(var(--heading-base-size) * 1px); }
+  h2 { font-size: calc(var(--heading-base-size) * 0.75 * 1px); }
+  h3 { font-size: calc(var(--heading-base-size) * 0.65 * 1px); }
+  h4 { font-size: calc(var(--heading-base-size) * 0.5 * 1px); }
+  h5 { font-size: calc(var(--heading-base-size) * 0.45 * 1px); }
+  h6 { font-size: calc(var(--heading-base-size) * 0.375 * 1px); }
 
-  h2 {
-    font-size: calc(var(--heading-base-size) * 0.75 * 1px);
-  }
-
-  h3 {
-    font-size: calc(var(--heading-base-size) * 0.65 * 1px);
-  }
-
-  h4 {
-    font-size: calc(var(--heading-base-size) * 0.5 * 1px);
-  }
-
-  h5 {
-    font-size: calc(var(--heading-base-size) * 0.45 * 1px);
-  }
-
-  h6 {
-    font-size: calc(var(--heading-base-size) * 0.375 * 1px);
-  }
-
-  /* Navigation text */
+  /* Navigation typography */
   .nav-text {
     font-family: var(--nav-font-family), var(--nav-font-type);
     font-size: calc(var(--nav-base-size) * 1px);
@@ -173,7 +185,7 @@
     -moz-osx-font-smoothing: var(--nav-font-moz-osx-font-smoothing);
   }
 
-  /* Announcement bar text */
+  /* Announcement bar typography */
   .announcement-text {
     font-family: var(--announcement-font-family), var(--announcement-font-type);
     font-size: calc(var(--announcement-base-size) * 1px);
@@ -184,13 +196,13 @@
     -moz-osx-font-smoothing: var(--announcement-font-moz-osx-font-smoothing);
   }
 
-  /* Announcement arrow auto-scales with typography */
+  /* Announcement arrow (auto-scales with text size) */
   .announcement-arrow {
     width: calc(var(--announcement-base-size) * 1px + 4px);
     height: calc(var(--announcement-base-size) * 1px + 4px);
   }
 
-  /* Logo text */
+  /* Logo typography */
   .logo-text {
     font-family: var(--logo-font-family), var(--logo-font-type);
     font-size: calc(var(--logo-base-size) * 1px);

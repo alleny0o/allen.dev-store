@@ -8,6 +8,10 @@ import {
 } from './links';
 import {getIntValue} from './utils';
 
+/**
+ * IMAGE FRAGMENTS
+ * Common fragments for image handling.
+ */
 export const IMAGE_FRAGMENT = defineQuery(`{
   _type,
   asset,
@@ -17,6 +21,10 @@ export const IMAGE_FRAGMENT = defineQuery(`{
   crop,
 }`);
 
+/**
+ * COLOR FRAGMENTS
+ * Shared fragments for color and color schemes.
+ */
 export const COLOR_FRAGMENT = defineQuery(`{
   alpha,
   hex,
@@ -34,6 +42,10 @@ export const COLOR_SCHEME_FRAGMENT = defineQuery(`{
   primaryForeground ${COLOR_FRAGMENT},
 }`);
 
+/**
+ * THEME CONTENT FRAGMENT
+ * Localized interface copy for all theme components.
+ */
 export const THEME_CONTENT_FRAGMENT = defineQuery(`{
   account {
     "accountDetails": ${getIntValue('accountDetails')},
@@ -96,6 +108,7 @@ export const THEME_CONTENT_FRAGMENT = defineQuery(`{
     "welcome": ${getIntValue('welcome')},
     "welcomeToYourAccount": ${getIntValue('welcomeToYourAccount')},
   },
+
   cart {
     "applyDiscount": ${getIntValue('applyDiscount')},
     "continueShopping": ${getIntValue('continueShopping')},
@@ -109,6 +122,7 @@ export const THEME_CONTENT_FRAGMENT = defineQuery(`{
     "remove": ${getIntValue('remove')},
     "subtotal": ${getIntValue('subtotal')},
   },
+
   collection {
     "apply": ${getIntValue('apply')},
     "clear": ${getIntValue('clear')},
@@ -131,6 +145,7 @@ export const THEME_CONTENT_FRAGMENT = defineQuery(`{
     "to": ${getIntValue('to')}, 
     "viewAll": ${getIntValue('viewAll')},
   },
+
   error {
     "addressCreation": ${getIntValue('addressCreation')},
     "missingAddressId": ${getIntValue('missingAddressId')},
@@ -139,6 +154,7 @@ export const THEME_CONTENT_FRAGMENT = defineQuery(`{
     "sectionError": ${getIntValue('sectionError')},
     "serverError": ${getIntValue('serverError')},
   },
+
   product {
     "addToCart": ${getIntValue('addToCart')},
     "quantitySelector": ${getIntValue('quantitySelector')},
@@ -147,6 +163,10 @@ export const THEME_CONTENT_FRAGMENT = defineQuery(`{
   },
 }`);
 
+/**
+ * SETTINGS FRAGMENT
+ * Style, spacing, media, integrations, and global configuration.
+ */
 export const SETTINGS_FRAGMENT = defineQuery(`{
   badgesCornerRadius,
   badgesPosition,
@@ -192,6 +212,10 @@ export const SETTINGS_FRAGMENT = defineQuery(`{
   youtube,
 }`);
 
+/**
+ * HEADER FRAGMENT
+ * Localized header configuration, appearance, layout, actions, and mega menu.
+ */
 export const HEADER_FRAGMENT = defineQuery(`{
   // Announcement bar (localized)
   "announcementBar": coalesce(
@@ -233,7 +257,11 @@ export const HEADER_FRAGMENT = defineQuery(`{
   // Header appearance
   colorScheme -> ${COLOR_SCHEME_FRAGMENT},
   blur,
-  showSeparatorLine,
+  separatorLine {
+    show,
+    opacity,
+    height,
+  },
 
   // Layout (desktop + mobile)
   desktopLayout,
@@ -251,7 +279,11 @@ export const HEADER_FRAGMENT = defineQuery(`{
   // Mega menu appearance
   megaMenuColorScheme -> ${COLOR_SCHEME_FRAGMENT},
   megaMenuPadding,
-  megaMenuShowSeparatorLine,
+  megaMenuSeparatorLine {
+    show,
+    opacity,
+    height,
+  },
 
   // Mega menu behavior
   megaMenuBehavior,
@@ -264,6 +296,10 @@ export const HEADER_FRAGMENT = defineQuery(`{
   sticky,
 }`);
 
+/**
+ * FONT FRAGMENTS
+ * Handles font families, assets, sizing, and typography rules.
+ */
 const FONT_ASSET_FRAGMENT = defineQuery(`{
   "extension": asset -> extension,
   "mimeType": asset -> mimeType,
@@ -290,6 +326,10 @@ export const FONT_FRAGMENT = defineQuery(`{
   lineHeight,
 }`);
 
+/**
+ * RICHTEXT FRAGMENT
+ * Richtext block processing with inline links and images.
+ */
 export const RICHTEXT_FRAGMENT = defineQuery(`{
   ...,
   _type == 'image' => ${IMAGE_FRAGMENT},
@@ -307,6 +347,10 @@ export const RICHTEXT_FRAGMENT = defineQuery(`{
   }
 }`);
 
+/**
+ * PRODUCT SECTION DESIGN FRAGMENT
+ * Controls layout options for product hero/section variants.
+ */
 export const PRODUCT_SECTION_DESIGN_FRAGMENT = defineQuery(`{
   breakpoint,
   flipLayout,

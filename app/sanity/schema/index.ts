@@ -1,12 +1,14 @@
-// ─────────────────────────────────────────────
-// 🧩 Plugins
-// ─────────────────────────────────────────────
+/**
+ * PLUGINS
+ * Imports plugin utilities used across the schema.
+ */
 import colorPicker from '../plugins/color-picker';
 import rangeSlider from '../plugins/range-slider';
 
-// ─────────────────────────────────────────────
-// 📄 Document Types
-// ─────────────────────────────────────────────
+/**
+ * DOCUMENT TYPES
+ * Imports document-level schema definitions.
+ */
 import blogPost from './documents/blog-post';
 import collection from './documents/collection';
 import collectionTemplate from './documents/collection-template';
@@ -17,9 +19,10 @@ import product from './documents/product';
 import productTemplate from './documents/product-template';
 import productVariant from './documents/product-variant';
 
-// ─────────────────────────────────────────────
-// 🧰 Objects: Global (utilities, layout, content)
-// ─────────────────────────────────────────────
+/**
+ * GLOBAL OBJECTS
+ * Shared utilities for layout, style, and content.
+ */
 import announcementBar from './objects/global/announcement-bar';
 import aspectRatios from './objects/global/aspect-ratios';
 import bannerRichtext from './objects/global/banner-richtext';
@@ -30,15 +33,17 @@ import padding from './objects/global/padding';
 import productRichtext from './objects/global/product-richtext';
 import richtext from './objects/global/richtext';
 import sectionSettings from './objects/global/section-settings';
+import separatorLine from './objects/global/separator-line';
 import seo from './objects/global/seo';
 import sectionsList, {
   collectionSections,
   productSections,
 } from './objects/global/sections-list';
 
-// ─────────────────────────────────────────────
-// 🧭 Objects: Navigation
-// ─────────────────────────────────────────────
+/**
+ * NAVIGATION OBJECTS
+ * Navigation-related schema utilities.
+ */
 import anchor from './objects/navigation/anchor';
 import externalLink from './objects/navigation/external-link';
 import headerNavigation from './objects/navigation/header-navigation';
@@ -48,20 +53,23 @@ import link from './objects/navigation/link';
 import links from './objects/navigation/links';
 import megaMenu from './objects/navigation/mega-menu';
 
-// ─────────────────────────────────────────────
-// 🅰️ Objects: Font
-// ─────────────────────────────────────────────
+/**
+ * FONT OBJECTS
+ * Font-related schema definitions.
+ */
 import fontAsset from './objects/font/font-asset';
 import fontCategory from './objects/font/font-category';
 
-// ─────────────────────────────────────────────
-// 🦶 Objects: Footers
-// ─────────────────────────────────────────────
+/**
+ * FOOTER OBJECTS
+ * Footer-specific schema elements.
+ */
 import socialLinksOnly from './objects/footers/social-links-only';
 
-// ─────────────────────────────────────────────
-// 🛍️ Objects: Shopify Integration
-// ─────────────────────────────────────────────
+/**
+ * SHOPIFY OBJECTS
+ * Shopify integration schema types.
+ */
 import inventory from './objects/shopify/inventory';
 import options from './objects/shopify/options';
 import placeholderString from './objects/shopify/placeholder-string';
@@ -72,9 +80,10 @@ import shopifyCollectionRule from './objects/shopify/shopify-collection-rule';
 import shopifyProduct from './objects/shopify/shopify-product';
 import shopifyProductVariant from './objects/shopify/shopify-product-variant';
 
-// ─────────────────────────────────────────────
-// 🧱 Objects: Sections
-// ─────────────────────────────────────────────
+/**
+ * SECTION OBJECTS
+ * Schema components used for page sections.
+ */
 import carouselSection from './objects/sections/carousel-section';
 import collectionBanner from './objects/sections/collection-banner';
 import collectionListSection from './objects/sections/collection-list-section';
@@ -86,9 +95,10 @@ import productHeroSection from './objects/sections/product-hero-section';
 import relatedProductsSection from './objects/sections/related-products-section';
 import richtextSection from './objects/sections/richtext-section';
 
-// ─────────────────────────────────────────────
-// ⚙️ Singletons
-// ─────────────────────────────────────────────
+/**
+ * SINGLETONS
+ * Single-instance schema types for site-wide configuration.
+ */
 import footer from './singletons/footer';
 import header from './singletons/header';
 import home from './singletons/home';
@@ -96,9 +106,10 @@ import settings from './singletons/settings';
 import themeContent from './singletons/theme-content';
 import productSectionDesign from './singletons/product-section-design';
 
-// ─────────────────────────────────────────────
-// 📦 Schema Groups
-// ─────────────────────────────────────────────
+/**
+ * SCHEMA GROUPS
+ * Groups of schema items for organized export.
+ */
 const singletons = [
   home,
   header,
@@ -136,7 +147,7 @@ const sections = [
 const footers = [socialLinksOnly];
 
 const objects = [
-  // Global
+  /* Global */
   announcementBar,
   aspectRatios,
   bannerRichtext,
@@ -152,9 +163,10 @@ const objects = [
   sectionsList,
   collectionSections,
   productSections,
+  separatorLine,
   seo,
 
-  // Navigation
+  /* Navigation */
   anchor,
   externalLink,
   headerNavigation,
@@ -164,11 +176,11 @@ const objects = [
   links,
   megaMenu,
 
-  // Font
+  /* Font */
   fontAsset,
   fontCategory,
 
-  // Shopify
+  /* Shopify */
   inventory,
   options,
   placeholderString,
@@ -180,9 +192,10 @@ const objects = [
   shopifyCollectionRule,
 ];
 
-// ─────────────────────────────────────────────
-// 🧠 Export Schema
-// ─────────────────────────────────────────────
+/**
+ * EXPORT SCHEMA
+ * Final schema export consumed by Sanity.
+ */
 export const schemaTypes = [
   ...objects,
   ...documents,

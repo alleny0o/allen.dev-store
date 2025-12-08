@@ -1,10 +1,9 @@
 import {defineField, defineType} from 'sanity';
 
-//
-// ────────────────────────────────────────────
-// GROUPS (professional structure)
-// ────────────────────────────────────────────
-//
+/**
+ * GROUPS
+ * Professional grouping structure for the header schema.
+ */
 const GROUPS = [
   {name: 'navigation', title: 'Navigation', default: true},
   {name: 'announcementBar', title: 'Announcement Bar'},
@@ -22,11 +21,10 @@ export default defineType({
   groups: GROUPS,
 
   fields: [
-    //
-    // ────────────────────────────────────────────
-    // NAVIGATION
-    // ────────────────────────────────────────────
-    //
+    /**
+     * NAVIGATION
+     * Controls menu structure and spacing.
+     */
     defineField({
       name: 'menu',
       title: 'Menu',
@@ -58,11 +56,10 @@ export default defineType({
       initialValue: 4,
     }),
 
-    //
-    // ────────────────────────────────────────────
-    // ANNOUNCEMENT BAR — content + behavior
-    // ────────────────────────────────────────────
-    //
+    /**
+     * ANNOUNCEMENT BAR
+     * Controls announcement content and behavior.
+     */
     defineField({
       name: 'announcementBar',
       title: 'Announcement bar content',
@@ -99,11 +96,10 @@ export default defineType({
       initialValue: true,
     }),
 
-    //
-    // ────────────────────────────────────────────
-    // LAYOUT (global header layout)
-    // ────────────────────────────────────────────
-    //
+    /**
+     * LAYOUT
+     * Global header layout across screen sizes.
+     */
     defineField({
       name: 'desktopLayout',
       title: 'Desktop header layout',
@@ -156,11 +152,10 @@ export default defineType({
       initialValue: 0,
     }),
 
-    //
-    // ────────────────────────────────────────────
-    // APPEARANCE (global header styling)
-    // ────────────────────────────────────────────
-    //
+    /**
+     * APPEARANCE
+     * Header color and visual styling.
+     */
     defineField({
       name: 'colorScheme',
       title: 'Header color scheme',
@@ -176,11 +171,11 @@ export default defineType({
       initialValue: false,
     }),
     defineField({
-      name: 'showSeparatorLine',
-      title: 'Show header separator line',
-      type: 'boolean',
+      name: 'separatorLine',
+      title: 'Header separator line',
+      type: 'separatorLine',
       group: 'appearance',
-      initialValue: true,
+      description: 'Separator between header and page content',
     }),
     defineField({
       name: 'announcementBarColorScheme',
@@ -196,11 +191,10 @@ export default defineType({
       group: 'appearance',
     }),
 
-    //
-    // ────────────────────────────────────────────
-    // ACTIONS (account, cart, wishlist, localization)
-    // ────────────────────────────────────────────
-    //
+    /**
+     * ACTIONS
+     * Header actions such as account, cart, wishlist.
+     */
     defineField({
       name: 'showLocalizationSelector',
       title: 'Show localization selector',
@@ -262,12 +256,10 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
 
-    //
-    // ────────────────────────────────────────────
-    // MEGA MENU — appearance + behavior
-    // ────────────────────────────────────────────
-    //
-    // Appearance
+    /**
+     * MEGA MENU
+     * Controls appearance and interaction behavior.
+     */
     defineField({
       name: 'megaMenuColorScheme',
       title: 'Mega menu color scheme',
@@ -282,14 +274,14 @@ export default defineType({
       group: 'megaMenu',
     }),
     defineField({
-      name: 'megaMenuShowSeparatorLine',
+      name: 'megaMenuSeparatorLine',
       title: 'Mega menu separator line',
-      type: 'boolean',
+      type: 'separatorLine',
       group: 'megaMenu',
-      initialValue: true,
+      description: 'Separator between mega menu and content',
     }),
 
-    // Behavior — your added fields included here
+    /* Behavior settings */
     defineField({
       name: 'megaMenuBehavior',
       title: 'Mega Menu Interaction',
@@ -339,11 +331,10 @@ export default defineType({
       hidden: ({parent}) => !parent?.megaMenuShowOverlay,
     }),
 
-    //
-    // ────────────────────────────────────────────
-    // BEHAVIOR — global header behavior
-    // ────────────────────────────────────────────
-    //
+    /**
+     * BEHAVIOR
+     * Global header behavior settings.
+     */
     defineField({
       name: 'sticky',
       title: 'Sticky header',

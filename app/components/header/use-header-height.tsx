@@ -7,13 +7,8 @@ export function useHeaderHeight() {
   const data = sanityRoot?.data as ROOT_QUERYResult | undefined;
   const header = data?.header;
 
-  const headerPadding = {
-    bottom: header?.padding?.bottom || 0,
-    top: header?.padding?.top || 0,
-  };
-
   const desktopLogoWidth = header?.desktopLogoWidth || 1;
-  const headerBorder = header?.showSeparatorLine ? 1 : 0;
+  const headerBorder = header?.separatorLine?.height || 0;
 
   const sanitySettings = data?.settings;
   const logo = sanitySettings?.logo;
@@ -23,12 +18,7 @@ export function useHeaderHeight() {
   const desktopLogoHeight =
     logo?._ref && width && height ? (desktopLogoWidth * height) / width : 44;
 
-  const desktopHeaderHeight = (
-    desktopLogoHeight +
-    headerPadding.top +
-    headerPadding.bottom +
-    headerBorder
-  ).toFixed(2);
+  const desktopHeaderHeight = (desktopLogoHeight + headerBorder).toFixed(2);
 
   return {desktopHeaderHeight};
 }

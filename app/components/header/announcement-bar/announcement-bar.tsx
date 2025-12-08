@@ -59,7 +59,7 @@ export function AnnouncementBar() {
     <section
       className="relative container overflow-hidden bg-background px-0! text-foreground sm:px-0! md:px-0!"
       id="announcement-bar"
-      // Make announcementSize available as a CSS var
+      data-announcement-bar
       style={
         {
           '--announcement-size': `${announcementSize}px`,

@@ -1,84 +1,89 @@
 // header.tsx
-import type { ROOT_QUERYResult } from 'types/sanity/sanity.generated';
+import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
+import {stegaClean} from '@sanity/client/stega';
+import {cx} from 'class-variance-authority';
 
 import {useRootLoaderData} from '~/root';
-import {useColorsCssVars} from '~/hooks/use-colors-css-vars';
-import {sanitizeString} from '~/utils/sanitize';
 
 import {HeaderWrapper} from './header-wrapper';
 import {HeaderContext} from './header-context';
 
-import { MegaMenuProvider } from '../navigation/desktop/mega-menu/mega-menu-context';
-import { MegaMenuDropdown } from '../navigation/desktop/mega-menu/mega-menu-dropdown';
+import {MegaMenuProvider} from '../navigation/desktop/mega-menu/mega-menu-context';
+import {MegaMenuDropdown} from '../navigation/desktop/mega-menu/mega-menu-dropdown';
 
-// Desktop Layouts
+// Desktop layouts
 import {ClassicLayout} from './layouts/desktop/classic-layout';
 import {CenterLogoLayout} from './layouts/desktop/center-logo-layout';
 import {ThreeColumnLayout} from './layouts/desktop/three-column-layout';
 import {SplitRightLayout} from './layouts/desktop/split-right-layout';
 
-// Mobile Layouts
+// Mobile layouts
 import {BalancedLayout} from './layouts/mobile/balanced-layout';
 import {MenuLeftLayout} from './layouts/mobile/menu-left-layout';
 import {BrandLeftLayout} from './layouts/mobile/brand-left-layout';
 
 export function Header() {
+  // Load header data
   const {sanityRoot} = useRootLoaderData();
   const data = sanityRoot?.data as ROOT_QUERYResult | undefined;
   const header = data?.header;
 
+  // Logo width for both desktop and mobile layouts
   const logoWidth = header?.desktopLogoWidth
     ? `${header.desktopLogoWidth}px`
     : undefined;
 
-  const colorsCssVars = useColorsCssVars({
-    selector: 'header',
-    settings: header,
-  });
-
-  const desktopLayout = sanitizeString(header?.desktopLayout, 'classic');
-  const mobileLayout = sanitizeString(header?.mobileLayout, 'menuLeft');
+  // Normalize layout values with fallbacks
+  const desktopLayout = stegaClean(header?.desktopLayout);
+  const mobileLayout = stegaClean(header?.mobileLayout);
+  const sticky = stegaClean(header?.sticky);
 
   return (
     <HeaderContext.Provider value={header ?? null}>
-      <HeaderWrapper>
-        <style dangerouslySetInnerHTML={{__html: colorsCssVars}} />
+      <MegaMenuProvider>
+        {/* Wrapper for positioning context */}
+        <div
+          data-header-wrapper
+          className={cx('relative', sticky !== 'none' && 'sticky top-0 z-50')}
+        >
+          <HeaderWrapper>
 
-        <MegaMenuProvider>
-          <div className="h-full w-full">
-            {/* Desktop Layout - only show on lg+ screens */}
-            <div className="hidden lg:block">
-              {desktopLayout === 'classic' && (
-                <ClassicLayout logoWidth={logoWidth} />
-              )}
-              {desktopLayout === 'centerLogo' && (
-                <CenterLogoLayout logoWidth={logoWidth} />
-              )}
-              {desktopLayout === 'threeColumn' && (
-                <ThreeColumnLayout logoWidth={logoWidth} />
-              )}
-              {desktopLayout === 'splitRight' && (
-                <SplitRightLayout logoWidth={logoWidth} />
-              )}
+            <div className="h-full w-full">
+              {/* Desktop layout (lg+) */}
+              <div className="hidden lg:block">
+                {desktopLayout === 'classic' && (
+                  <ClassicLayout logoWidth={logoWidth} />
+                )}
+                {desktopLayout === 'centerLogo' && (
+                  <CenterLogoLayout logoWidth={logoWidth} />
+                )}
+                {desktopLayout === 'threeColumn' && (
+                  <ThreeColumnLayout logoWidth={logoWidth} />
+                )}
+                {desktopLayout === 'splitRight' && (
+                  <SplitRightLayout logoWidth={logoWidth} />
+                )}
+              </div>
+
+              {/* Mobile layout (below lg) */}
+              <div className="lg:hidden">
+                {mobileLayout === 'balanced' && (
+                  <BalancedLayout logoWidth={logoWidth} />
+                )}
+                {mobileLayout === 'menuLeft' && (
+                  <MenuLeftLayout logoWidth={logoWidth} />
+                )}
+                {mobileLayout === 'brandLeft' && (
+                  <BrandLeftLayout logoWidth={logoWidth} />
+                )}
+              </div>
             </div>
+          </HeaderWrapper>
 
-            {/* Mobile Layout - only show on smaller screens */}
-            <div className="lg:hidden">
-              {mobileLayout === 'balanced' && (
-                <BalancedLayout logoWidth={logoWidth} />
-              )}
-              {mobileLayout === 'menuLeft' && (
-                <MenuLeftLayout logoWidth={logoWidth} />
-              )}
-              {mobileLayout === 'brandLeft' && (
-                <BrandLeftLayout logoWidth={logoWidth} />
-              )}
-            </div>
-          </div>
-
+          {/* Dropdown for mega menu content - outside HeaderWrapper */}
           <MegaMenuDropdown />
-        </MegaMenuProvider>
-      </HeaderWrapper>
+        </div>
+      </MegaMenuProvider>
     </HeaderContext.Provider>
   );
 }
