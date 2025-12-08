@@ -8,7 +8,6 @@ import {useRootLoaderData} from '~/root';
 import {useColorsCssVars} from '~/hooks/use-colors-css-vars';
 
 import {HeaderAnimation} from './header-animation';
-import {HeaderHeightCssVars} from './header-height-css-vars';
 
 export function HeaderWrapper({children}: {children: React.ReactNode}) {
   // Load header data from Sanity
@@ -70,9 +69,6 @@ export function HeaderWrapper({children}: {children: React.ReactNode}) {
           {children}
         </header>
       )}
-
-      {/* Injects --header-height and related CSS vars */}
-      <HeaderHeightCssVars />
     </>
   );
 }
