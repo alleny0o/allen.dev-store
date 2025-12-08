@@ -1,7 +1,7 @@
 // badge-preset.ts
 import {TagIcon} from '@sanity/icons';
 import {defineField, defineType} from 'sanity';
-import {fontWeightField} from '../objects/font/font-weight-field';
+import {fontWeightField} from '../objects/font/font-weight';
 
 export default defineType({
   name: 'badgePreset',

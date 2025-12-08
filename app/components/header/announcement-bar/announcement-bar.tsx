@@ -3,6 +3,7 @@ import React from 'react';
 import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
 import {ChevronLeft, ChevronRight} from 'lucide-react';
 import {useColorsCssVars} from '~/hooks/use-colors-css-vars';
+import { useTypographyCssVars } from '~/hooks/use-typography-css-vars';
 import {useRootLoaderData} from '~/root';
 
 import {
@@ -33,8 +34,6 @@ export function AnnouncementBar() {
   const announcementBar = header?.announcementBar;
   const utilityLinks = header?.utilityLinks;
 
-  const announcementSize = data?.fonts?.announcement?.baseSize ?? 13;
-
   const paddingTop = header?.announcementBarPadding?.top ?? 0;
   const paddingBottom = header?.announcementBarPadding?.bottom ?? 0;
 
@@ -43,6 +42,7 @@ export function AnnouncementBar() {
 
   const isUtilitiesActive = (utilityLinks?.length ?? 0) > 0;
 
+  // Generate color CSS vars
   const colorsCssVars = useColorsCssVars({
     selector: `#announcement-bar`,
     settings: {
@@ -53,6 +53,17 @@ export function AnnouncementBar() {
     },
   });
 
+  // Generate typography CSS vars
+  const announcementTypographyCss = useTypographyCssVars({
+    selector: '#announcement-bar .announcement-text',
+    override: header?.announcementBarTypography,
+  });
+
+  const utilityLinksTypographyCss = useTypographyCssVars({
+    selector: '#announcement-bar .utility-links',
+    override: header?.utilityLinksTypography,
+  });
+
   if (!announcementBar) return null;
 
   return (
@@ -60,18 +71,18 @@ export function AnnouncementBar() {
       className="relative container overflow-hidden bg-background px-0! text-foreground sm:px-0! md:px-0!"
       id="announcement-bar"
       data-announcement-bar
-      style={
-        {
-          '--announcement-size': `${announcementSize}px`,
-        } as React.CSSProperties
-      }
     >
       <div
         className={`${isArrowsActive && isUtilitiesActive ? 'lg:px-(--container-padding)' : ''} ${
           isArrowsActive ? 'lg:pl-(--container-padding)' : ''
         } ${isUtilitiesActive ? 'lg:pr-(--container-padding)' : ''}`}
       >
-        <style dangerouslySetInnerHTML={{__html: colorsCssVars}} />
+        {/* Inject color and typography CSS vars */}
+        <style
+          dangerouslySetInnerHTML={{
+            __html: colorsCssVars + announcementTypographyCss + utilityLinksTypographyCss,
+          }}
+        />
 
         <div className="announcement-text">
           <AnnouncementRotator
@@ -121,7 +132,7 @@ export function AnnouncementBar() {
       </div>
 
       {isUtilitiesActive && (
-        <div className="announcement-text pointer-events-auto absolute top-0 right-(--container-padding) bottom-0 z-10 hidden items-center justify-end gap-4 border-l border-current bg-background pl-4 lg:flex">
+        <div className="utility-links pointer-events-auto absolute top-0 right-(--container-padding) bottom-0 z-10 hidden items-center justify-end gap-4 border-l border-current bg-background pl-4 lg:flex">
           {utilityLinks?.map((link: UtilityLink) => (
             <React.Fragment key={link._key}>
               {link._type === 'internalLink' && (

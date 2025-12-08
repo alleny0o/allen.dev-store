@@ -1,0 +1,12 @@
+/**
+ * FONT TOKEN DEFINITIONS
+ * Maps Sanity font selections into Tailwind theme variables.
+ */
+
+@theme {
+  --font-heading: var(--heading-font-family);
+  --font-body: var(--body-font-family);
+  --font-extra1: var(--extra1-font-family);
+  --font-extra2: var(--extra2-font-family);
+  --font-extra3: var(--extra3-font-family);
+}

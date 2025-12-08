@@ -32,6 +32,13 @@ export default defineType({
       type: 'internationalizedArrayHeaderNavigation',
     }),
     defineField({
+      name: 'navigationTypography',
+      title: 'Navigation typography',
+      type: 'fontStyleOverride',
+      group: 'navigation',
+      description: 'Typography for main navigation links',
+    }),
+    defineField({
       name: 'menuItemGap',
       title: 'Menu item gap',
       type: 'rangeSlider',
@@ -67,11 +74,25 @@ export default defineType({
       type: 'internationalizedArrayAnnouncementBar',
     }),
     defineField({
+      name: 'announcementBarTypography',
+      title: 'Announcement typography',
+      type: 'fontStyleOverride',
+      group: 'announcementBar',
+      description: 'Typography for announcement bar text',
+    }),
+    defineField({
       name: 'utilityLinks',
       title: 'Utility links',
       description: 'Links on the right side (e.g., Help, Stocklists, Services)',
       type: 'internationalizedArrayLinks',
       group: 'announcementBar',
+    }),
+    defineField({
+      name: 'utilityLinksTypography',
+      title: 'Utility links typography',
+      type: 'fontStyleOverride',
+      group: 'announcementBar',
+      description: 'Typography for utility links',
     }),
     defineField({
       name: 'fadeTransition',
@@ -226,6 +247,13 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'actionsTypography',
+      title: 'Actions typography',
+      type: 'fontStyleOverride',
+      group: 'actions',
+      description: 'Typography for action labels (Account, Cart)',
+    }),
+    defineField({
       name: 'cartStyleDesktop',
       title: 'Cart display (desktop)',
       type: 'string',
@@ -266,6 +294,20 @@ export default defineType({
       type: 'reference',
       to: [{type: 'colorScheme'}],
       group: 'megaMenu',
+    }),
+    defineField({
+      name: 'megaMenuHeadingTypography',
+      title: 'Mega menu heading typography',
+      type: 'fontStyleOverride',
+      group: 'megaMenu',
+      description: 'Typography for mega menu section headings',
+    }),
+    defineField({
+      name: 'megaMenuLinkTypography',
+      title: 'Mega menu link typography',
+      type: 'fontStyleOverride',
+      group: 'megaMenu',
+      description: 'Typography for mega menu links',
     }),
     defineField({
       name: 'megaMenuPadding',

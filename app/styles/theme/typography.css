@@ -1,0 +1,100 @@
+/**
+ * TYPOGRAPHY SYSTEM
+ * Unified heading scale, extra fonts, announcement bar text, etc.
+ */
+
+@layer base {
+  /* Heading fundamentals */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--heading-font-family), var(--heading-font-type);
+    font-weight: var(--heading-font-weight);
+    font-style: var(--heading-font-style);
+    letter-spacing: calc(var(--heading-letter-spacing) * 1px);
+    line-height: var(--heading-line-height);
+    text-transform: var(--heading-capitalize);
+    -webkit-font-smoothing: var(--heading-font-webkit-font-smoothing);
+    -moz-osx-font-smoothing: var(--heading-font-moz-osx-font-smoothing);
+  }
+
+  /* Scaled heading sizes */
+  h1 {
+    font-size: calc(var(--heading-base-size) * 1px);
+  }
+  h2 {
+    font-size: calc(var(--heading-base-size) * 0.75 * 1px);
+  }
+  h3 {
+    font-size: calc(var(--heading-base-size) * 0.65 * 1px);
+  }
+  h4 {
+    font-size: calc(var(--heading-base-size) * 0.5 * 1px);
+  }
+  h5 {
+    font-size: calc(var(--heading-base-size) * 0.45 * 1px);
+  }
+  h6 {
+    font-size: calc(var(--heading-base-size) * 0.375 * 1px);
+  }
+
+  /* Extra Typographies ---------------------------- */
+  .extra1-text {
+    font-family: var(--extra1-font-family), var(--extra1-font-type);
+    font-size: calc(var(--extra1-base-size) * 1px);
+    font-weight: var(--extra1-font-weight);
+    font-style: var(--extra1-font-style);
+    line-height: var(--extra1-line-height);
+    letter-spacing: calc(var(--extra1-letter-spacing) * 1px);
+    text-transform: var(--extra1-capitalize);
+    -webkit-font-smoothing: var(--extra1-font-webkit-font-smoothing);
+    -moz-osx-font-smoothing: var(--extra1-font-moz-osx-font-smoothing);
+  }
+
+  .extra2-text {
+    font-family: var(--extra2-font-family), var(--extra2-font-type);
+    font-size: calc(var(--extra2-base-size) * 1px);
+    font-weight: var(--extra2-font-weight);
+    font-style: var(--extra2-font-style);
+    line-height: var(--extra2-line-height);
+    letter-spacing: calc(var(--extra2-letter-spacing) * 1px);
+    text-transform: var(--extra2-capitalize);
+    -webkit-font-smoothing: var(--extra2-font-webkit-font-smoothing);
+    -moz-osx-font-smoothing: var(--extra2-font-moz-osx-font-smoothing);
+  }
+
+  .extra3-text {
+    font-family: var(--extra3-font-family), var(--extra3-font-type);
+    font-size: calc(var(--extra3-base-size) * 1px);
+    font-weight: var(--extra3-font-weight);
+    font-style: var(--extra3-font-style);
+    line-height: var(--extra3-line-height);
+    letter-spacing: calc(var(--extra3-letter-spacing) * 1px);
+    text-transform: var(--extra3-capitalize);
+    -webkit-font-smoothing: var(--extra3-font-webkit-font-smoothing);
+    -moz-osx-font-smoothing: var(--extra3-font-moz-osx-font-smoothing);
+  }
+
+  /* Announcement Bar Text */
+  #announcement-bar .announcement-text,
+  #announcement-bar .utility-links {
+    font-family: var(--t-font-family), var(--t-font-type);
+    font-size: calc(var(--t-font-size) * 1px);
+    font-weight: var(--t-font-weight);
+    font-style: var(--t-font-style);
+    line-height: var(--t-line-height);
+    letter-spacing: calc(var(--t-letter-spacing) * 1px);
+    text-transform: var(--t-text-transform);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Announcement arrow size */
+  #announcement-bar .announcement-arrow {
+    width: calc(var(--t-font-size) * 1px + 3px);
+    height: calc(var(--t-font-size) * 1px + 3px);
+  }
+}

@@ -59,6 +59,8 @@ import megaMenu from './objects/navigation/mega-menu';
  */
 import fontAsset from './objects/font/font-asset';
 import fontCategory from './objects/font/font-category';
+import fontStyleOverride from './objects/font/font-style-override';
+import fontWeight from './objects/font/font-weight';
 
 /**
  * FOOTER OBJECTS
@@ -179,6 +181,8 @@ const objects = [
   /* Font */
   fontAsset,
   fontCategory,
+  fontStyleOverride,
+  fontWeight,
 
   /* Shopify */
   inventory,

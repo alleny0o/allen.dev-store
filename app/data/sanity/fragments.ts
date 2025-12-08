@@ -213,90 +213,6 @@ export const SETTINGS_FRAGMENT = defineQuery(`{
 }`);
 
 /**
- * HEADER FRAGMENT
- * Localized header configuration, appearance, layout, actions, and mega menu.
- */
-export const HEADER_FRAGMENT = defineQuery(`{
-  // Announcement bar (localized)
-  "announcementBar": coalesce(
-    announcementBar[_key == $language][0].value[],
-    announcementBar[_key == $defaultLanguage][0].value[],
-  )[] {
-    _type == "announcement" => {
-      _key,
-      externalLink,
-      link -> ${LINK_REFERENCE_FRAGMENT},
-      openInNewTab,
-      text,
-    },
-  },
-
-  // Utility links (localized)
-  "utilityLinks": coalesce(
-    utilityLinks[_key == $language][0].value[],
-    utilityLinks[_key == $defaultLanguage][0].value[],
-  )[] ${LINKS_LIST_SELECTION},
-
-  // Announcement bar appearance
-  announcementBarColorScheme -> ${COLOR_SCHEME_FRAGMENT},
-  fadeTransition,
-  autoRotateAnnouncements,
-  announcementBarPadding,
-  showAnnouncementArrows,
-  announcementBarTextSize,
-
-  // Navigation menu (localized)
-  "menu": coalesce(
-    menu[_key == $language][0].value[],
-    menu[_key == $defaultLanguage][0].value[],
-  )[] ${LINKS_LIST_SELECTION},
-  menuItemGap,
-  menuItemPaddingX,
-  menuItemPaddingY,
-
-  // Header appearance
-  colorScheme -> ${COLOR_SCHEME_FRAGMENT},
-  blur,
-  separatorLine {
-    show,
-    opacity,
-    height,
-  },
-
-  // Layout (desktop + mobile)
-  desktopLayout,
-  mobileLayout,
-  desktopLogoWidth,
-  headerMinHeight,
-
-  // Actions (account, wishlist, cart, localization)
-  showLocalizationSelector,
-  showWishlist,
-  accountStyleDesktop,
-  cartStyleDesktop,
-  cartStyleMobile,
-
-  // Mega menu appearance
-  megaMenuColorScheme -> ${COLOR_SCHEME_FRAGMENT},
-  megaMenuPadding,
-  megaMenuSeparatorLine {
-    show,
-    opacity,
-    height,
-  },
-
-  // Mega menu behavior
-  megaMenuBehavior,
-  allowMegaMenuParentLinks,
-  megaMenuDisableScroll,
-  megaMenuShowOverlay,
-  megaMenuOverlayOpacity,
-
-  // Global behavior
-  sticky,
-}`);
-
-/**
  * FONT FRAGMENTS
  * Handles font families, assets, sizing, and typography rules.
  */
@@ -324,6 +240,21 @@ export const FONT_FRAGMENT = defineQuery(`{
   },
   letterSpacing,
   lineHeight,
+}`);
+
+/**
+ * FONT STYLE OVERRIDE FRAGMENT
+ * Component-level typography overrides (role + optional customizations).
+ */
+export const FONT_STYLE_OVERRIDE_FRAGMENT = defineQuery(`{
+  role,
+  enabled,
+  fontWeight,
+  fontSize,
+  fontStyle,
+  letterSpacing,
+  lineHeight,
+  capitalize,
 }`);
 
 /**
@@ -384,4 +315,93 @@ export const PRODUCT_SECTION_DESIGN_FRAGMENT = defineQuery(`{
   showThumbnailsOnMobile,
   mediaInteraction,
   showDots
+}`);
+
+/**
+ * HEADER FRAGMENT
+ * Localized header configuration, appearance, layout, actions, and mega menu.
+ */
+export const HEADER_FRAGMENT = defineQuery(`{
+  // Announcement bar (localized)
+  "announcementBar": coalesce(
+    announcementBar[_key == $language][0].value[],
+    announcementBar[_key == $defaultLanguage][0].value[],
+  )[] {
+    _type == "announcement" => {
+      _key,
+      externalLink,
+      link -> ${LINK_REFERENCE_FRAGMENT},
+      openInNewTab,
+      text,
+    },
+  },
+
+  // Utility links (localized)
+  "utilityLinks": coalesce(
+    utilityLinks[_key == $language][0].value[],
+    utilityLinks[_key == $defaultLanguage][0].value[],
+  )[] ${LINKS_LIST_SELECTION},
+
+  // Announcement bar appearance
+  announcementBarColorScheme -> ${COLOR_SCHEME_FRAGMENT},
+  announcementBarTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
+  utilityLinksTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
+  fadeTransition,
+  autoRotateAnnouncements,
+  announcementBarPadding,
+  showAnnouncementArrows,
+
+  // Navigation menu (localized)
+  "menu": coalesce(
+    menu[_key == $language][0].value[],
+    menu[_key == $defaultLanguage][0].value[],
+  )[] ${LINKS_LIST_SELECTION},
+  navigationTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
+  menuItemGap,
+  menuItemPaddingX,
+  menuItemPaddingY,
+
+  // Header appearance
+  colorScheme -> ${COLOR_SCHEME_FRAGMENT},
+  blur,
+  separatorLine {
+    show,
+    opacity,
+    height,
+  },
+
+  // Layout (desktop + mobile)
+  desktopLayout,
+  mobileLayout,
+  desktopLogoWidth,
+  headerMinHeight,
+
+  // Actions (account, wishlist, cart, localization)
+  showLocalizationSelector,
+  showWishlist,
+  accountStyleDesktop,
+  actionsTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
+  cartStyleDesktop,
+  cartStyleMobile,
+
+  // Mega menu appearance
+  megaMenuColorScheme -> ${COLOR_SCHEME_FRAGMENT},
+  megaMenuHeadingTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
+  megaMenuLinkTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
+  megaMenuPadding,
+  megaMenuSeparatorLine {
+    show,
+    opacity,
+    height,
+  },
+
+  // Mega menu behavior
+  megaMenuBehavior,
+  allowMegaMenuParentLinks,
+  megaMenuDisableScroll,
+  megaMenuShowOverlay,
+  megaMenuOverlayOpacity,
+
+  // Global behavior
+  sticky,
 }`);

@@ -1,5 +1,5 @@
 import {stegaClean} from '@sanity/client/stega';
-import type {FontsQuery} from '~/lib/fonts';
+import type {FontsQuery} from '~/lib/fonts/fonts';
 import {useRootLoaderData} from '~/root';
 
 type FontAssetsFragment = NonNullable<
@@ -46,23 +46,37 @@ export function getFonts({fontsData}: {fontsData: FontsQuery}) {
       ? fontsData.body.font[0].fontAssets
       : [];
 
-  const extraFonts =
-    fontsData?.extra?.font &&
-    fontsData.extra.font?.length > 0 &&
-    fontsData.extra.font[0]?.fontAssets?.length &&
-    fontsData.extra.font[0]?.fontAssets?.length > 0
-      ? fontsData.extra.font[0]?.fontAssets
+  const extra1Fonts =
+    fontsData?.extra1?.font &&
+    fontsData.extra1.font?.length > 0 &&
+    fontsData.extra1.font[0]?.fontAssets?.length &&
+    fontsData.extra1.font[0]?.fontAssets?.length > 0
+      ? fontsData.extra1.font[0]?.fontAssets
       : [];
 
-  const logoFonts =
-    fontsData?.logo?.font &&
-    fontsData.logo.font.length > 0 &&
-    fontsData.logo.font[0].fontAssets?.length &&
-    fontsData.logo.font[0].fontAssets?.length > 0
-      ? fontsData.logo.font[0].fontAssets
+  const extra2Fonts =
+    fontsData?.extra2?.font &&
+    fontsData.extra2.font?.length > 0 &&
+    fontsData.extra2.font[0]?.fontAssets?.length &&
+    fontsData.extra2.font[0]?.fontAssets?.length > 0
+      ? fontsData.extra2.font[0]?.fontAssets
       : [];
 
-  return [...headingFonts, ...bodyFonts, ...extraFonts, ...logoFonts];
+  const extra3Fonts =
+    fontsData?.extra3?.font &&
+    fontsData.extra3.font?.length > 0 &&
+    fontsData.extra3.font[0]?.fontAssets?.length &&
+    fontsData.extra3.font[0]?.fontAssets?.length > 0
+      ? fontsData.extra3.font[0]?.fontAssets
+      : [];
+
+  return [
+    ...headingFonts,
+    ...bodyFonts,
+    ...extra1Fonts,
+    ...extra2Fonts,
+    ...extra3Fonts,
+  ];
 }
 
 function generateFontFaces({fontsData}: {fontsData: FontsQuery}) {
@@ -105,7 +119,9 @@ function generateCssFontVariables({fontsData}: {fontsData: FontsQuery}) {
     capitalize?: boolean | null;
     categoryName?: string;
     fontName?: null | string;
+    fontStyle?: null | string;
     fontType?: null | string;
+    fontWeight?: null | number;
     letterSpacing?: null | number;
     lineHeight?: null | number;
   }> = [];
@@ -134,91 +150,83 @@ function generateCssFontVariables({fontsData}: {fontsData: FontsQuery}) {
     ...fontsData?.body?.font?.[0],
   });
 
-  // Extra
+  // Extra 1
   fontCategories.push({
-    baseSize: fontsData?.extra?.baseSize,
-    capitalize: fontsData?.extra?.capitalize,
-    categoryName: 'extra',
-    fontName: fontsData?.extra?.font?.[0]?.fontName || defaultFontFamily,
-    fontType: fontsData?.extra?.font?.[0]?.fontType || 'unset',
-    letterSpacing: fontsData?.extra?.letterSpacing,
-    lineHeight: fontsData?.extra?.lineHeight,
-    ...fontsData?.extra?.font?.[0],
+    baseSize: fontsData?.extra1?.baseSize,
+    capitalize: fontsData?.extra1?.capitalize,
+    categoryName: 'extra1',
+    fontName: fontsData?.extra1?.font?.[0]?.fontName || defaultFontFamily,
+    fontType: fontsData?.extra1?.font?.[0]?.fontType || 'unset',
+    letterSpacing: fontsData?.extra1?.letterSpacing,
+    lineHeight: fontsData?.extra1?.lineHeight,
+    ...fontsData?.extra1?.font?.[0],
   });
 
-  // Nav (uses body font)
+  // Extra 2
   fontCategories.push({
-    baseSize: fontsData?.nav?.baseSize,
-    capitalize: fontsData?.nav?.capitalize,
-    categoryName: 'nav',
-    fontName: fontsData?.body?.font?.[0]?.fontName || defaultFontFamily,
-    fontType: fontsData?.body?.font?.[0]?.fontType || 'unset',
-    letterSpacing: fontsData?.nav?.letterSpacing,
-    lineHeight: fontsData?.nav?.lineHeight,
+    baseSize: fontsData?.extra2?.baseSize,
+    capitalize: fontsData?.extra2?.capitalize,
+    categoryName: 'extra2',
+    fontName: fontsData?.extra2?.font?.[0]?.fontName || defaultFontFamily,
+    fontType: fontsData?.extra2?.font?.[0]?.fontType || 'unset',
+    letterSpacing: fontsData?.extra2?.letterSpacing,
+    lineHeight: fontsData?.extra2?.lineHeight,
+    ...fontsData?.extra2?.font?.[0],
   });
 
-  // Announcement (uses body font)
+  // Extra 3
   fontCategories.push({
-    baseSize: fontsData?.announcement?.baseSize,
-    capitalize: fontsData?.announcement?.capitalize,
-    categoryName: 'announcement',
-    fontName: fontsData?.body?.font?.[0]?.fontName || defaultFontFamily,
-    fontType: fontsData?.body?.font?.[0]?.fontType || 'unset',
-    letterSpacing: fontsData?.announcement?.letterSpacing,
-    lineHeight: fontsData?.announcement?.lineHeight,
-  });
-
-  // Logo (uses its own font)
-  fontCategories.push({
-    baseSize: fontsData?.logo?.baseSize,
-    capitalize: fontsData?.logo?.capitalize,
-    categoryName: 'logo',
-    fontName: fontsData?.logo?.font?.[0]?.fontName || defaultFontFamily,
-    fontType: fontsData?.logo?.font?.[0]?.fontType || 'unset',
-    letterSpacing: fontsData?.logo?.letterSpacing,
-    lineHeight: fontsData?.logo?.lineHeight,
-    ...fontsData?.logo?.font?.[0],
+    baseSize: fontsData?.extra3?.baseSize,
+    capitalize: fontsData?.extra3?.capitalize,
+    categoryName: 'extra3',
+    fontName: fontsData?.extra3?.font?.[0]?.fontName || defaultFontFamily,
+    fontType: fontsData?.extra3?.font?.[0]?.fontType || 'unset',
+    letterSpacing: fontsData?.extra3?.letterSpacing,
+    lineHeight: fontsData?.extra3?.lineHeight,
+    ...fontsData?.extra3?.font?.[0],
   });
 
   if (fontCategories?.length > 0) {
     return `
       :root {
-        ${fontVariables()}
+        ${fontCategories
+          .map((fontCategory) => {
+            return `
+              --${fontCategory.categoryName}-font-family: ${
+                fontCategory.fontName ?? 'unset'
+              };
+              --${fontCategory.categoryName}-font-type: ${
+                fontCategory.fontType ?? 'unset'
+              };
+              --${fontCategory.categoryName}-line-height: ${
+                fontCategory.lineHeight ?? 'unset'
+              };
+              --${fontCategory.categoryName}-letter-spacing: ${
+                fontCategory.letterSpacing ?? 'unset'
+              };
+              --${fontCategory.categoryName}-base-size: ${
+                fontCategory.baseSize ?? 'unset'
+              };
+              --${fontCategory.categoryName}-capitalize: ${
+                fontCategory.capitalize ? 'uppercase' : 'none'
+              };
+              --${fontCategory.categoryName}-font-webkit-font-smoothing: ${
+                fontCategory.antialiased ? 'antialiased' : 'unset'
+              };
+              --${fontCategory.categoryName}-font-moz-osx-font-smoothing: ${
+                fontCategory.antialiased ? 'grayscale' : 'unset'
+              };
+              --${fontCategory.categoryName}-font-weight: ${
+                fontCategory.fontWeight ?? 'unset'
+              };
+              --${fontCategory.categoryName}-font-style: ${
+                fontCategory.fontStyle ?? 'unset'
+              };
+            `.trim();
+          })
+          .join('\n')}
       }
     `.trim();
-  }
-
-  function fontVariables() {
-    return fontCategories
-      .map((fontCategory) => {
-        return `
-        --${fontCategory.categoryName}-font-family: ${
-          fontCategory.fontName ?? 'unset'
-        };
-        --${fontCategory.categoryName}-font-type: ${
-          fontCategory.fontType ?? 'unset'
-        };
-        --${fontCategory.categoryName}-line-height: ${
-          fontCategory.lineHeight ?? 'unset'
-        };
-        --${fontCategory.categoryName}-letter-spacing: ${
-          fontCategory.letterSpacing ?? 'unset'
-        };
-        --${fontCategory.categoryName}-base-size: ${
-          fontCategory.baseSize ?? 'unset'
-        };
-        --${fontCategory.categoryName}-capitalize: ${
-          fontCategory.capitalize ? 'uppercase' : 'none'
-        };
-        --${fontCategory.categoryName}-font-webkit-font-smoothing: ${
-          fontCategory.antialiased ? 'antialiased' : 'unset'
-        };
-        --${fontCategory.categoryName}-font-moz-osx-font-smoothing: ${
-          fontCategory.antialiased ? 'grayscale' : 'unset'
-        };
-        `.trim();
-      })
-      .join('\n');
   }
 
   return '';

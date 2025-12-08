@@ -37,7 +37,7 @@ import {useLocalePath} from './hooks/use-locale-path';
 
 // helpers
 import {resolveShopifyPromises} from './lib/resolve-shopify-promises';
-import {generateFontsPreloadLinks} from './lib/fonts';
+import {generateFontsPreloadLinks} from './lib/fonts/fonts';
 import {generateFaviconUrls} from './lib/generate-favicon-urls';
 
 // locale resolver

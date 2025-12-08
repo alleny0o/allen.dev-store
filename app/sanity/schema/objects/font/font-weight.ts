@@ -12,15 +12,14 @@ export const fontWeights = [
   {title: 'Black - 900', value: 900},
 ];
 
-export const fontWeightField = (options?: {initialValue?: number}) =>
-  defineField({
-    type: 'number',
-    name: 'fontWeight',
-    title: 'Font weight',
-    validation: (Rule) => Rule.required(),
-    options: {
-      list: fontWeights,
-      layout: 'dropdown',
-    },
-    initialValue: options?.initialValue ?? 400,
-  });
+export default defineField({
+  name: 'fontWeight',
+  title: 'Font Weight',
+  type: 'number',
+  validation: (Rule) => Rule.required(),
+  options: {
+    list: fontWeights,
+    layout: 'dropdown',
+  },
+  initialValue: 400,
+});

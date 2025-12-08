@@ -45,12 +45,11 @@ export const ROOT_QUERY = defineQuery(`{
   '_type': 'root',
   "defaultColorScheme": *[_type == "colorScheme" && default == true][0] ${COLOR_SCHEME_FRAGMENT},
   "fonts": *[_type == "typography"][0] {
-    body ${FONT_FRAGMENT},
     heading ${FONT_FRAGMENT},
-    nav,
-    announcement,
-    logo ${FONT_FRAGMENT},
-    extra ${FONT_FRAGMENT},
+    body ${FONT_FRAGMENT},
+    extra1 ${FONT_FRAGMENT},
+    extra2 ${FONT_FRAGMENT},
+    extra3 ${FONT_FRAGMENT},
   },
   "footer": *[_type == 'footer'][0] {
     "footer": footers[0] {

@@ -1,0 +1,31 @@
+/**
+ * GLOBAL BASE STYLES
+ * Universal resets, borders, focus states, buttons, etc.
+ */
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+
+    &:focus-visible {
+      outline-color: var(--color-ring);
+    }
+  }
+
+  button,
+  [role='button'] {
+    cursor: pointer;
+  }
+
+  /* Body typography settings */
+  body {
+    font-family: var(--body-font-family), var(--body-font-type);
+    font-size: calc(var(--body-base-size) * 1px);
+    font-weight: var(--body-font-weight);
+    font-style: var(--body-font-style);
+    line-height: var(--body-line-height);
+    letter-spacing: calc(var(--body-letter-spacing) * 1px);
+    -webkit-font-smoothing: var(--body-font-webkit-font-smoothing);
+    -moz-osx-font-smoothing: var(--body-font-moz-osx-font-smoothing);
+  }
+}

@@ -2786,6 +2786,14 @@
         },
         "optional": true
       },
+      "navigationTypography": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "fontStyleOverride"
+        },
+        "optional": true
+      },
       "menuItemGap": {
         "type": "objectAttribute",
         "value": {
@@ -2818,11 +2826,27 @@
         },
         "optional": true
       },
+      "announcementBarTypography": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "fontStyleOverride"
+        },
+        "optional": true
+      },
       "utilityLinks": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
           "name": "internationalizedArrayLinks"
+        },
+        "optional": true
+      },
+      "utilityLinksTypography": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "fontStyleOverride"
         },
         "optional": true
       },
@@ -3023,6 +3047,14 @@
         },
         "optional": true
       },
+      "actionsTypography": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "fontStyleOverride"
+        },
+        "optional": true
+      },
       "cartStyleDesktop": {
         "type": "objectAttribute",
         "value": {
@@ -3084,6 +3116,22 @@
             }
           },
           "dereferencesTo": "colorScheme"
+        },
+        "optional": true
+      },
+      "megaMenuHeadingTypography": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "fontStyleOverride"
+        },
+        "optional": true
+      },
+      "megaMenuLinkTypography": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "fontStyleOverride"
         },
         "optional": true
       },
@@ -3237,6 +3285,114 @@
           "value": {
             "type": "inline",
             "name": "rangeSlider"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "fontStyleOverride",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "fontStyleOverride"
+          }
+        },
+        "role": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "heading"
+              },
+              {
+                "type": "string",
+                "value": "body"
+              },
+              {
+                "type": "string",
+                "value": "extra1"
+              },
+              {
+                "type": "string",
+                "value": "extra2"
+              },
+              {
+                "type": "string",
+                "value": "extra3"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "enabled": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "fontWeight": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "fontWeight"
+          },
+          "optional": true
+        },
+        "fontSize": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
+          },
+          "optional": true
+        },
+        "fontStyle": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "normal"
+              },
+              {
+                "type": "string",
+                "value": "italic"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "letterSpacing": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
+          },
+          "optional": true
+        },
+        "lineHeight": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
+          },
+          "optional": true
+        },
+        "capitalize": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
           },
           "optional": true
         }
@@ -4489,39 +4645,6 @@
               },
               "optional": true
             },
-            "baseSize": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "inline",
-                "name": "rangeSlider"
-              },
-              "optional": true
-            },
-            "letterSpacing": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "inline",
-                "name": "rangeSlider"
-              },
-              "optional": true
-            },
-            "lineHeight": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "inline",
-                "name": "rangeSlider"
-              },
-              "optional": true
-            }
-          }
-        },
-        "optional": true
-      },
-      "nav": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "object",
-          "attributes": {
             "capitalize": {
               "type": "objectAttribute",
               "value": {
@@ -4557,47 +4680,7 @@
         },
         "optional": true
       },
-      "announcement": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "object",
-          "attributes": {
-            "capitalize": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "boolean"
-              },
-              "optional": true
-            },
-            "baseSize": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "inline",
-                "name": "rangeSlider"
-              },
-              "optional": true
-            },
-            "letterSpacing": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "inline",
-                "name": "rangeSlider"
-              },
-              "optional": true
-            },
-            "lineHeight": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "inline",
-                "name": "rangeSlider"
-              },
-              "optional": true
-            }
-          }
-        },
-        "optional": true
-      },
-      "logo": {
+      "extra1": {
         "type": "objectAttribute",
         "value": {
           "type": "object",
@@ -4631,7 +4714,62 @@
               },
               "optional": true
             },
-            "italic": {
+            "baseSize": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            },
+            "letterSpacing": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            },
+            "lineHeight": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
+      "extra2": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "font": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "array",
+                "of": {
+                  "type": "object",
+                  "attributes": {
+                    "_key": {
+                      "type": "objectAttribute",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "rest": {
+                    "type": "inline",
+                    "name": "fontCategory"
+                  }
+                }
+              },
+              "optional": true
+            },
+            "capitalize": {
               "type": "objectAttribute",
               "value": {
                 "type": "boolean"
@@ -4666,7 +4804,7 @@
         },
         "optional": true
       },
-      "extra": {
+      "extra3": {
         "type": "objectAttribute",
         "value": {
           "type": "object",
@@ -5187,6 +5325,51 @@
     }
   },
   {
+    "name": "fontWeight",
+    "type": "type",
+    "value": {
+      "type": "union",
+      "of": [
+        {
+          "type": "number",
+          "value": 100
+        },
+        {
+          "type": "number",
+          "value": 200
+        },
+        {
+          "type": "number",
+          "value": 300
+        },
+        {
+          "type": "number",
+          "value": 400
+        },
+        {
+          "type": "number",
+          "value": 500
+        },
+        {
+          "type": "number",
+          "value": 600
+        },
+        {
+          "type": "number",
+          "value": 700
+        },
+        {
+          "type": "number",
+          "value": 800
+        },
+        {
+          "type": "number",
+          "value": 900
+        }
+      ]
+    }
+  },
+  {
     "name": "fontCategory",
     "type": "type",
     "value": {
@@ -5447,45 +5630,8 @@
         "fontWeight": {
           "type": "objectAttribute",
           "value": {
-            "type": "union",
-            "of": [
-              {
-                "type": "number",
-                "value": 100
-              },
-              {
-                "type": "number",
-                "value": 200
-              },
-              {
-                "type": "number",
-                "value": 300
-              },
-              {
-                "type": "number",
-                "value": 400
-              },
-              {
-                "type": "number",
-                "value": 500
-              },
-              {
-                "type": "number",
-                "value": 600
-              },
-              {
-                "type": "number",
-                "value": 700
-              },
-              {
-                "type": "number",
-                "value": 800
-              },
-              {
-                "type": "number",
-                "value": 900
-              }
-            ]
+            "type": "inline",
+            "name": "fontWeight"
           },
           "optional": true
         }
