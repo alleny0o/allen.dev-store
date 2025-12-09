@@ -6,7 +6,10 @@ import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
 type HeaderMenu = NonNullable<NonNullable<ROOT_QUERYResult['header']>['menu']>;
 type MenuItem = HeaderMenu[number];
 type MegaMenuType = Extract<MenuItem, {_type: 'megaMenu'}>;
-type LinkSectionType = Extract<NonNullable<MegaMenuType['content']>[number], {_type: 'linkSection'}>;
+type LinkSectionType = Extract<
+  NonNullable<MegaMenuType['content']>[number],
+  {_type: 'linkSection'}
+>;
 
 interface LinkSectionProps {
   data: LinkSectionType;
@@ -14,10 +17,10 @@ interface LinkSectionProps {
 
 export function LinkSection({data}: LinkSectionProps) {
   return (
-    <div className="col-span-3">
+    <nav className="col-span-3" aria-label={data.heading || 'Menu section'}>
       <div className="space-y-4">
         {data.heading && (
-          <h3 className="font-semibold text-lg">
+          <h3 className="mega-menu-heading">
             {data.headingLink ? (
               <SanityReferenceLink data={data.headingLink}>
                 {data.heading}
@@ -27,10 +30,11 @@ export function LinkSection({data}: LinkSectionProps) {
             )}
           </h3>
         )}
-        {data.links && (
-          <ul className="space-y-2">
+        
+        {data.links && data.links.length > 0 && (
+          <ul className="space-y-4">
             {data.links.map((link) => (
-              <li key={link._key}>
+              <li key={link._key} className="mega-menu-link">
                 {link._type === 'internalLink' && (
                   <SanityInternalLink data={link} />
                 )}
@@ -42,6 +46,6 @@ export function LinkSection({data}: LinkSectionProps) {
           </ul>
         )}
       </div>
-    </div>
+    </nav>
   );
 }

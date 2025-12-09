@@ -1,6 +1,7 @@
 /**
- * INLINE THEME COLORS
- * Converts CSS custom properties to Tailwind-compatible color tokens.
+ * THEME COLOR DEFINITIONS
+ * Converts Sanity CMS color scheme variables into Tailwind-compatible
+ * color tokens using inline theme declarations for dynamic theming.
  */
 
 @theme inline {

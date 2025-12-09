@@ -1,6 +1,7 @@
 /**
- * ANIMATIONS
- * Accordion open/close + future animation tokens.
+ * ANIMATION DEFINITIONS
+ * Theme-level animation tokens and keyframes for UI components.
+ * Currently includes accordion animations with room for expansion.
  */
 
 @theme {

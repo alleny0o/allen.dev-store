@@ -3,7 +3,7 @@ import React from 'react';
 import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
 import {ChevronLeft, ChevronRight} from 'lucide-react';
 import {useColorsCssVars} from '~/hooks/use-colors-css-vars';
-import { useTypographyCssVars } from '~/hooks/use-typography-css-vars';
+import {useTypographyCssVars} from '~/hooks/use-typography-css-vars';
 import {useRootLoaderData} from '~/root';
 
 import {
@@ -80,11 +80,14 @@ export function AnnouncementBar() {
         {/* Inject color and typography CSS vars */}
         <style
           dangerouslySetInnerHTML={{
-            __html: colorsCssVars + announcementTypographyCss + utilityLinksTypographyCss,
+            __html:
+              colorsCssVars +
+              announcementTypographyCss +
+              utilityLinksTypographyCss,
           }}
         />
 
-        <div className="announcement-text">
+        <div>
           <AnnouncementRotator
             autoRotate={header?.autoRotateAnnouncements ?? false}
             transitionMode={header?.fadeTransition ? 'fade' : 'slide'}
@@ -94,6 +97,7 @@ export function AnnouncementBar() {
               <div className="pointer-events-auto absolute top-0 bottom-0 left-0 z-10 hidden items-center gap-0 bg-background lg:flex">
                 <AnnouncementRotatorPrevious className="shrink-0 rounded-md">
                   <ChevronLeft
+                    strokeWidth={1.5}
                     className="announcement-arrow"
                     aria-hidden="true"
                   />
@@ -101,6 +105,7 @@ export function AnnouncementBar() {
 
                 <AnnouncementRotatorNext className="shrink-0 rounded-md">
                   <ChevronRight
+                    strokeWidth={1.5}
                     className="announcement-arrow"
                     aria-hidden="true"
                   />
@@ -121,7 +126,7 @@ export function AnnouncementBar() {
             >
               {announcementBar.map((item: AnnouncementBarEntry) => (
                 <AnnouncementRotatorItem key={item._key}>
-                  <div className="flex items-center justify-center lg:px-[var(--container-padding)*2]">
+                  <div className="announcement-text flex items-center justify-center lg:px-[var(--container-padding)*2]">
                     <AnnouncementItem {...item} />
                   </div>
                 </AnnouncementRotatorItem>

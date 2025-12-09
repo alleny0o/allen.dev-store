@@ -1,6 +1,7 @@
 /**
  * FONT TOKEN DEFINITIONS
- * Maps Sanity font selections into Tailwind theme variables.
+ * Theme-level font family mappings that connect Sanity CMS font selections
+ * to Tailwind CSS custom properties for consistent typography theming.
  */
 
 @theme {

@@ -1,6 +1,7 @@
 /**
  * GLOBAL BASE STYLES
- * Universal resets, borders, focus states, buttons, etc.
+ * Universal resets, borders, focus states, buttons, and core element styling.
+ * Contains fundamental CSS that applies to all elements across the site.
  */
 
 @layer base {

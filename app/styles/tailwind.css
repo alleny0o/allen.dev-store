@@ -13,4 +13,4 @@
 
 /* Base Styles ----------------------------------------------------- */
 @import './base/globals.css';
-@import './theme/typography.css';
+@import './base/typography.css';

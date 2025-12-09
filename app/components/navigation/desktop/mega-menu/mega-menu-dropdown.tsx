@@ -5,6 +5,7 @@ import {ImageBlock} from './sections/image-block';
 import {useRef, useEffect, useState} from 'react';
 import {useHeaderSettings} from '~/components/header/header-context';
 import {useColorsCssVars} from '~/hooks/use-colors-css-vars';
+import {useTypographyCssVars} from '~/hooks/use-typography-css-vars';
 
 export function MegaMenuDropdown() {
   const header = useHeaderSettings();
@@ -20,6 +21,17 @@ export function MegaMenuDropdown() {
       padding: header?.megaMenuPadding, // Header does not use padding
       separatorLine: header?.megaMenuSeparatorLine ?? null,
     },
+  });
+
+  // Generate typography CSS vars
+  const megaMenuHeadingTypographyCss = useTypographyCssVars({
+    selector: '#mega-menu-dropdown .mega-menu-heading',
+    override: header?.megaMenuHeadingTypography,
+  });
+
+  const megaMenuLinkTypographyCss = useTypographyCssVars({
+    selector: '#mega-menu-dropdown .mega-menu-link',
+    override: header?.megaMenuLinkTypography,
   });
 
   useEffect(() => {
@@ -81,7 +93,14 @@ export function MegaMenuDropdown() {
 
   return (
     <>
-      <style dangerouslySetInnerHTML={{__html: megaDropdownCssVars}} />
+      <style
+        dangerouslySetInnerHTML={{
+          __html:
+            megaDropdownCssVars +
+            megaMenuHeadingTypographyCss +
+            megaMenuLinkTypographyCss,
+        }}
+      />
 
       <div
         ref={dropdownRef}

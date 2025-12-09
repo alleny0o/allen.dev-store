@@ -1,6 +1,7 @@
 /**
  * TYPOGRAPHY SYSTEM
- * Unified heading scale, extra fonts, announcement bar text, etc.
+ * Base layer typography styles including heading scales, extra font classes,
+ * and specialized text styling for announcements and UI elements.
  */
 
 @layer base {
@@ -94,7 +95,32 @@
 
   /* Announcement arrow size */
   #announcement-bar .announcement-arrow {
-    width: calc(var(--t-font-size) * 1px + 3px);
-    height: calc(var(--t-font-size) * 1px + 3px);
+    width: calc(var(--t-font-size) * 1px + 4px);
+    height: calc(var(--t-font-size) * 1px + 4px);
+  }
+
+  /* Mega Menu Dropdown Text */
+  #mega-menu-dropdown .mega-menu-heading {
+    font-family: var(--t-font-family), var(--t-font-type);
+    font-size: calc(var(--t-font-size) * 1px);
+    font-weight: var(--t-font-weight);
+    font-style: var(--t-font-style);
+    line-height: var(--t-line-height);
+    letter-spacing: calc(var(--t-letter-spacing) * 1px);
+    text-transform: var(--t-text-transform);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #mega-menu-dropdown .mega-menu-link {
+    font-family: var(--t-font-family), var(--t-font-type);
+    font-size: calc(var(--t-font-size) * 1px);
+    font-weight: var(--t-font-weight);
+    font-style: var(--t-font-style);
+    line-height: var(--t-line-height);
+    letter-spacing: calc(var(--t-letter-spacing) * 1px);
+    text-transform: var(--t-text-transform);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
