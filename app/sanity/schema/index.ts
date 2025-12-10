@@ -46,12 +46,14 @@ import sectionsList, {
  */
 import anchor from './objects/navigation/anchor';
 import externalLink from './objects/navigation/external-link';
-import headerNavigation from './objects/navigation/header-navigation';
+import headerNavigation from './objects/navigation/menus/header/header-navigation';
 import internalButton from './objects/navigation/internal-button';
 import internalLink from './objects/navigation/internal-link';
 import link from './objects/navigation/link';
 import links from './objects/navigation/links';
-import megaMenu from './objects/navigation/mega-menu';
+import megaMenu from './objects/navigation/menus/mega-menu/mega-menu';
+import linkSection from './objects/navigation/menus/mega-menu/sections/link-section';
+import imageBlock from './objects/navigation/menus/mega-menu/sections/image-block';
 
 /**
  * FONT OBJECTS
@@ -177,6 +179,8 @@ const objects = [
   link,
   links,
   megaMenu,
+  linkSection,
+  imageBlock,
 
   /* Font */
   fontAsset,
