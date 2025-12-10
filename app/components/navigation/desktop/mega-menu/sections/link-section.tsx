@@ -1,3 +1,5 @@
+// mega-menu/sections/link-section.tsx
+
 import {SanityInternalLink} from '~/components/sanity/link/sanity-internal-link';
 import {SanityExternalLink} from '~/components/sanity/link/sanity-external-link';
 import {SanityReferenceLink} from '~/components/sanity/link/sanity-reference-link';
@@ -13,11 +15,12 @@ type LinkSectionType = Extract<
 
 interface LinkSectionProps {
   data: LinkSectionType;
+  className?: string;
 }
 
-export function LinkSection({data}: LinkSectionProps) {
+export function LinkSection({data, className}: LinkSectionProps) {
   return (
-    <nav className="col-span-3" aria-label={data.heading || 'Menu section'}>
+    <nav className={className} aria-label={data.heading || 'Menu section'}>
       <div className="space-y-4">
         {data.heading && (
           <h3 className="mega-menu-heading">
@@ -30,7 +33,7 @@ export function LinkSection({data}: LinkSectionProps) {
             )}
           </h3>
         )}
-        
+
         {data.links && data.links.length > 0 && (
           <ul className="space-y-4">
             {data.links.map((link) => (
