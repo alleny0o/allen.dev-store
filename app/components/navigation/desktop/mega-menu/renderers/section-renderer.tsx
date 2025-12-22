@@ -1,12 +1,7 @@
 // mega-menu/renderers/section-renderer.tsx
-
-import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
 import {LinkSection} from '../sections/link-section';
 import {SECTION_PRESETS, type SectionPreset} from '../config/layout-presets';
-
-type HeaderMenu = NonNullable<NonNullable<ROOT_QUERYResult['header']>['menu']>;
-type MenuItem = HeaderMenu[number];
-type MegaMenuType = Extract<MenuItem, {_type: 'megaMenu'}>;
+import { MegaMenuType } from '~/components/navigation/types';
 
 interface SectionRendererProps {
   menu: MegaMenuType;

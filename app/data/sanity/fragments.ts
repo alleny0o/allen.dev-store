@@ -357,7 +357,6 @@ export const HEADER_FRAGMENT = defineQuery(`{
     menu[_key == $defaultLanguage][0].value[],
   )[] ${LINKS_LIST_SELECTION},
   navigationTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
-  menuItemGap,
   menuItemPaddingX,
   menuItemPaddingY,
 

@@ -20,12 +20,10 @@ export const DesktopNavigation = () => {
 
   if (!items.length) return null;
 
-  const gap = header.menuItemGap ?? 8;
   const paddingX = header.menuItemPaddingX ?? 4;
   const paddingY = header.menuItemPaddingY ?? 4;
 
   const navStyles = {
-    '--nav-gap': `${gap}px`,
     '--nav-padding-x': `${paddingX}px`,
     '--nav-padding-y': `${paddingY}px`,
   } as CSSProperties;
@@ -34,10 +32,9 @@ export const DesktopNavigation = () => {
     <nav
       id="header-nav"
       aria-label="Main Navigation"
-      className="h-full [&_a.nav-text]:px-(--nav-padding-x) [&_a.nav-text]:py-(--nav-padding-y)"
-      style={navStyles}
+      className="h-full [&_:is(a,button).nav-text]:px-(--nav-padding-x) [&_:is(a,button).nav-text]:py-(--nav-padding-y)"      style={navStyles}
     >
-      <ul className="flex h-full items-center" style={{gap: 'var(--nav-gap)'}}>
+      <ul className="flex h-full items-center">
         {items.map((item) => {
           switch (item._type) {
             case 'internalLink':

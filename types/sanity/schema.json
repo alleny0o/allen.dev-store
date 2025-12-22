@@ -2794,14 +2794,6 @@
         },
         "optional": true
       },
-      "menuItemGap": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "rangeSlider"
-        },
-        "optional": true
-      },
       "menuItemPaddingX": {
         "type": "objectAttribute",
         "value": {

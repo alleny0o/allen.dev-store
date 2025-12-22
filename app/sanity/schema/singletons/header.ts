@@ -39,14 +39,6 @@ export default defineType({
       description: 'Typography for main navigation links',
     }),
     defineField({
-      name: 'menuItemGap',
-      title: 'Menu item gap',
-      type: 'rangeSlider',
-      group: 'navigation',
-      options: {min: 0, max: 16, suffix: 'px'},
-      initialValue: 8,
-    }),
-    defineField({
       name: 'menuItemPaddingX',
       title: 'Menu item horizontal padding',
       type: 'rangeSlider',

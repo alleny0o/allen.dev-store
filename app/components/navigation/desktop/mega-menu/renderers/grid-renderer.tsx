@@ -1,13 +1,8 @@
-// mega-menu/renderers/grid-renderer.tsx
+// grid-renderer.tsx
 
-import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
 import {LinkSection} from '../sections/link-section';
-import {ImageBlock} from '../sections/image-block';
 import {GRID_LAYOUTS, type GridLayout} from '../config/layout-presets';
-
-type HeaderMenu = NonNullable<NonNullable<ROOT_QUERYResult['header']>['menu']>;
-type MenuItem = HeaderMenu[number];
-type MegaMenuType = Extract<MenuItem, {_type: 'megaMenu'}>;
+import { MegaMenuType } from '~/components/navigation/types';
 
 interface GridRendererProps {
   menu: MegaMenuType;
@@ -21,7 +16,7 @@ export function GridRenderer({menu}: GridRendererProps) {
   const className = GRID_LAYOUTS[menu.gridLayout as GridLayout] || 'col-span-3';
 
   return (
-    <div className="grid grid-cols-12 gap-x-6 gap-y-[36px] section-padding">
+    <div className="grid grid-cols-12 gap-x-6 gap-y-9 section-padding">
       {menu.content?.map((block) => {
         if (block._type === 'linkSection') {
           return (
@@ -29,9 +24,7 @@ export function GridRenderer({menu}: GridRendererProps) {
           );
         }
         if (block._type === 'imageBlock') {
-          return (
-            <ImageBlock key={block._key} data={block} className={className} />
-          );
+          return null;
         }
         return null;
       })}

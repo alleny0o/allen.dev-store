@@ -32,7 +32,6 @@ export function MegaMenuProvider({children}: {children: ReactNode}) {
   const [openMenu, setOpenMenu] = useState<MegaMenuType | null>(null);
   const navigation = useNavigation();
 
-  const itemRef = useRef<HTMLElement | null>(null);
   const dropdownRef = useRef<HTMLElement | null>(null);
 
   const header = useHeaderSettings();
@@ -44,7 +43,7 @@ export function MegaMenuProvider({children}: {children: ReactNode}) {
   }, []);
 
   const registerItemRef = useCallback((ref: HTMLElement | null) => {
-    itemRef.current = ref;
+    // No longer needed - keeping for backwards compatibility
   }, []);
 
   const registerDropdownRef = useCallback((ref: HTMLElement | null) => {
@@ -79,19 +78,22 @@ export function MegaMenuProvider({children}: {children: ReactNode}) {
       rafId = requestAnimationFrame(() => {
         rafId = null;
 
-        if (!itemRef.current || !dropdownRef.current) return;
+        if (!dropdownRef.current) return;
 
-        const itemRect = itemRef.current.getBoundingClientRect();
+        const navBar = document.querySelector('#header-nav');
+        if (!navBar) return;
+
+        const navRect = navBar.getBoundingClientRect();
         const dropdownRect = dropdownRef.current.getBoundingClientRect();
 
         // Add 5px tolerance to prevent overly sensitive detection
         const TOLERANCE = 5;
 
-        const isInItem =
-          e.clientX >= itemRect.left - TOLERANCE &&
-          e.clientX <= itemRect.right + TOLERANCE &&
-          e.clientY >= itemRect.top - TOLERANCE &&
-          e.clientY <= itemRect.bottom + TOLERANCE;
+        const isInNav =
+          e.clientX >= navRect.left - TOLERANCE &&
+          e.clientX <= navRect.right + TOLERANCE &&
+          e.clientY >= navRect.top - TOLERANCE &&
+          e.clientY <= navRect.bottom + TOLERANCE;
 
         const isInDropdown =
           e.clientX >= dropdownRect.left - TOLERANCE &&
@@ -99,7 +101,7 @@ export function MegaMenuProvider({children}: {children: ReactNode}) {
           e.clientY >= dropdownRect.top - TOLERANCE &&
           e.clientY <= dropdownRect.bottom + TOLERANCE;
 
-        if (!isInItem && !isInDropdown) {
+        if (!isInNav && !isInDropdown) {
           closeMenu();
         }
       });
