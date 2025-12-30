@@ -108,6 +108,26 @@ export default defineType({
       group: 'announcementBar',
       initialValue: true,
     }),
+    defineField({
+      name: 'announcementArrowSize',
+      title: 'Navigation arrow size',
+      type: 'rangeSlider',
+      group: 'announcementBar',
+      options: {min: 16, max: 48, suffix: 'px'},
+      initialValue: 24,
+      description: 'Size of the announcement navigation arrows',
+      hidden: ({parent}) => !parent?.showAnnouncementArrows,
+    }),
+    defineField({
+      name: 'announcementArrowStrokeWidth',
+      title: 'Navigation arrow stroke width',
+      type: 'rangeSlider',
+      group: 'announcementBar',
+      options: {min: 1, max: 4, suffix: 'px', step: 0.25},
+      initialValue: 2,
+      description: 'Thickness of the announcement navigation arrow lines',
+      hidden: ({parent}) => !parent?.showAnnouncementArrows,
+    }),
 
     /**
      * LAYOUT

@@ -93,10 +93,11 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Announcement arrow size */
+  /* Announcement arrow styling */
   #announcement-bar .announcement-arrow {
-    width: calc(var(--t-font-size) * 1px + 4px);
-    height: calc(var(--t-font-size) * 1px + 4px);
+    width: var(--arrow-size) !important;
+    height: var(--arrow-size) !important;
+    stroke-width: var(--arrow-stroke-width) !important;
   }
 
   /* Mega Menu Dropdown Text */

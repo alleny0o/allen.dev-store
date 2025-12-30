@@ -2863,6 +2863,22 @@
         },
         "optional": true
       },
+      "announcementArrowSize": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "rangeSlider"
+        },
+        "optional": true
+      },
+      "announcementArrowStrokeWidth": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "rangeSlider"
+        },
+        "optional": true
+      },
       "desktopLayout": {
         "type": "objectAttribute",
         "value": {

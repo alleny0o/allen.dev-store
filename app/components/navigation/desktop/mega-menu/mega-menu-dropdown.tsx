@@ -5,6 +5,8 @@ import {GridRenderer} from './renderers/grid-renderer';
 import {SectionRenderer} from './renderers/section-renderer';
 import {useMegaMenuStyles} from './hooks/use-mega-menu-styles';
 import {useMegaMenuHeight} from './hooks/use-mega-menu-height';
+import {useMegaMenuScrollLock} from './hooks/use-mega-menu-scroll-lock';
+import {useMegaMenuOverlay} from './hooks/use-mega-menu-overlay';
 import {useRef, useEffect} from 'react';
 
 /**
@@ -17,6 +19,12 @@ export function MegaMenuDropdown() {
 
   const styles = useMegaMenuStyles();
   const maxHeight = useMegaMenuHeight(!!openMenu);
+
+  // Apply scroll lock when menu is open (if enabled)
+  useMegaMenuScrollLock(!!openMenu);
+
+  // Get overlay configuration
+  const overlayConfig = useMegaMenuOverlay(!!openMenu);
 
   useEffect(() => {
     if (dropdownRef.current) {
@@ -62,6 +70,19 @@ export function MegaMenuDropdown() {
   return (
     <>
       <style dangerouslySetInnerHTML={{__html: styles}} />
+
+      {/* Overlay */}
+      {overlayConfig.showOverlay && (
+        <div
+          className="absolute top-full left-0 right-0 bottom-0 z-30 bg-black"
+          style={{
+            ...overlayConfig.overlayStyles,
+            height: '100vh', // Cover rest of viewport
+          }}
+          onClick={closeMenu}
+          aria-hidden="true"
+        />
+      )}
 
       <div
         ref={dropdownRef}

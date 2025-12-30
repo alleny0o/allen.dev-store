@@ -64,6 +64,14 @@ export function AnnouncementBar() {
     override: header?.utilityLinksTypography,
   });
 
+  // Generate arrow styling CSS vars
+  const arrowStyleCss = `
+    #announcement-bar {
+      --arrow-size: ${header?.announcementArrowSize ?? 24}px;
+      --arrow-stroke-width: ${header?.announcementArrowStrokeWidth ?? 2};
+    }
+  `;
+
   if (!announcementBar) return null;
 
   return (
@@ -83,7 +91,8 @@ export function AnnouncementBar() {
             __html:
               colorsCssVars +
               announcementTypographyCss +
-              utilityLinksTypographyCss,
+              utilityLinksTypographyCss +
+              arrowStyleCss,
           }}
         />
 
@@ -97,7 +106,6 @@ export function AnnouncementBar() {
               <div className="pointer-events-auto absolute top-0 bottom-0 left-0 z-10 hidden items-center gap-0 bg-background lg:flex">
                 <AnnouncementRotatorPrevious className="shrink-0 rounded-md">
                   <ChevronLeft
-                    strokeWidth={1.5}
                     className="announcement-arrow"
                     aria-hidden="true"
                   />
@@ -105,7 +113,6 @@ export function AnnouncementBar() {
 
                 <AnnouncementRotatorNext className="shrink-0 rounded-md">
                   <ChevronRight
-                    strokeWidth={1.5}
                     className="announcement-arrow"
                     aria-hidden="true"
                   />

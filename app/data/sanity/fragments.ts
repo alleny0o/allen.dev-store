@@ -350,6 +350,8 @@ export const HEADER_FRAGMENT = defineQuery(`{
   autoRotateAnnouncements,
   announcementBarPadding,
   showAnnouncementArrows,
+  announcementArrowSize,
+  announcementArrowStrokeWidth,
 
   // Navigation menu (localized)
   "menu": coalesce(

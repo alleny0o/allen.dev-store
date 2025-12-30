@@ -70,7 +70,7 @@ export function MegaMenuProvider({children}: {children: ReactNode}) {
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!isMouseMoveActive) return;
-      
+
       // If we already have a pending frame, skip this event
       if (rafId !== null) return;
 
@@ -135,6 +135,21 @@ export function MegaMenuProvider({children}: {children: ReactNode}) {
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, [openMenu, behavior, closeMenu]);
+
+  // Close menu when screen becomes smaller than lg breakpoint
+  useEffect(() => {
+    if (!openMenu) return;
+
+    const handleResize = () => {
+      // Tailwind's lg breakpoint is 1024px
+      if (window.innerWidth < 1024) {
+        closeMenu();
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [openMenu, closeMenu]);
 
   return (
     <MegaMenuContext.Provider
