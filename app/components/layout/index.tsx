@@ -17,8 +17,7 @@ import {TogglePreviewMode} from '../sanity/toggle-preview-mode';
 import {VisualEditing} from '../sanity/visual-editing.client';
 
 // layout / ui components
-import {AnnouncementBar} from '../header/announcement-bar/announcement-bar';
-import {Header} from '../header/header';
+import { AnnouncementBar, Header } from '~/features/header';
 import {Footer} from '../footer/footer';
 import {TailwindIndicator} from '../tailwind-indicator';
 

@@ -11,7 +11,7 @@ import {
 
 import {useBoundedScroll} from '~/hooks/use-bounded-scroll';
 import {cn} from '~/lib/utils';
-import {useHeaderHeight} from './use-header-height';
+import {useHeaderHeight} from '../hooks/use-header-height';
 
 export function HeaderAnimation(props: {
   children: React.ReactNode;

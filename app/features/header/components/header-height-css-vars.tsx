@@ -1,4 +1,4 @@
-import {useHeaderHeight} from './use-header-height';
+import {useHeaderHeight} from '../hooks/use-header-height';
 
 export function HeaderHeightCssVars() {
   const {desktopHeaderHeight} = useHeaderHeight();

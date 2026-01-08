@@ -1,6 +1,6 @@
 // use-mega-menu-styles.ts
 
-import {useHeaderSettings} from '~/components/header/header-context';
+import {useHeaderSettings} from '~/features/header';
 import {useColorsCssVars} from '~/hooks/use-colors-css-vars';
 import {useTypographyCssVars} from '~/hooks/use-typography-css-vars';
 

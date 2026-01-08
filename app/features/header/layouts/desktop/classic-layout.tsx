@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 import {useLocalePath} from '~/hooks/use-locale-path';
 import {DesktopNavigation} from '~/features/navigation';
 
-import {Logo} from '../../header-logo';
+import { Logo } from '../../components/header-logo';
 
 type ClassicLayoutProps = {
   logoWidth?: string;

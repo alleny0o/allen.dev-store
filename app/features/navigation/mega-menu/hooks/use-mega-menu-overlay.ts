@@ -1,6 +1,6 @@
 // hooks/use-mega-menu-overlay.ts
 
-import {useHeaderSettings} from '~/components/header/header-context';
+import {useHeaderSettings} from '~/features/header';
 import type {CSSProperties} from 'react';
 
 interface OverlayConfig {

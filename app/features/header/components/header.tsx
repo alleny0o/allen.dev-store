@@ -12,15 +12,15 @@ import {MegaMenuProvider} from '~/features/navigation/mega-menu/context/mega-men
 import {MegaMenuDropdown} from '~/features/navigation/mega-menu/components/mega-menu-dropdown';
 
 // Desktop layouts
-import {ClassicLayout} from './layouts/desktop/classic-layout';
-import {CenterLogoLayout} from './layouts/desktop/center-logo-layout';
-import {ThreeColumnLayout} from './layouts/desktop/three-column-layout';
-import {SplitRightLayout} from './layouts/desktop/split-right-layout';
+import {ClassicLayout} from '../layouts/desktop/classic-layout';
+import {CenterLogoLayout} from '../layouts/desktop/center-logo-layout';
+import {ThreeColumnLayout} from '../layouts/desktop/three-column-layout';
+import {SplitRightLayout} from '../layouts/desktop/split-right-layout';
 
 // Mobile layouts
-import {BalancedLayout} from './layouts/mobile/balanced-layout';
-import {MenuLeftLayout} from './layouts/mobile/menu-left-layout';
-import {BrandLeftLayout} from './layouts/mobile/brand-left-layout';
+import {BalancedLayout} from '../layouts/mobile/balanced-layout';
+import {MenuLeftLayout} from '../layouts/mobile/menu-left-layout';
+import {BrandLeftLayout} from '../layouts/mobile/brand-left-layout';
 
 export function Header() {
   // Load header data

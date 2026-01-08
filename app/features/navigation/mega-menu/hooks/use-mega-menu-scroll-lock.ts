@@ -1,7 +1,7 @@
 // hooks/use-mega-menu-scroll-lock.ts
 
 import {useEffect} from 'react';
-import {useHeaderSettings} from '~/components/header/header-context';
+import {useHeaderSettings} from '~/features/header';
 
 /**
  * Disables body scroll when mega menu is open (if enabled in settings)

@@ -4,22 +4,18 @@ import {Link} from 'react-router';
 import {useLocalePath} from '~/hooks/use-locale-path';
 import {DesktopNavigation} from '~/features/navigation';
 
-import {Logo} from '../../header-logo';
+import { Logo } from '../../components/header-logo';
 
-type SplitRightLayoutProps = {
+type ThreeColumnLayoutProps = {
   logoWidth?: string;
 };
 
-export function SplitRightLayout({logoWidth}: SplitRightLayoutProps) {
+export function ThreeColumnLayout({logoWidth}: ThreeColumnLayoutProps) {
   const homePath = useLocalePath({path: '/'});
 
   return (
-    <div className="flex h-full items-stretch justify-between">
-      {' '}
-      {/* ← items-stretch */}
-      <div className="flex items-center">
-        {' '}
-        {/* ← wrap logo */}
+    <div className="grid h-full grid-cols-3 items-center">
+      <div className="flex h-full min-w-0 items-center justify-start">
         <Link className="group" prefetch="intent" to={homePath}>
           <Logo
             className="h-auto w-(--logoWidth)"
@@ -32,11 +28,13 @@ export function SplitRightLayout({logoWidth}: SplitRightLayoutProps) {
           />
         </Link>
       </div>
-      <div className="flex h-full items-stretch gap-8">
-        {' '}
-        {/* ← items-stretch */}
+
+      <div className="flex h-full min-w-0 items-center justify-center">
         <DesktopNavigation />
-        <div className="flex items-center">{/* actions */}</div>
+      </div>
+
+      <div className="flex h-full min-w-0 items-center justify-end">
+        {/* actions */}
       </div>
     </div>
   );

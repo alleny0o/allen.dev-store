@@ -10,7 +10,7 @@ import {
 } from 'react';
 import {useNavigation} from 'react-router';
 import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
-import {useHeaderSettings} from '~/components/header/header-context';
+import {useHeaderSettings} from '~/features/header';
 
 type HeaderMenu = NonNullable<NonNullable<ROOT_QUERYResult['header']>['menu']>;
 type MenuItem = HeaderMenu[number];

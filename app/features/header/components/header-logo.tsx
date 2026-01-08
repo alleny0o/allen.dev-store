@@ -1,7 +1,7 @@
 import {useRootLoaderData} from '~/root';
 import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
 
-import {SanityImage} from '../sanity/sanity-image';
+import { SanityImage } from '~/components/sanity/sanity-image';
 
 export function Logo(props: {
   className?: string;

@@ -1,5 +1,5 @@
 // desktop-navigation.tsx
-import {useHeaderSettings} from '~/components/header/header-context';
+import {useHeaderSettings} from '~/features/header';
 
 import {
   HeaderMenu,

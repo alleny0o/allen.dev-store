@@ -5,21 +5,29 @@ import {useLocalePath} from '~/hooks/use-locale-path';
 import {ClientOnly} from '~/components/client-only';
 import {MobileNavigation, MobileNavigationTrigger} from '~/features/navigation';
 
-import {Logo} from '../../header-logo';
-import {useHeaderSettings} from '~/components/header/header-context';
+import { Logo } from '../../components/header-logo';
+import {useHeaderSettings} from '~/features/header';
 
-type BrandLeftLayoutProps = {
+type BalancedLayoutProps = {
   logoWidth?: string;
 };
 
-export function BrandLeftLayout({logoWidth}: BrandLeftLayoutProps) {
+export function BalancedLayout({logoWidth}: BalancedLayoutProps) {
   const homePath = useLocalePath({path: '/'});
-  const header = useHeaderSettings();
+  const header = useHeaderSettings(); // full header object
   const menu = header.menu ?? [];
 
   return (
     <div className="flex items-center justify-between">
-      {/* Left: Logo */}
+      {/* Left: Menu + Search */}
+      <div className="flex items-center gap-4">
+        <ClientOnly fallback={<MobileNavigationTrigger />}>
+          {() => <MobileNavigation data={menu} />}
+        </ClientOnly>
+        {/* search */}
+      </div>
+
+      {/* Center: Logo */}
       <Link className="group" prefetch="intent" to={homePath}>
         <Logo
           className="h-auto w-(--logoWidth)"
@@ -32,15 +40,9 @@ export function BrandLeftLayout({logoWidth}: BrandLeftLayoutProps) {
         />
       </Link>
 
-      {/* Right: Actions cluster */}
+      {/* Right: Actions */}
       <div className="flex items-center gap-4">
-        {/* search */}
-        {/* cart */}
-        {/* account */}
-
-        <ClientOnly fallback={<MobileNavigationTrigger />}>
-          {() => <MobileNavigation data={menu} />}
-        </ClientOnly>
+        {/* actions */}
       </div>
     </div>
   );
