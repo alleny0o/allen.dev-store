@@ -1,7 +1,7 @@
 // internal-link-item.tsx
 import { SanityInternalLink } from "~/components/sanity/link/sanity-internal-link";
 import type { InternalLinkType } from "../../types";
-import { useMegaMenu } from "../mega-menu/mega-menu-context";
+import {useMegaMenu} from '../../mega-menu/context/mega-menu-context';
 
 interface InternalLinkItemProps {
   item: InternalLinkType;

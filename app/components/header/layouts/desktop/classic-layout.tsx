@@ -2,7 +2,7 @@ import type {CSSProperties} from 'react';
 import {Link} from 'react-router';
 
 import {useLocalePath} from '~/hooks/use-locale-path';
-import {DesktopNavigation} from '~/components/navigation/desktop/desktop-navigation';
+import {DesktopNavigation} from '~/features/navigation';
 
 import {Logo} from '../../header-logo';
 

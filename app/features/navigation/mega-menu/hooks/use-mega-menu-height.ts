@@ -1,5 +1,4 @@
 // use-mega-menu-height.ts
-
 import {useState, useEffect} from 'react';
 
 /**

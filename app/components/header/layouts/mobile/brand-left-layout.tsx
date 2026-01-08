@@ -3,8 +3,7 @@ import {Link} from 'react-router';
 
 import {useLocalePath} from '~/hooks/use-locale-path';
 import {ClientOnly} from '~/components/client-only';
-import {MobileNavigation} from '~/components/navigation/mobile-navigation.client';
-import {MobileNavigationTrigger} from '~/components/navigation/mobile-navigation-trigger';
+import {MobileNavigation, MobileNavigationTrigger} from '~/features/navigation';
 
 import {Logo} from '../../header-logo';
 import {useHeaderSettings} from '~/components/header/header-context';

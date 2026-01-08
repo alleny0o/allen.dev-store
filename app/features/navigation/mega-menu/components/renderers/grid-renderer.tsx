@@ -1,7 +1,7 @@
 // grid-renderer.tsx
 
 import {LinkSection} from '../sections/link-section';
-import {GRID_LAYOUTS, type GridLayout} from '../config/layout-presets';
+import {GRID_LAYOUTS, type GridLayout} from '../../constants';
 import { MegaMenuType } from '~/components/navigation/types';
 
 interface GridRendererProps {

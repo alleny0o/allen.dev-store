@@ -3,16 +3,11 @@ import {useCallback, useState} from 'react';
 import {useDevice} from '~/hooks/use-device';
 import {cn} from '~/lib/utils';
 
-import {IconChevron} from '../icons/icon-chevron';
-import {SanityExternalLink} from '../sanity/link/sanity-external-link';
-import {SanityInternalLink} from '../sanity/link/sanity-internal-link';
-import {
-  Drawer,
-  DrawerContent,
-  DrawerNestedRoot,
-  DrawerTrigger,
-} from '../ui/drawer';
-import {ScrollArea} from '../ui/scroll-area';
+import { SanityExternalLink } from '~/components/sanity/link/sanity-external-link';
+import { SanityInternalLink } from '~/components/sanity/link/sanity-internal-link';
+
+import { Drawer, DrawerContent, DrawerNestedRoot, DrawerTrigger } from '~/components/ui/drawer';
+import { ScrollArea } from '~/components/ui/scroll-area';
 import {MobileNavigationTrigger} from './mobile-navigation-trigger';
 
 const mobileMenuLinkClass = cn(
@@ -40,7 +35,7 @@ export function MobileNavigation(props: {data?: any}) {
         <MobileNavigationContent>
           {props.data &&
             props.data?.length > 0 &&
-            props.data?.map((item) => (
+            props.data?.map((item: any) => (
               <li key={item._key}>
                 {item._type === 'internalLink' && (
                   <SanityInternalLink

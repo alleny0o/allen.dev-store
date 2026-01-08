@@ -1,6 +1,6 @@
 // mega-menu/renderers/section-renderer.tsx
 import {LinkSection} from '../sections/link-section';
-import {SECTION_PRESETS, type SectionPreset} from '../config/layout-presets';
+import { SECTION_PRESETS, type SectionPreset } from '../../constants';
 import { MegaMenuType } from '~/components/navigation/types';
 
 interface SectionRendererProps {

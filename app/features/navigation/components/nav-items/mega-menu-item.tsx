@@ -1,8 +1,8 @@
 // mega-menu-item.tsx
-import {SanityReferenceLink} from '~/components/sanity/link/sanity-reference-link';
-import {useMegaMenu} from '../mega-menu/mega-menu-context';
-import type {MegaMenuType} from '../../types';
 import {useRef, useEffect, useState} from 'react';
+import {SanityReferenceLink} from '~/components/sanity/link/sanity-reference-link';
+import type {MegaMenuType} from '../../types';
+import {useMegaMenu} from '../../mega-menu/context/mega-menu-context';
 
 interface MegaMenuItemProps {
   item: MegaMenuType;

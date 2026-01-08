@@ -1,12 +1,11 @@
 // mega-menu/mega-menu-dropdown.tsx
-
-import {useMegaMenu} from './mega-menu-context';
+import { useMegaMenu } from '../context/mega-menu-context';
 import {GridRenderer} from './renderers/grid-renderer';
 import {SectionRenderer} from './renderers/section-renderer';
-import {useMegaMenuStyles} from './hooks/use-mega-menu-styles';
-import {useMegaMenuHeight} from './hooks/use-mega-menu-height';
-import {useMegaMenuScrollLock} from './hooks/use-mega-menu-scroll-lock';
-import {useMegaMenuOverlay} from './hooks/use-mega-menu-overlay';
+import {useMegaMenuStyles} from '../hooks/use-mega-menu-styles';
+import {useMegaMenuHeight} from '../hooks/use-mega-menu-height';
+import {useMegaMenuScrollLock} from '../hooks/use-mega-menu-scroll-lock';
+import {useMegaMenuOverlay} from '../hooks/use-mega-menu-overlay';
 import {useRef, useEffect} from 'react';
 
 /**

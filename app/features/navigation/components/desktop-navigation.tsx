@@ -8,9 +8,9 @@ import {
   MegaMenuType,
 } from '../types';
 
-import {InternalLinkItem} from './link-items/internal-link-item';
-import {ExternalLinkItem} from './link-items/external-link-item';
-import {MegaMenuItem} from './link-items/mega-menu-item';
+import {InternalLinkItem} from './nav-items/internal-link-item';
+import {ExternalLinkItem} from './nav-items/external-link-item';
+import {MegaMenuItem} from './nav-items/mega-menu-item';
 
 import type {CSSProperties} from 'react';
 

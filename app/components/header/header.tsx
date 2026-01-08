@@ -8,8 +8,8 @@ import {useRootLoaderData} from '~/root';
 import {HeaderWrapper} from './header-wrapper';
 import {HeaderContext} from './header-context';
 
-import {MegaMenuProvider} from '../navigation/desktop/mega-menu/mega-menu-context';
-import {MegaMenuDropdown} from '../navigation/desktop/mega-menu/mega-menu-dropdown';
+import {MegaMenuProvider} from '~/features/navigation/mega-menu/context/mega-menu-context';
+import {MegaMenuDropdown} from '~/features/navigation/mega-menu/components/mega-menu-dropdown';
 
 // Desktop layouts
 import {ClassicLayout} from './layouts/desktop/classic-layout';

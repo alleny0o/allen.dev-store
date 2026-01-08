@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import {IconMenu} from '../icons/icon-menu';
-import {IconButton} from '../ui/button';
+import { IconMenu } from '~/components/icons/icon-menu';
+import { IconButton } from '~/components/ui/button';
 
 export const MobileNavigationTrigger = React.forwardRef<
   HTMLButtonElement,

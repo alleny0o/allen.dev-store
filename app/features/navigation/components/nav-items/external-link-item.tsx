@@ -1,7 +1,7 @@
 // external-link-item.tsx
 import {SanityExternalLink} from '~/components/sanity/link/sanity-external-link';
-import type {ExternalLinkType} from '../../types';
-import {useMegaMenu} from '../mega-menu/mega-menu-context';
+import type { ExternalLinkType } from '../../types';
+import {useMegaMenu} from '../../mega-menu/context/mega-menu-context';
 
 interface ExternalLinkItemProps {
   item: ExternalLinkType;
