@@ -1,12 +1,25 @@
 // mega-menu/mega-menu-dropdown.tsx
-import { useMegaMenu } from '../context/mega-menu-context';
-import {GridRenderer} from './renderers/grid-renderer';
-import {SectionRenderer} from './renderers/section-renderer';
+
+// React
+import {useRef, useEffect} from 'react';
+
+// Motion
+import {m, AnimatePresence} from 'motion/react';
+
+// Context & Hooks
+import {useMegaMenu} from '../context/mega-menu-context';
+import {useHeaderSettings} from '~/features/header';
 import {useMegaMenuStyles} from '../hooks/use-mega-menu-styles';
 import {useMegaMenuHeight} from '../hooks/use-mega-menu-height';
 import {useMegaMenuScrollLock} from '../hooks/use-mega-menu-scroll-lock';
 import {useMegaMenuOverlay} from '../hooks/use-mega-menu-overlay';
-import {useRef, useEffect} from 'react';
+
+// Components
+import {GridRenderer} from './renderers/grid-renderer';
+import {SectionRenderer} from './renderers/section-renderer';
+
+// Utils
+import {getDropdownVariant} from '../animations/dropdown-variants';
 
 /**
  * Main mega menu dropdown container
@@ -17,6 +30,9 @@ export function MegaMenuDropdown() {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const styles = useMegaMenuStyles();
+  const header = useHeaderSettings();
+  const animationType = header?.desktopMegaMenuAnimation ?? 'slideFade';
+  const duration = (header?.desktopMegaMenuAnimationDuration ?? 250) / 1000; // Convert ms to seconds
   const maxHeight = useMegaMenuHeight(!!openMenu);
 
   // Apply scroll lock when menu is open (if enabled)
@@ -64,16 +80,15 @@ export function MegaMenuDropdown() {
           openMenu?.section6,
         ].some((section) => section?.length);
 
-  if (!openMenu || !hasContent) return null;
-
   return (
     <>
+      {/* Styles - always rendered so CSS vars are available */}
       <style dangerouslySetInnerHTML={{__html: styles}} />
 
       {/* Overlay */}
       {overlayConfig.showOverlay && (
         <div
-          className="absolute top-full left-0 right-0 bottom-0 z-30 bg-black"
+          className="absolute top-full right-0 bottom-0 left-0 z-30 bg-black"
           style={{
             ...overlayConfig.overlayStyles,
             height: '100vh', // Cover rest of viewport
@@ -83,21 +98,34 @@ export function MegaMenuDropdown() {
         />
       )}
 
-      <div
-        ref={dropdownRef}
-        id="mega-menu-dropdown"
-        data-mega-menu-dropdown
-        className="absolute top-full right-0 left-0 z-40 overflow-y-auto bg-background"
-        style={{maxHeight}}
-      >
-        <div className="container">
-          {openMenu.layout === 'grid' ? (
-            <GridRenderer menu={openMenu} />
-          ) : (
-            <SectionRenderer menu={openMenu} />
-          )}
-        </div>
-      </div>
+      {/* Animated Dropdown */}
+      <AnimatePresence>
+        {openMenu && hasContent && (
+          <m.div
+            ref={dropdownRef}
+            id="mega-menu-dropdown"
+            data-mega-menu-dropdown
+            className="absolute top-full right-0 left-0 z-40 overflow-y-auto bg-background"
+            style={{maxHeight}}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={getDropdownVariant(animationType)}
+            transition={{
+              duration,
+              ease: [0.04, 0.62, 0.23, 0.98], // Custom ease-out curve (smooth)
+            }}
+          >
+            <div className="container">
+              {openMenu.layout === 'grid' ? (
+                <GridRenderer menu={openMenu} />
+              ) : (
+                <SectionRenderer menu={openMenu} />
+              )}
+            </div>
+          </m.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

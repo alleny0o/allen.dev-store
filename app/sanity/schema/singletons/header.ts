@@ -7,8 +7,9 @@ import {defineField, defineType} from 'sanity';
  */
 const GROUPS = [
   {name: 'navigation', title: 'Navigation', default: true},
-  {name: 'desktopStyles', title: 'Desktop Styles'},
-  {name: 'mobileStyles', title: 'Mobile Styles'},
+  {name: 'desktopNavigation', title: 'Desktop Navigation'},
+  {name: 'desktopMegaMenu', title: 'Desktop Mega Menu'},
+  {name: 'mobileNavigation', title: 'Mobile Navigation'},
   {name: 'announcementBar', title: 'Announcement Bar'},
   {name: 'layout', title: 'Layout'},
   {name: 'appearance', title: 'Appearance'},
@@ -39,22 +40,22 @@ export default defineType({
 
     /**
      * ============================================================================
-     * DESKTOP STYLES
-     * Desktop-specific navigation styling and mega menu configuration.
+     * DESKTOP NAVIGATION
+     * Desktop navigation link styling.
      * ============================================================================
      */
     defineField({
       name: 'desktopNavigationTypography',
       title: 'Desktop navigation typography',
       type: 'fontStyleOverride',
-      group: 'desktopStyles',
+      group: 'desktopNavigation',
       description: 'Typography for desktop navigation links',
     }),
     defineField({
       name: 'desktopMenuItemPaddingX',
       title: 'Desktop menu item horizontal padding',
       type: 'rangeSlider',
-      group: 'desktopStyles',
+      group: 'desktopNavigation',
       options: {min: 0, max: 30, suffix: 'px'},
       initialValue: 4,
     }),
@@ -62,49 +63,56 @@ export default defineType({
       name: 'desktopMenuItemPaddingY',
       title: 'Desktop menu item vertical padding',
       type: 'rangeSlider',
-      group: 'desktopStyles',
+      group: 'desktopNavigation',
       options: {min: 0, max: 30, suffix: 'px'},
       initialValue: 4,
     }),
+
+    /**
+     * ============================================================================
+     * DESKTOP MEGA MENU
+     * Desktop mega menu appearance, behavior, and animations.
+     * ============================================================================
+     */
     defineField({
       name: 'desktopMegaMenuColorScheme',
       title: 'Desktop mega menu color scheme',
       type: 'reference',
       to: [{type: 'colorScheme'}],
-      group: 'desktopStyles',
+      group: 'desktopMegaMenu',
     }),
     defineField({
       name: 'desktopMegaMenuHeadingTypography',
       title: 'Desktop mega menu heading typography',
       type: 'fontStyleOverride',
-      group: 'desktopStyles',
+      group: 'desktopMegaMenu',
       description: 'Typography for desktop mega menu section headings',
     }),
     defineField({
       name: 'desktopMegaMenuLinkTypography',
       title: 'Desktop mega menu link typography',
       type: 'fontStyleOverride',
-      group: 'desktopStyles',
+      group: 'desktopMegaMenu',
       description: 'Typography for desktop mega menu links',
     }),
     defineField({
       name: 'desktopMegaMenuPadding',
       title: 'Desktop mega menu padding',
       type: 'padding',
-      group: 'desktopStyles',
+      group: 'desktopMegaMenu',
     }),
     defineField({
       name: 'desktopMegaMenuSeparatorLine',
       title: 'Desktop mega menu separator line',
       type: 'separatorLine',
-      group: 'desktopStyles',
+      group: 'desktopMegaMenu',
       description: 'Separator between desktop mega menu and content',
     }),
     defineField({
       name: 'desktopMegaMenuBehavior',
       title: 'Desktop mega menu interaction',
       type: 'string',
-      group: 'desktopStyles',
+      group: 'desktopMegaMenu',
       options: {
         list: [
           {title: 'Hover to open (Traditional)', value: 'hover'},
@@ -119,7 +127,7 @@ export default defineType({
       name: 'desktopAllowMegaMenuParentLinks',
       title: 'Allow parent navigation links (desktop)',
       type: 'boolean',
-      group: 'desktopStyles',
+      group: 'desktopMegaMenu',
       initialValue: true,
       description:
         'If enabled, parent menu items can have links. If disabled, they only toggle the menu.',
@@ -128,37 +136,63 @@ export default defineType({
       name: 'desktopMegaMenuDisableScroll',
       title: 'Disable scroll when desktop mega menu is open',
       type: 'boolean',
-      group: 'desktopStyles',
+      group: 'desktopMegaMenu',
       initialValue: false,
     }),
     defineField({
       name: 'desktopMegaMenuShowOverlay',
       title: 'Show overlay when desktop mega menu is open',
       type: 'boolean',
-      group: 'desktopStyles',
+      group: 'desktopMegaMenu',
       initialValue: false,
     }),
     defineField({
       name: 'desktopMegaMenuOverlayOpacity',
       title: 'Desktop mega menu overlay opacity',
       type: 'rangeSlider',
-      group: 'desktopStyles',
+      group: 'desktopMegaMenu',
       options: {min: 0, max: 100, suffix: '%'},
       initialValue: 50,
       hidden: ({parent}) => !parent?.desktopMegaMenuShowOverlay,
     }),
+    defineField({
+      name: 'desktopMegaMenuAnimation',
+      title: 'Dropdown entrance animation',
+      type: 'string',
+      group: 'desktopMegaMenu',
+      description: 'Animation when the mega menu appears',
+      options: {
+        list: [
+          {title: 'None (Instant)', value: 'none'},
+          {title: 'Fade', value: 'fade'},
+          {title: 'Slide Down', value: 'slideDown'},
+          {title: 'Slide + Fade (Recommended)', value: 'slideFade'},
+        ],
+        layout: 'dropdown',
+      },
+      initialValue: 'slideFade',
+    }),
+    defineField({
+      name: 'desktopMegaMenuAnimationDuration',
+      title: 'Animation duration',
+      type: 'rangeSlider',
+      group: 'desktopMegaMenu',
+      description: 'How fast the mega menu animates in',
+      options: {min: 100, max: 600, suffix: 'ms', step: 50},
+      initialValue: 250,
+    }),
 
     /**
      * ============================================================================
-     * MOBILE STYLES
-     * Mobile-specific navigation styling (drawer/hamburger menu - future).
+     * MOBILE NAVIGATION
+     * Mobile navigation styling (drawer/hamburger menu - future).
      * ============================================================================
      */
     defineField({
       name: 'mobileNavigationTypography',
       title: 'Mobile navigation typography',
       type: 'fontStyleOverride',
-      group: 'mobileStyles',
+      group: 'mobileNavigation',
       description: 'Typography for mobile navigation links',
     }),
 

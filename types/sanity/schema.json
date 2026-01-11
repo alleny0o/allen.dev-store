@@ -2918,6 +2918,39 @@
         },
         "optional": true
       },
+      "desktopMegaMenuAnimation": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "none"
+            },
+            {
+              "type": "string",
+              "value": "fade"
+            },
+            {
+              "type": "string",
+              "value": "slideDown"
+            },
+            {
+              "type": "string",
+              "value": "slideFade"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "desktopMegaMenuAnimationDuration": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "rangeSlider"
+        },
+        "optional": true
+      },
       "mobileNavigationTypography": {
         "type": "objectAttribute",
         "value": {
