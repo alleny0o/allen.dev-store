@@ -353,14 +353,33 @@ export const HEADER_FRAGMENT = defineQuery(`{
   announcementArrowSize,
   announcementArrowStrokeWidth,
 
-  // Navigation menu (localized)
+  // Navigation menu (localized) - SHARED between desktop and mobile
   "menu": coalesce(
     menu[_key == $language][0].value[],
     menu[_key == $defaultLanguage][0].value[],
   )[] ${LINKS_LIST_SELECTION},
-  navigationTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
-  menuItemPaddingX,
-  menuItemPaddingY,
+
+  // Desktop styles
+  desktopNavigationTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
+  desktopMenuItemPaddingX,
+  desktopMenuItemPaddingY,
+  desktopMegaMenuColorScheme -> ${COLOR_SCHEME_FRAGMENT},
+  desktopMegaMenuHeadingTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
+  desktopMegaMenuLinkTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
+  desktopMegaMenuPadding,
+  desktopMegaMenuSeparatorLine {
+    show,
+    opacity,
+    height,
+  },
+  desktopMegaMenuBehavior,
+  desktopAllowMegaMenuParentLinks,
+  desktopMegaMenuDisableScroll,
+  desktopMegaMenuShowOverlay,
+  desktopMegaMenuOverlayOpacity,
+
+  // Mobile styles
+  mobileNavigationTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
 
   // Header appearance
   colorScheme -> ${COLOR_SCHEME_FRAGMENT},
@@ -384,24 +403,6 @@ export const HEADER_FRAGMENT = defineQuery(`{
   actionsTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
   cartStyleDesktop,
   cartStyleMobile,
-
-  // Mega menu appearance
-  megaMenuColorScheme -> ${COLOR_SCHEME_FRAGMENT},
-  megaMenuHeadingTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
-  megaMenuLinkTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
-  megaMenuPadding,
-  megaMenuSeparatorLine {
-    show,
-    opacity,
-    height,
-  },
-
-  // Mega menu behavior
-  megaMenuBehavior,
-  allowMegaMenuParentLinks,
-  megaMenuDisableScroll,
-  megaMenuShowOverlay,
-  megaMenuOverlayOpacity,
 
   // Global behavior
   sticky,

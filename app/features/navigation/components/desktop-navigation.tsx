@@ -20,8 +20,8 @@ export const DesktopNavigation = () => {
 
   if (!items.length) return null;
 
-  const paddingX = header.menuItemPaddingX ?? 4;
-  const paddingY = header.menuItemPaddingY ?? 4;
+  const paddingX = header.desktopMenuItemPaddingX ?? 4;
+  const paddingY = header.desktopMenuItemPaddingY ?? 4;
 
   const navStyles = {
     '--nav-padding-x': `${paddingX}px`,

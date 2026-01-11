@@ -15,8 +15,8 @@ interface OverlayConfig {
 export function useMegaMenuOverlay(isOpen: boolean): OverlayConfig {
   const header = useHeaderSettings();
   
-  const showOverlay = header?.megaMenuShowOverlay ?? false;
-  const opacity = header?.megaMenuOverlayOpacity ?? 50;
+  const showOverlay = header?.desktopMegaMenuShowOverlay ?? false;
+  const opacity = header?.desktopMegaMenuOverlayOpacity ?? 50;
 
   return {
     showOverlay: isOpen && showOverlay,

@@ -35,8 +35,8 @@ export function MegaMenuProvider({children}: {children: ReactNode}) {
   const dropdownRef = useRef<HTMLElement | null>(null);
 
   const header = useHeaderSettings();
-  const behavior = (header?.megaMenuBehavior as 'hover' | 'click') || 'hover';
-  const allowParentLinks = header?.allowMegaMenuParentLinks ?? true;
+  const behavior = ((header?.desktopMegaMenuBehavior ?? 'hover') as 'hover' | 'click');
+  const allowParentLinks = header?.desktopAllowMegaMenuParentLinks ?? true;
 
   const closeMenu = useCallback(() => {
     setOpenMenu(null);

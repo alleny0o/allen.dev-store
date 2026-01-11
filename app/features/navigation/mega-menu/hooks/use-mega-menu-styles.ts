@@ -13,20 +13,20 @@ export function useMegaMenuStyles() {
   const dropdownCssVars = useColorsCssVars({
     selector: '#mega-menu-dropdown',
     settings: {
-      colorScheme: header?.megaMenuColorScheme ?? null,
-      padding: header?.megaMenuPadding,
-      separatorLine: header?.megaMenuSeparatorLine ?? null,
+      colorScheme: header?.desktopMegaMenuColorScheme ?? null,
+      padding: header?.desktopMegaMenuPadding,
+      separatorLine: header?.desktopMegaMenuSeparatorLine ?? null,
     },
   });
 
   const headingTypographyCss = useTypographyCssVars({
     selector: '#mega-menu-dropdown .mega-menu-heading',
-    override: header?.megaMenuHeadingTypography,
+    override: header?.desktopMegaMenuHeadingTypography,
   });
 
   const linkTypographyCss = useTypographyCssVars({
     selector: '#mega-menu-dropdown .mega-menu-link',
-    override: header?.megaMenuLinkTypography,
+    override: header?.desktopMegaMenuLinkTypography,
   });
 
   return dropdownCssVars + headingTypographyCss + linkTypographyCss;

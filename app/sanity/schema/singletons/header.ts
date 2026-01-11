@@ -3,14 +3,16 @@ import {defineField, defineType} from 'sanity';
 /**
  * GROUPS
  * Professional grouping structure for the header schema.
+ * Desktop and mobile are now clearly separated.
  */
 const GROUPS = [
   {name: 'navigation', title: 'Navigation', default: true},
+  {name: 'desktopStyles', title: 'Desktop Styles'},
+  {name: 'mobileStyles', title: 'Mobile Styles'},
   {name: 'announcementBar', title: 'Announcement Bar'},
   {name: 'layout', title: 'Layout'},
   {name: 'appearance', title: 'Appearance'},
   {name: 'actions', title: 'Actions'},
-  {name: 'megaMenu', title: 'Mega Menu'},
   {name: 'behavior', title: 'Behavior'},
 ];
 
@@ -22,42 +24,149 @@ export default defineType({
 
   fields: [
     /**
+     * ============================================================================
      * NAVIGATION
-     * Controls menu structure and spacing.
+     * Menu structure shared across desktop and mobile.
+     * ============================================================================
      */
     defineField({
       name: 'menu',
       title: 'Menu',
       group: 'navigation',
       type: 'internationalizedArrayHeaderNavigation',
-    }),
-    defineField({
-      name: 'navigationTypography',
-      title: 'Navigation typography',
-      type: 'fontStyleOverride',
-      group: 'navigation',
-      description: 'Typography for main navigation links',
-    }),
-    defineField({
-      name: 'menuItemPaddingX',
-      title: 'Menu item horizontal padding',
-      type: 'rangeSlider',
-      group: 'navigation',
-      options: {min: 0, max: 30, suffix: 'px'},
-      initialValue: 4,
-    }),
-    defineField({
-      name: 'menuItemPaddingY',
-      title: 'Menu item vertical padding',
-      type: 'rangeSlider',
-      group: 'navigation',
-      options: {min: 0, max: 30, suffix: 'px'},
-      initialValue: 4,
+      description: 'Navigation structure used for both desktop and mobile',
     }),
 
     /**
+     * ============================================================================
+     * DESKTOP STYLES
+     * Desktop-specific navigation styling and mega menu configuration.
+     * ============================================================================
+     */
+    defineField({
+      name: 'desktopNavigationTypography',
+      title: 'Desktop navigation typography',
+      type: 'fontStyleOverride',
+      group: 'desktopStyles',
+      description: 'Typography for desktop navigation links',
+    }),
+    defineField({
+      name: 'desktopMenuItemPaddingX',
+      title: 'Desktop menu item horizontal padding',
+      type: 'rangeSlider',
+      group: 'desktopStyles',
+      options: {min: 0, max: 30, suffix: 'px'},
+      initialValue: 4,
+    }),
+    defineField({
+      name: 'desktopMenuItemPaddingY',
+      title: 'Desktop menu item vertical padding',
+      type: 'rangeSlider',
+      group: 'desktopStyles',
+      options: {min: 0, max: 30, suffix: 'px'},
+      initialValue: 4,
+    }),
+    defineField({
+      name: 'desktopMegaMenuColorScheme',
+      title: 'Desktop mega menu color scheme',
+      type: 'reference',
+      to: [{type: 'colorScheme'}],
+      group: 'desktopStyles',
+    }),
+    defineField({
+      name: 'desktopMegaMenuHeadingTypography',
+      title: 'Desktop mega menu heading typography',
+      type: 'fontStyleOverride',
+      group: 'desktopStyles',
+      description: 'Typography for desktop mega menu section headings',
+    }),
+    defineField({
+      name: 'desktopMegaMenuLinkTypography',
+      title: 'Desktop mega menu link typography',
+      type: 'fontStyleOverride',
+      group: 'desktopStyles',
+      description: 'Typography for desktop mega menu links',
+    }),
+    defineField({
+      name: 'desktopMegaMenuPadding',
+      title: 'Desktop mega menu padding',
+      type: 'padding',
+      group: 'desktopStyles',
+    }),
+    defineField({
+      name: 'desktopMegaMenuSeparatorLine',
+      title: 'Desktop mega menu separator line',
+      type: 'separatorLine',
+      group: 'desktopStyles',
+      description: 'Separator between desktop mega menu and content',
+    }),
+    defineField({
+      name: 'desktopMegaMenuBehavior',
+      title: 'Desktop mega menu interaction',
+      type: 'string',
+      group: 'desktopStyles',
+      options: {
+        list: [
+          {title: 'Hover to open (Traditional)', value: 'hover'},
+          {title: 'Click to open (Shinola style)', value: 'click'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'hover',
+      description: 'How desktop mega menus open. Touch devices always use tap.',
+    }),
+    defineField({
+      name: 'desktopAllowMegaMenuParentLinks',
+      title: 'Allow parent navigation links (desktop)',
+      type: 'boolean',
+      group: 'desktopStyles',
+      initialValue: true,
+      description:
+        'If enabled, parent menu items can have links. If disabled, they only toggle the menu.',
+    }),
+    defineField({
+      name: 'desktopMegaMenuDisableScroll',
+      title: 'Disable scroll when desktop mega menu is open',
+      type: 'boolean',
+      group: 'desktopStyles',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'desktopMegaMenuShowOverlay',
+      title: 'Show overlay when desktop mega menu is open',
+      type: 'boolean',
+      group: 'desktopStyles',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'desktopMegaMenuOverlayOpacity',
+      title: 'Desktop mega menu overlay opacity',
+      type: 'rangeSlider',
+      group: 'desktopStyles',
+      options: {min: 0, max: 100, suffix: '%'},
+      initialValue: 50,
+      hidden: ({parent}) => !parent?.desktopMegaMenuShowOverlay,
+    }),
+
+    /**
+     * ============================================================================
+     * MOBILE STYLES
+     * Mobile-specific navigation styling (drawer/hamburger menu - future).
+     * ============================================================================
+     */
+    defineField({
+      name: 'mobileNavigationTypography',
+      title: 'Mobile navigation typography',
+      type: 'fontStyleOverride',
+      group: 'mobileStyles',
+      description: 'Typography for mobile navigation links',
+    }),
+
+    /**
+     * ============================================================================
      * ANNOUNCEMENT BAR
      * Controls announcement content and behavior.
+     * ============================================================================
      */
     defineField({
       name: 'announcementBar',
@@ -130,8 +239,10 @@ export default defineType({
     }),
 
     /**
+     * ============================================================================
      * LAYOUT
      * Global header layout across screen sizes.
+     * ============================================================================
      */
     defineField({
       name: 'desktopLayout',
@@ -186,8 +297,10 @@ export default defineType({
     }),
 
     /**
+     * ============================================================================
      * APPEARANCE
      * Header color and visual styling.
+     * ============================================================================
      */
     defineField({
       name: 'colorScheme',
@@ -225,8 +338,10 @@ export default defineType({
     }),
 
     /**
+     * ============================================================================
      * ACTIONS
      * Header actions such as account, cart, wishlist.
+     * ============================================================================
      */
     defineField({
       name: 'showLocalizationSelector',
@@ -297,97 +412,10 @@ export default defineType({
     }),
 
     /**
-     * MEGA MENU
-     * Controls appearance and interaction behavior.
-     */
-    defineField({
-      name: 'megaMenuColorScheme',
-      title: 'Mega menu color scheme',
-      type: 'reference',
-      to: [{type: 'colorScheme'}],
-      group: 'megaMenu',
-    }),
-    defineField({
-      name: 'megaMenuHeadingTypography',
-      title: 'Mega menu heading typography',
-      type: 'fontStyleOverride',
-      group: 'megaMenu',
-      description: 'Typography for mega menu section headings',
-    }),
-    defineField({
-      name: 'megaMenuLinkTypography',
-      title: 'Mega menu link typography',
-      type: 'fontStyleOverride',
-      group: 'megaMenu',
-      description: 'Typography for mega menu links',
-    }),
-    defineField({
-      name: 'megaMenuPadding',
-      title: 'Mega menu padding',
-      type: 'padding',
-      group: 'megaMenu',
-    }),
-    defineField({
-      name: 'megaMenuSeparatorLine',
-      title: 'Mega menu separator line',
-      type: 'separatorLine',
-      group: 'megaMenu',
-      description: 'Separator between mega menu and content',
-    }),
-
-    /* Behavior settings */
-    defineField({
-      name: 'megaMenuBehavior',
-      title: 'Mega Menu Interaction',
-      type: 'string',
-      group: 'megaMenu',
-      options: {
-        list: [
-          {title: 'Hover to open (Traditional)', value: 'hover'},
-          {title: 'Click to open (Shinola style)', value: 'click'},
-        ],
-        layout: 'radio',
-      },
-      initialValue: 'hover',
-      description:
-        'How mega menus open on desktop. Touch devices always use tap.',
-    }),
-    defineField({
-      name: 'allowMegaMenuParentLinks',
-      title: 'Allow parent navigation links',
-      type: 'boolean',
-      group: 'megaMenu',
-      initialValue: true,
-      description:
-        'If enabled, parent menu items can have links. If disabled, they only toggle the menu.',
-    }),
-    defineField({
-      name: 'megaMenuDisableScroll',
-      title: 'Disable scroll when mega menu is open',
-      type: 'boolean',
-      group: 'megaMenu',
-      initialValue: false,
-    }),
-    defineField({
-      name: 'megaMenuShowOverlay',
-      title: 'Show overlay when mega menu is open',
-      type: 'boolean',
-      group: 'megaMenu',
-      initialValue: false,
-    }),
-    defineField({
-      name: 'megaMenuOverlayOpacity',
-      title: 'Mega menu overlay opacity',
-      type: 'rangeSlider',
-      group: 'megaMenu',
-      options: {min: 0, max: 100, suffix: '%'},
-      initialValue: 50,
-      hidden: ({parent}) => !parent?.megaMenuShowOverlay,
-    }),
-
-    /**
+     * ============================================================================
      * BEHAVIOR
      * Global header behavior settings.
+     * ============================================================================
      */
     defineField({
       name: 'sticky',

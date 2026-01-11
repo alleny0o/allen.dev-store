@@ -39,10 +39,10 @@ export default defineField({
       type: 'link',
       description:
         'Where clicking the parent menu item goes (leave empty if you only want the dropdown to open)',
-      hidden: ({document}) => !document?.allowMegaMenuParentLinks,
+      hidden: ({document}) => !document?.desktopAllowMegaMenuParentLinks,
       validation: (Rule) =>
         Rule.custom((value, context) => {
-          const allow = context.document?.allowMegaMenuParentLinks;
+          const allow = context.document?.desktopAllowMegaMenuParentLinks;
           if (allow && !value) {
             return 'A link is required when parent navigation links are enabled.';
           }

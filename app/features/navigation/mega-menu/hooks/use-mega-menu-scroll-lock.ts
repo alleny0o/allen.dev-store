@@ -9,7 +9,7 @@ import {useHeaderSettings} from '~/features/header';
  */
 export function useMegaMenuScrollLock(isOpen: boolean) {
   const header = useHeaderSettings();
-  const disableScroll = header?.megaMenuDisableScroll ?? false;
+  const disableScroll = header?.desktopMegaMenuDisableScroll ?? false;
 
   useEffect(() => {
     // Only apply scroll lock if both conditions are true

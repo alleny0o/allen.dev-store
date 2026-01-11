@@ -2786,7 +2786,7 @@
         },
         "optional": true
       },
-      "navigationTypography": {
+      "desktopNavigationTypography": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
@@ -2794,7 +2794,7 @@
         },
         "optional": true
       },
-      "menuItemPaddingX": {
+      "desktopMenuItemPaddingX": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
@@ -2802,11 +2802,127 @@
         },
         "optional": true
       },
-      "menuItemPaddingY": {
+      "desktopMenuItemPaddingY": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
           "name": "rangeSlider"
+        },
+        "optional": true
+      },
+      "desktopMegaMenuColorScheme": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "_ref": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              }
+            },
+            "_type": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string",
+                "value": "reference"
+              }
+            },
+            "_weak": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "boolean"
+              },
+              "optional": true
+            }
+          },
+          "dereferencesTo": "colorScheme"
+        },
+        "optional": true
+      },
+      "desktopMegaMenuHeadingTypography": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "fontStyleOverride"
+        },
+        "optional": true
+      },
+      "desktopMegaMenuLinkTypography": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "fontStyleOverride"
+        },
+        "optional": true
+      },
+      "desktopMegaMenuPadding": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "padding"
+        },
+        "optional": true
+      },
+      "desktopMegaMenuSeparatorLine": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "separatorLine"
+        },
+        "optional": true
+      },
+      "desktopMegaMenuBehavior": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "hover"
+            },
+            {
+              "type": "string",
+              "value": "click"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "desktopAllowMegaMenuParentLinks": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
+      "desktopMegaMenuDisableScroll": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
+      "desktopMegaMenuShowOverlay": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
+      "desktopMegaMenuOverlayOpacity": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "rangeSlider"
+        },
+        "optional": true
+      },
+      "mobileNavigationTypography": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "fontStyleOverride"
         },
         "optional": true
       },
@@ -3097,114 +3213,6 @@
         },
         "optional": true
       },
-      "megaMenuColorScheme": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "object",
-          "attributes": {
-            "_ref": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "string"
-              }
-            },
-            "_type": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "string",
-                "value": "reference"
-              }
-            },
-            "_weak": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "boolean"
-              },
-              "optional": true
-            }
-          },
-          "dereferencesTo": "colorScheme"
-        },
-        "optional": true
-      },
-      "megaMenuHeadingTypography": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "fontStyleOverride"
-        },
-        "optional": true
-      },
-      "megaMenuLinkTypography": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "fontStyleOverride"
-        },
-        "optional": true
-      },
-      "megaMenuPadding": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "padding"
-        },
-        "optional": true
-      },
-      "megaMenuSeparatorLine": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "separatorLine"
-        },
-        "optional": true
-      },
-      "megaMenuBehavior": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "union",
-          "of": [
-            {
-              "type": "string",
-              "value": "hover"
-            },
-            {
-              "type": "string",
-              "value": "click"
-            }
-          ]
-        },
-        "optional": true
-      },
-      "allowMegaMenuParentLinks": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "boolean"
-        },
-        "optional": true
-      },
-      "megaMenuDisableScroll": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "boolean"
-        },
-        "optional": true
-      },
-      "megaMenuShowOverlay": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "boolean"
-        },
-        "optional": true
-      },
-      "megaMenuOverlayOpacity": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "rangeSlider"
-        },
-        "optional": true
-      },
       "sticky": {
         "type": "objectAttribute",
         "value": {
@@ -3225,77 +3233,6 @@
           ]
         },
         "optional": true
-      }
-    }
-  },
-  {
-    "name": "separatorLine",
-    "type": "type",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "separatorLine"
-          }
-        },
-        "show": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        },
-        "opacity": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "rangeSlider"
-          },
-          "optional": true
-        },
-        "height": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "rangeSlider"
-          },
-          "optional": true
-        }
-      }
-    }
-  },
-  {
-    "name": "padding",
-    "type": "type",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "padding"
-          }
-        },
-        "top": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "rangeSlider"
-          },
-          "optional": true
-        },
-        "bottom": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "rangeSlider"
-          },
-          "optional": true
-        }
       }
     }
   },
@@ -3401,6 +3338,77 @@
           "type": "objectAttribute",
           "value": {
             "type": "boolean"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "padding",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "padding"
+          }
+        },
+        "top": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
+          },
+          "optional": true
+        },
+        "bottom": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "separatorLine",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "separatorLine"
+          }
+        },
+        "show": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "opacity": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
+          },
+          "optional": true
+        },
+        "height": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
           },
           "optional": true
         }
