@@ -18,7 +18,7 @@ import {VisualEditing} from '../sanity/visual-editing.client';
 
 // layout / ui components
 import { AnnouncementBar, Header } from '~/features/header';
-import {Footer} from '../footer/footer';
+import {Footer} from '~/features/footer';
 import {TailwindIndicator} from '../tailwind-indicator';
 
 // aside / ui components
