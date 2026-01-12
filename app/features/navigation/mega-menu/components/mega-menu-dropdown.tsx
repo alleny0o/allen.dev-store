@@ -1,7 +1,7 @@
 // mega-menu/mega-menu-dropdown.tsx
 
 // React
-import {useRef, useEffect} from 'react';
+import {useRef, useEffect, useState} from 'react';
 
 // Motion
 import {m, AnimatePresence} from 'motion/react';
@@ -28,11 +28,13 @@ import {getDropdownVariant} from '../animations/dropdown-variants';
 export function MegaMenuDropdown() {
   const {openMenu, registerDropdownRef, closeMenu} = useMegaMenu();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const wasOpenRef = useRef(false);
+  const [shouldAnimateContent, setShouldAnimateContent] = useState(false);
 
   const styles = useMegaMenuStyles();
   const header = useHeaderSettings();
   const animationType = header?.desktopMegaMenuAnimation ?? 'slideFade';
-  const duration = (header?.desktopMegaMenuAnimationDuration ?? 250) / 1000; // Convert ms to seconds
+  const duration = (header?.desktopMegaMenuAnimationDuration ?? 250) / 1000;
   const maxHeight = useMegaMenuHeight(!!openMenu);
 
   // Apply scroll lock when menu is open (if enabled)
@@ -40,6 +42,22 @@ export function MegaMenuDropdown() {
 
   // Get overlay configuration
   const overlayConfig = useMegaMenuOverlay(!!openMenu);
+
+  // Track if menu is opening for first time vs switching tabs
+  useEffect(() => {
+    if (openMenu && !wasOpenRef.current) {
+      // Menu just opened from closed state - ANIMATE
+      setShouldAnimateContent(true);
+      wasOpenRef.current = true;
+    } else if (openMenu && wasOpenRef.current) {
+      // Menu was already open, just switching tabs - NO ANIMATION
+      setShouldAnimateContent(false);
+    } else if (!openMenu) {
+      // Menu closed - reset
+      wasOpenRef.current = false;
+      setShouldAnimateContent(false);
+    }
+  }, [openMenu]);
 
   useEffect(() => {
     if (dropdownRef.current) {
@@ -91,7 +109,7 @@ export function MegaMenuDropdown() {
           className="absolute top-full right-0 bottom-0 left-0 z-30 bg-black"
           style={{
             ...overlayConfig.overlayStyles,
-            height: '100vh', // Cover rest of viewport
+            height: '100vh',
           }}
           onClick={closeMenu}
           aria-hidden="true"
@@ -109,18 +127,24 @@ export function MegaMenuDropdown() {
             style={{maxHeight}}
             initial="hidden"
             animate="visible"
-            exit="hidden"
+            exit="visible"
             variants={getDropdownVariant(animationType)}
             transition={{
               duration,
-              ease: [0.04, 0.62, 0.23, 0.98], // Custom ease-out curve (smooth)
+              ease: [0.25, 0.46, 0.45, 0.94],
             }}
           >
             <div className="container">
               {openMenu.layout === 'grid' ? (
-                <GridRenderer menu={openMenu} />
+                <GridRenderer
+                  menu={openMenu}
+                  shouldAnimate={shouldAnimateContent}
+                />
               ) : (
-                <SectionRenderer menu={openMenu} />
+                <SectionRenderer
+                  menu={openMenu}
+                  shouldAnimate={shouldAnimateContent}
+                />
               )}
             </div>
           </m.div>

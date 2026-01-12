@@ -379,6 +379,9 @@ export const HEADER_FRAGMENT = defineQuery(`{
   desktopMegaMenuOverlayOpacity,
   desktopMegaMenuAnimation,
   desktopMegaMenuAnimationDuration,
+  desktopMegaMenuContentStagger,
+  desktopMegaMenuStaggerDelay,
+  desktopMegaMenuStaggerStartDelay,
 
   // Mobile styles
   mobileNavigationTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},

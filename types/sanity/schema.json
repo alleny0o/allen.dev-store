@@ -2951,6 +2951,51 @@
         },
         "optional": true
       },
+      "desktopMegaMenuContentStagger": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "none"
+            },
+            {
+              "type": "string",
+              "value": "fade"
+            },
+            {
+              "type": "string",
+              "value": "lift"
+            },
+            {
+              "type": "string",
+              "value": "scale"
+            },
+            {
+              "type": "string",
+              "value": "blur"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "desktopMegaMenuStaggerDelay": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "rangeSlider"
+        },
+        "optional": true
+      },
+      "desktopMegaMenuStaggerStartDelay": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "rangeSlider"
+        },
+        "optional": true
+      },
       "mobileNavigationTypography": {
         "type": "objectAttribute",
         "value": {
