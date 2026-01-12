@@ -363,9 +363,12 @@ export const HEADER_FRAGMENT = defineQuery(`{
   desktopNavigationTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
   desktopMenuItemPaddingX,
   desktopMenuItemPaddingY,
+  desktopNavigationHoverEffect,
   desktopMegaMenuColorScheme -> ${COLOR_SCHEME_FRAGMENT},
   desktopMegaMenuHeadingTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
+  desktopMegaMenuHeadingHoverEffect,
   desktopMegaMenuLinkTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
+  desktopMegaMenuLinkHoverEffect,
   desktopMegaMenuPadding,
   desktopMegaMenuSeparatorLine {
     show,

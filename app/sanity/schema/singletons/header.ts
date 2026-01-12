@@ -67,6 +67,24 @@ export default defineType({
       options: {min: 0, max: 30, suffix: 'px'},
       initialValue: 4,
     }),
+    defineField({
+      name: 'desktopNavigationHoverEffect',
+      title: 'Navigation link hover effect',
+      type: 'string',
+      group: 'desktopNavigation',
+      description: 'Hover animation for desktop navigation links',
+      options: {
+        list: [
+          {title: 'None', value: 'none'},
+          {title: 'Underline', value: 'underline'},
+          {title: 'Color Change', value: 'color'},
+          {title: 'Background Fill', value: 'background'},
+          {title: 'Scale', value: 'scale'},
+        ],
+        layout: 'dropdown',
+      },
+      initialValue: 'none',
+    }),
 
     /**
      * ============================================================================
@@ -89,11 +107,47 @@ export default defineType({
       description: 'Typography for desktop mega menu section headings',
     }),
     defineField({
+      name: 'desktopMegaMenuHeadingHoverEffect',
+      title: 'Heading link hover effect',
+      type: 'string',
+      group: 'desktopMegaMenu',
+      description: 'Hover animation for mega menu heading links',
+      options: {
+        list: [
+          {title: 'None', value: 'none'},
+          {title: 'Underline', value: 'underline'},
+          {title: 'Color Change', value: 'color'},
+          {title: 'Background Fill', value: 'background'},
+          {title: 'Scale', value: 'scale'},
+        ],
+        layout: 'dropdown',
+      },
+      initialValue: 'none',
+    }),
+    defineField({
       name: 'desktopMegaMenuLinkTypography',
       title: 'Desktop mega menu link typography',
       type: 'fontStyleOverride',
       group: 'desktopMegaMenu',
       description: 'Typography for desktop mega menu links',
+    }),
+    defineField({
+      name: 'desktopMegaMenuLinkHoverEffect',
+      title: 'Sublink hover effect',
+      type: 'string',
+      group: 'desktopMegaMenu',
+      description: 'Hover animation for mega menu sublinks',
+      options: {
+        list: [
+          {title: 'None', value: 'none'},
+          {title: 'Underline', value: 'underline'},
+          {title: 'Color Change', value: 'color'},
+          {title: 'Background Fill', value: 'background'},
+          {title: 'Scale', value: 'scale'},
+        ],
+        layout: 'dropdown',
+      },
+      initialValue: 'none',
     }),
     defineField({
       name: 'desktopMegaMenuPadding',
@@ -214,7 +268,8 @@ export default defineType({
       title: 'Stagger start delay',
       type: 'rangeSlider',
       group: 'desktopMegaMenu',
-      description: 'Delay before stagger begins (useful for matching dropdown animation)',
+      description:
+        'Delay before stagger begins (useful for matching dropdown animation)',
       options: {min: 0, max: 600, suffix: 'ms', step: 50},
       initialValue: 0,
       hidden: ({parent}) => parent?.desktopMegaMenuContentStagger === 'none',

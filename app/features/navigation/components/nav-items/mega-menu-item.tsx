@@ -3,6 +3,7 @@ import {useRef, useEffect, useState} from 'react';
 import {SanityReferenceLink} from '~/components/sanity/link/sanity-reference-link';
 import type {MegaMenuType} from '../../types';
 import {useMegaMenu} from '../../mega-menu/context/mega-menu-context';
+import {useNavHoverClasses} from '../../hooks/use-nav-hover-classes';
 
 interface MegaMenuItemProps {
   item: MegaMenuType;
@@ -17,6 +18,8 @@ export function MegaMenuItem({item}: MegaMenuItemProps) {
     allowParentLinks,
     registerItemRef,
   } = useMegaMenu();
+
+  const hoverClasses = useNavHoverClasses('navigation');
 
   const label = item.name ?? 'Menu';
   const isOpen = openMenu?._key === item._key;
@@ -42,6 +45,11 @@ export function MegaMenuItem({item}: MegaMenuItemProps) {
   const handleMouseEnter = () => {
     if (behavior === 'hover') {
       setOpenMenu(item);
+    } else if (behavior === 'click') {
+      // In click mode, hovering over a different mega menu closes the current one
+      if (openMenu && openMenu._key !== item._key) {
+        closeMenu();
+      }
     }
   };
 
@@ -57,7 +65,7 @@ export function MegaMenuItem({item}: MegaMenuItemProps) {
       }
       // Second tap: navigate (don't preventDefault)
     }
-    
+
     // SCENARIO 2: Click mode with parent link (desktop)
     else if (behavior === 'click' && hasLink) {
       if (!isOpen) {
@@ -67,7 +75,7 @@ export function MegaMenuItem({item}: MegaMenuItemProps) {
       }
       // Second click: navigate (don't preventDefault)
     }
-    
+
     // SCENARIO 3: Click mode without parent link
     else if (behavior === 'click') {
       e.preventDefault();
@@ -78,7 +86,7 @@ export function MegaMenuItem({item}: MegaMenuItemProps) {
         setOpenMenu(item);
       }
     }
-    
+
     // SCENARIO 4: Hover mode (desktop) - let link navigate naturally
   };
 
@@ -88,11 +96,11 @@ export function MegaMenuItem({item}: MegaMenuItemProps) {
       className="h-full shrink-0"
       onMouseEnter={handleMouseEnter}
     >
-      <div className="h-full flex items-center">
+      <div className="flex h-full items-center">
         {hasLink ? (
           <SanityReferenceLink
             data={item.link}
-            className="nav-text"
+            className={`nav-text ${hoverClasses} ${isOpen ? 'active' : ''}`}
             onClick={handleClick}
           >
             {label}
@@ -100,7 +108,7 @@ export function MegaMenuItem({item}: MegaMenuItemProps) {
         ) : (
           <button
             type="button"
-            className="nav-text cursor-pointer"
+            className={`nav-text cursor-pointer ${hoverClasses} ${isOpen ? 'active' : ''}`}
             onClick={handleClick}
             aria-expanded={isOpen}
             aria-haspopup="true"

@@ -2810,6 +2810,35 @@
         },
         "optional": true
       },
+      "desktopNavigationHoverEffect": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "none"
+            },
+            {
+              "type": "string",
+              "value": "underline"
+            },
+            {
+              "type": "string",
+              "value": "color"
+            },
+            {
+              "type": "string",
+              "value": "background"
+            },
+            {
+              "type": "string",
+              "value": "scale"
+            }
+          ]
+        },
+        "optional": true
+      },
       "desktopMegaMenuColorScheme": {
         "type": "objectAttribute",
         "value": {
@@ -2848,11 +2877,69 @@
         },
         "optional": true
       },
+      "desktopMegaMenuHeadingHoverEffect": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "none"
+            },
+            {
+              "type": "string",
+              "value": "underline"
+            },
+            {
+              "type": "string",
+              "value": "color"
+            },
+            {
+              "type": "string",
+              "value": "background"
+            },
+            {
+              "type": "string",
+              "value": "scale"
+            }
+          ]
+        },
+        "optional": true
+      },
       "desktopMegaMenuLinkTypography": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
           "name": "fontStyleOverride"
+        },
+        "optional": true
+      },
+      "desktopMegaMenuLinkHoverEffect": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "none"
+            },
+            {
+              "type": "string",
+              "value": "underline"
+            },
+            {
+              "type": "string",
+              "value": "color"
+            },
+            {
+              "type": "string",
+              "value": "background"
+            },
+            {
+              "type": "string",
+              "value": "scale"
+            }
+          ]
         },
         "optional": true
       },
