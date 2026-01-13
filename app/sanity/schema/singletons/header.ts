@@ -76,7 +76,8 @@ export default defineType({
       options: {
         list: [
           {title: 'None', value: 'none'},
-          {title: 'Underline', value: 'underline'},
+          {title: 'Underline (Animated)', value: 'underline'},
+          {title: 'Underline (Instant)', value: 'underlineInstant'},
           {title: 'Color Change', value: 'color'},
           {title: 'Background Fill', value: 'background'},
           {title: 'Scale', value: 'scale'},
@@ -115,7 +116,8 @@ export default defineType({
       options: {
         list: [
           {title: 'None', value: 'none'},
-          {title: 'Underline', value: 'underline'},
+          {title: 'Underline (Animated)', value: 'underline'},
+          {title: 'Underline (Instant)', value: 'underlineInstant'},
           {title: 'Color Change', value: 'color'},
           {title: 'Background Fill', value: 'background'},
           {title: 'Scale', value: 'scale'},
@@ -140,7 +142,8 @@ export default defineType({
       options: {
         list: [
           {title: 'None', value: 'none'},
-          {title: 'Underline', value: 'underline'},
+          {title: 'Underline (Animated)', value: 'underline'},
+          {title: 'Underline (Instant)', value: 'underlineInstant'},
           {title: 'Color Change', value: 'color'},
           {title: 'Background Fill', value: 'background'},
           {title: 'Scale', value: 'scale'},

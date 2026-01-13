@@ -433,6 +433,7 @@ export type Header = {
   desktopNavigationHoverEffect?:
     | 'none'
     | 'underline'
+    | 'underlineInstant'
     | 'color'
     | 'background'
     | 'scale';
@@ -446,6 +447,7 @@ export type Header = {
   desktopMegaMenuHeadingHoverEffect?:
     | 'none'
     | 'underline'
+    | 'underlineInstant'
     | 'color'
     | 'background'
     | 'scale';
@@ -453,6 +455,7 @@ export type Header = {
   desktopMegaMenuLinkHoverEffect?:
     | 'none'
     | 'underline'
+    | 'underlineInstant'
     | 'color'
     | 'background'
     | 'scale';
@@ -7223,6 +7226,7 @@ export type ROOT_QUERYResult = {
       | 'none'
       | 'scale'
       | 'underline'
+      | 'underlineInstant'
       | null;
     desktopMegaMenuColorScheme: {
       background: {
@@ -7340,6 +7344,7 @@ export type ROOT_QUERYResult = {
       | 'none'
       | 'scale'
       | 'underline'
+      | 'underlineInstant'
       | null;
     desktopMegaMenuLinkTypography: {
       role: 'body' | 'extra1' | 'extra2' | 'extra3' | 'heading' | null;
@@ -7357,6 +7362,7 @@ export type ROOT_QUERYResult = {
       | 'none'
       | 'scale'
       | 'underline'
+      | 'underlineInstant'
       | null;
     desktopMegaMenuPadding: Padding | null;
     desktopMegaMenuSeparatorLine: {

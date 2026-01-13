@@ -2825,6 +2825,10 @@
             },
             {
               "type": "string",
+              "value": "underlineInstant"
+            },
+            {
+              "type": "string",
               "value": "color"
             },
             {
@@ -2892,6 +2896,10 @@
             },
             {
               "type": "string",
+              "value": "underlineInstant"
+            },
+            {
+              "type": "string",
               "value": "color"
             },
             {
@@ -2926,6 +2934,10 @@
             {
               "type": "string",
               "value": "underline"
+            },
+            {
+              "type": "string",
+              "value": "underlineInstant"
             },
             {
               "type": "string",
