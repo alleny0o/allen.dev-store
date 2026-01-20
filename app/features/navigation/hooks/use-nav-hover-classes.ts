@@ -1,5 +1,5 @@
 import {useHeaderSettings} from '~/features/header';
-import {getHoverClasses} from '../utils/get-hover-classes';
+import { getHoverClasses } from '~/utils/hover-classes';
 
 type NavHoverType = 'navigation' | 'heading' | 'link';
 

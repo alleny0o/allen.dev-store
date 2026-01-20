@@ -124,4 +124,41 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  /* Image Block Typography */
+  #mega-menu-dropdown .image-block-heading {
+    font-family: var(--t-font-family), var(--t-font-type);
+    font-size: calc(var(--t-font-size) * 1px);
+    font-weight: var(--t-font-weight);
+    font-style: var(--t-font-style);
+    line-height: var(--t-line-height);
+    letter-spacing: calc(var(--t-letter-spacing) * 1px);
+    text-transform: var(--t-text-transform);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #mega-menu-dropdown .image-block-description {
+    font-family: var(--t-font-family), var(--t-font-type);
+    font-size: calc(var(--t-font-size) * 1px);
+    font-weight: var(--t-font-weight);
+    font-style: var(--t-font-style);
+    line-height: var(--t-line-height);
+    letter-spacing: calc(var(--t-letter-spacing) * 1px);
+    text-transform: var(--t-text-transform);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #mega-menu-dropdown .image-block-cta {
+    font-family: var(--t-font-family), var(--t-font-type);
+    font-size: calc(var(--t-font-size) * 1px);
+    font-weight: var(--t-font-weight);
+    font-style: var(--t-font-style);
+    line-height: var(--t-line-height);
+    letter-spacing: calc(var(--t-letter-spacing) * 1px);
+    text-transform: var(--t-text-transform);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }

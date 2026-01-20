@@ -153,6 +153,27 @@ export default defineType({
       initialValue: 'none',
     }),
     defineField({
+      name: 'desktopMegaMenuImageBlockHeadingTypography',
+      title: 'Desktop mega menu image block heading typography',
+      type: 'fontStyleOverride',
+      group: 'desktopMegaMenu',
+      description: 'Typography for image block headings',
+    }),
+    defineField({
+      name: 'desktopMegaMenuImageBlockDescriptionTypography',
+      title: 'Desktop mega menu image block description typography',
+      type: 'fontStyleOverride',
+      group: 'desktopMegaMenu',
+      description: 'Typography for image block descriptions',
+    }),
+    defineField({
+      name: 'desktopMegaMenuCTATypography',
+      title: 'Desktop mega menu CTA typography',
+      type: 'fontStyleOverride',
+      group: 'desktopMegaMenu',
+      description: 'Typography for CTA buttons in image blocks',
+    }),
+    defineField({
       name: 'desktopMegaMenuPadding',
       title: 'Desktop mega menu padding',
       type: 'padding',

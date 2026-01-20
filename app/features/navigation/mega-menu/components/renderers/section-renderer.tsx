@@ -2,7 +2,8 @@
 
 import {m} from 'motion/react';
 import {LinkSection} from '../sections/link-section';
-import {SECTION_PRESETS, type SectionPreset} from '../../constants';
+import {ImageBlock} from '../sections/image-block';
+import {SECTION_PRESETS, type SectionPreset} from '~/features/navigation/mega-menu/constants';
 import {MegaMenuType} from '~/features/navigation/types';
 import {useHeaderSettings} from '~/features/header';
 import {getStaggerVariant} from '../../animations/stagger-variants';
@@ -25,7 +26,8 @@ export function SectionRenderer({menu, shouldAnimate}: SectionRendererProps) {
   const header = useHeaderSettings();
   const staggerType = header?.desktopMegaMenuContentStagger ?? 'none';
   const staggerDelay = (header?.desktopMegaMenuStaggerDelay ?? 50) / 1000; // Convert to seconds
-  const staggerStartDelay = (header?.desktopMegaMenuStaggerStartDelay ?? 0) / 1000; // Convert to seconds
+  const staggerStartDelay =
+    (header?.desktopMegaMenuStaggerStartDelay ?? 0) / 1000; // Convert to seconds
 
   return (
     <div className={`grid ${preset.gridCols} gap-6 section-padding`}>
@@ -46,35 +48,37 @@ export function SectionRenderer({menu, shouldAnimate}: SectionRendererProps) {
             className={`${spanClass} flex flex-col gap-x-6 gap-y-9`}
           >
             {blocks?.map((block, blockIndex) => {
+              let content = null;
+
               if (block._type === 'linkSection') {
-                const content = <LinkSection data={block} />;
-
-                // If should animate, wrap in motion div
-                if (shouldAnimate && staggerType !== 'none') {
-                  return (
-                    <m.div
-                      key={block._key}
-                      initial="hidden"
-                      animate="visible"
-                      variants={getStaggerVariant(staggerType)}
-                      transition={{
-                        duration: 0.3,
-                        ease: [0.04, 0.62, 0.23, 0.98],
-                        delay: staggerStartDelay + (blockIndex * staggerDelay),
-                      }}
-                    >
-                      {content}
-                    </m.div>
-                  );
-                }
-
-                // Otherwise, just render plain div
-                return <div key={block._key}>{content}</div>;
+                content = <LinkSection data={block} />;
+              } else if (block._type === 'imageBlock') {
+                content = <ImageBlock data={block} />;
               }
-              if (block._type === 'imageBlock') {
-                return null;
+
+              if (!content) return null;
+
+              // If should animate, wrap in motion div
+              if (shouldAnimate && staggerType !== 'none') {
+                return (
+                  <m.div
+                    key={block._key}
+                    initial="hidden"
+                    animate="visible"
+                    variants={getStaggerVariant(staggerType)}
+                    transition={{
+                      duration: 0.3,
+                      ease: [0.04, 0.62, 0.23, 0.98],
+                      delay: staggerStartDelay + blockIndex * staggerDelay,
+                    }}
+                  >
+                    {content}
+                  </m.div>
+                );
               }
-              return null;
+
+              // Otherwise, just render plain div
+              return <div key={block._key}>{content}</div>;
             })}
           </div>
         );

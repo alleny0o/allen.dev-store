@@ -1,5 +1,3 @@
-// mega-menu/config/layout-presets.ts
-
 /**
  * Section preset configuration
  * Maps preset values to their grid system and column span classes

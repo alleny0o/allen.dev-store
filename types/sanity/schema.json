@@ -2955,6 +2955,30 @@
         },
         "optional": true
       },
+      "desktopMegaMenuImageBlockHeadingTypography": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "fontStyleOverride"
+        },
+        "optional": true
+      },
+      "desktopMegaMenuImageBlockDescriptionTypography": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "fontStyleOverride"
+        },
+        "optional": true
+      },
+      "desktopMegaMenuCTATypography": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "fontStyleOverride"
+        },
+        "optional": true
+      },
       "desktopMegaMenuPadding": {
         "type": "objectAttribute",
         "value": {
@@ -5913,10 +5937,57 @@
           },
           "optional": true
         },
-        "alt": {
+        "aspectRatio": {
           "type": "objectAttribute",
           "value": {
-            "type": "string"
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "1:1"
+              },
+              {
+                "type": "string",
+                "value": "3:4"
+              },
+              {
+                "type": "string",
+                "value": "4:5"
+              },
+              {
+                "type": "string",
+                "value": "16:9"
+              },
+              {
+                "type": "string",
+                "value": "21:9"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "borderRadius": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "none"
+              },
+              {
+                "type": "string",
+                "value": "md"
+              },
+              {
+                "type": "string",
+                "value": "lg"
+              },
+              {
+                "type": "string",
+                "value": "xl"
+              }
+            ]
           },
           "optional": true
         },
@@ -5934,6 +6005,56 @@
           },
           "optional": true
         },
+        "contentLayout": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "overlay"
+              },
+              {
+                "type": "string",
+                "value": "below"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "overlayOpacity": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
+          },
+          "optional": true
+        },
+        "overlayTextColor": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "white"
+              },
+              {
+                "type": "string",
+                "value": "card-foreground"
+              },
+              {
+                "type": "string",
+                "value": "primary-foreground"
+              },
+              {
+                "type": "string",
+                "value": "foreground"
+              }
+            ]
+          },
+          "optional": true
+        },
         "link": {
           "type": "objectAttribute",
           "value": {
@@ -5946,6 +6067,159 @@
           "type": "objectAttribute",
           "value": {
             "type": "string"
+          },
+          "optional": true
+        },
+        "linkStyle": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "text"
+              },
+              {
+                "type": "string",
+                "value": "filled"
+              },
+              {
+                "type": "string",
+                "value": "outlined"
+              },
+              {
+                "type": "string",
+                "value": "ghost"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "ctaColorScheme": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "primary"
+              },
+              {
+                "type": "string",
+                "value": "secondary"
+              },
+              {
+                "type": "string",
+                "value": "accent"
+              },
+              {
+                "type": "string",
+                "value": "foreground"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "ctaPaddingX": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
+          },
+          "optional": true
+        },
+        "ctaPaddingY": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
+          },
+          "optional": true
+        },
+        "ctaBorderRadius": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "none"
+              },
+              {
+                "type": "string",
+                "value": "sm"
+              },
+              {
+                "type": "string",
+                "value": "md"
+              },
+              {
+                "type": "string",
+                "value": "lg"
+              },
+              {
+                "type": "string",
+                "value": "xl"
+              },
+              {
+                "type": "string",
+                "value": "full"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "ctaHoverEffect": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "none"
+              },
+              {
+                "type": "string",
+                "value": "darken"
+              },
+              {
+                "type": "string",
+                "value": "lift"
+              },
+              {
+                "type": "string",
+                "value": "scale"
+              },
+              {
+                "type": "string",
+                "value": "underline"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "hoverEffect": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "none"
+              },
+              {
+                "type": "string",
+                "value": "scale"
+              },
+              {
+                "type": "string",
+                "value": "fade"
+              },
+              {
+                "type": "string",
+                "value": "lift"
+              }
+            ]
           },
           "optional": true
         }

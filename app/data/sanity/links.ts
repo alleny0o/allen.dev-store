@@ -58,11 +58,22 @@ export const IMAGE_BLOCK_FRAGMENT = defineQuery(`{
   _key,
   _type,
   image,
-  alt,
+  aspectRatio,
+  borderRadius,
   heading,
   description,
+  contentLayout,
+  overlayOpacity,
+  overlayTextColor,
   link -> ${LINK_REFERENCE_FRAGMENT},
   linkText,
+  linkStyle,
+  ctaColorScheme,
+  ctaPaddingX,
+  ctaPaddingY,
+  ctaBorderRadius,
+  ctaHoverEffect,
+  hoverEffect,
 }`);
 
 const CONTENT_BLOCKS_QUERY = `[] {

@@ -1,8 +1,10 @@
 /**
- * Returns Tailwind classes for navigation hover effects
+ * Returns Tailwind classes for hover effects on text/links/buttons
+ * Used across navigation, mega menu, and CTA buttons
  */
 export function getHoverClasses(effect: string | null | undefined): string {
   switch (effect) {
+    // Navigation hover effects
     case 'underline':
       return 'relative after:absolute after:bottom-[0px] after:left-[var(--nav-padding-x)] after:right-[var(--nav-padding-x)] after:h-[1.5px] after:w-0 after:bg-current after:transition-all after:duration-300 after:ease-out hover:after:w-[calc(100%-var(--nav-padding-x)*2)] [&.active]:after:w-[calc(100%-var(--nav-padding-x)*2)]';
 
@@ -18,7 +20,15 @@ export function getHoverClasses(effect: string | null | undefined): string {
     case 'scale':
       return 'transition-transform duration-300 hover:scale-105';
 
+    case 'darken':
+      return 'hover:brightness-90 transition-all duration-200';
+
+    case 'lift':
+      return 'hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200';
+
     case 'none':
+        return '';
+        
     default:
       return '';
   }
