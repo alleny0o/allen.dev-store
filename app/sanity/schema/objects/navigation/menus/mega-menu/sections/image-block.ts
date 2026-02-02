@@ -58,7 +58,6 @@ export default defineField({
     defineField({
       name: 'heading',
       type: 'string',
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'description',

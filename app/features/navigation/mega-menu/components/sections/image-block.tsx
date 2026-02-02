@@ -75,10 +75,18 @@ export function ImageBlock({data, className}: ImageBlockProps) {
 
     // TEXT ONLY STYLE
     if (linkStyle === 'text') {
-      return (
+      const textContent = (
         <span className={`image-block-cta ${ctaHoverClass}`}>
           {data.linkText}
         </span>
+      );
+
+      return data.link ? (
+        <SanityReferenceLink data={data.link}>
+          {textContent}
+        </SanityReferenceLink>
+      ) : (
+        textContent
       );
     }
 
@@ -125,10 +133,18 @@ export function ImageBlock({data, className}: ImageBlockProps) {
         break;
     }
 
-    return (
+    const buttonContent = (
       <span className={`${baseClasses} ${styleClasses}`} style={inlineStyles}>
         {data.linkText}
       </span>
+    );
+
+    return data.link ? (
+      <SanityReferenceLink data={data.link}>
+        {buttonContent}
+      </SanityReferenceLink>
+    ) : (
+      buttonContent
     );
   };
 
@@ -137,108 +153,117 @@ export function ImageBlock({data, className}: ImageBlockProps) {
 
   // OVERLAY MODE
   if (contentLayout === 'overlay') {
-    const content = (
-      <div className={`group relative overflow-hidden ${borderRadiusClass}`}>
-        {/* Typography CSS */}
-        <style dangerouslySetInnerHTML={{__html: headingTypographyCss + descriptionTypographyCss + ctaTypographyCss}} />
-
+    const overlayContent = (
+      <>
         {/* Image */}
         <SanityImage
           data={data.image as SanityImageType}
           aspectRatio={aspectRatioValue}
           sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
-          className={`h-full w-full object-cover ${imageHoverClass}`}
+          className="h-full w-full object-cover"
           showBorder={false}
           showShadow={false}
         />
 
         {/* Gradient Overlay */}
         <div
-          className="absolute inset-0 bg-gradient-to-t from-black to-transparent"
+          className="absolute inset-0 bg-linear-to-t from-black to-transparent pointer-events-none"
           style={{opacity: overlayOpacity / 100}}
         />
 
-        {/* Text Content - Bottom Left */}
-        <div className="absolute inset-0 flex flex-col justify-end p-6">
+        {/* Text Content - Bottom Left (Not clickable) */}
+        <div className="absolute inset-0 flex flex-col justify-end p-6 pointer-events-none">
           <div className={`space-y-3 ${overlayTextColorClass}`}>
             {data.heading && (
-              <h3 className="image-block-heading text-xl font-semibold">
+              <h3 className="image-block-heading">
                 {data.heading}
               </h3>
             )}
 
             {data.description && (
-              <p className="image-block-description text-sm opacity-90">
+              <p className="image-block-description">
                 {data.description}
               </p>
             )}
 
-            {renderCTA()}
+            {/* CTA is clickable - restore pointer events */}
+            <div className="image-block-cta pointer-events-auto">
+              {renderCTA()}
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
 
     return (
       <div className={className}>
+        {/* Typography CSS */}
+        <style dangerouslySetInnerHTML={{__html: headingTypographyCss + descriptionTypographyCss + ctaTypographyCss}} />
+
         {data.link ? (
           <SanityReferenceLink data={data.link} className="block">
-            {content}
+            <div className={`group relative overflow-hidden ${borderRadiusClass} ${imageHoverClass}`}>
+              {overlayContent}
+            </div>
           </SanityReferenceLink>
         ) : (
-          content
+          <div className={`group relative overflow-hidden ${borderRadiusClass} ${imageHoverClass}`}>
+            {overlayContent}
+          </div>
         )}
       </div>
     );
   }
 
   // BELOW MODE
-  const content = (
-    <div className="space-y-4">
-      {/* Typography CSS */}
-      <style dangerouslySetInnerHTML={{__html: headingTypographyCss + descriptionTypographyCss + ctaTypographyCss}} />
-
-      {/* Heading Above Image */}
-      {data.heading && (
-        <h3 className="image-block-heading mega-menu-heading">
-          {data.heading}
-        </h3>
-      )}
-
-      {/* Image */}
-      <div className={`group relative overflow-hidden ${borderRadiusClass}`}>
-        <SanityImage
-          data={data.image as SanityImageType}
-          aspectRatio={aspectRatioValue}
-          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
-          className={`h-full w-full object-cover ${imageHoverClass}`}
-          showBorder={false}
-          showShadow={false}
-        />
-      </div>
-
-      {/* Content Below Image */}
-      <div className="space-y-3">
-        {data.description && (
-          <p className="image-block-description text-sm text-muted-foreground">
-            {data.description}
-          </p>
-        )}
-
-        {renderCTA()}
-      </div>
-    </div>
+  const belowImage = (
+    <SanityImage
+      data={data.image as SanityImageType}
+      aspectRatio={aspectRatioValue}
+      sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+      className="h-full w-full object-cover"
+      showBorder={false}
+      showShadow={false}
+    />
   );
 
   return (
     <div className={className}>
-      {data.link ? (
-        <SanityReferenceLink data={data.link} className="block">
-          {content}
-        </SanityReferenceLink>
-      ) : (
-        content
-      )}
+      <div className="space-y-4">
+        {/* Typography CSS */}
+        <style dangerouslySetInnerHTML={{__html: headingTypographyCss + descriptionTypographyCss + ctaTypographyCss}} />
+
+        {/* Heading Above Image (Not clickable) */}
+        {data.heading && (
+          <h3 className="image-block-heading">
+            {data.heading}
+          </h3>
+        )}
+
+        {/* Image - Clickable */}
+        {data.link ? (
+          <SanityReferenceLink data={data.link} className="block">
+            <div className={`group relative overflow-hidden ${borderRadiusClass} ${imageHoverClass}`}>
+              {belowImage}
+            </div>
+          </SanityReferenceLink>
+        ) : (
+          <div className={`group relative overflow-hidden ${borderRadiusClass} ${imageHoverClass}`}>
+            {belowImage}
+          </div>
+        )}
+
+        {/* Content Below Image (Not clickable except CTA) */}
+        <div className="space-y-3">
+          {data.description && (
+            <p className="image-block-description text-muted-foreground">
+              {data.description}
+            </p>
+          )}
+
+          {renderCTA()}
+        </div>
+      </div>
     </div>
   );
 }
