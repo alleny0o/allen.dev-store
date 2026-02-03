@@ -3,8 +3,8 @@
  */
 import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
 
-/** Header configuration data from Sanity CMS */
-export type HeaderData = ROOT_QUERYResult['header'];
+/** Header configuration data from Sanity CMS (non-nullable for use after context validation) */
+export type HeaderData = NonNullable<ROOT_QUERYResult['header']>;
 
 /** Common props for all header layout components (desktop and mobile) */
 export type HeaderLayoutProps = {

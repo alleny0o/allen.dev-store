@@ -9,12 +9,13 @@ import {
   type ReactNode,
 } from 'react';
 import {useNavigation} from 'react-router';
-import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
 import {useHeaderSettings} from '~/features/header';
+import type {MegaMenuType} from '../../types';
 
-type HeaderMenu = NonNullable<NonNullable<ROOT_QUERYResult['header']>['menu']>;
-type MenuItem = HeaderMenu[number];
-type MegaMenuType = Extract<MenuItem, {_type: 'megaMenu'}>;
+// Timing and threshold constants
+const HOVER_ACTIVATION_DELAY_MS = 100;
+const MOUSE_TOLERANCE_PX = 5;
+const LG_BREAKPOINT_PX = 1024;
 
 interface MegaMenuContextType {
   openMenu: MegaMenuType | null;
@@ -28,6 +29,10 @@ interface MegaMenuContextType {
 
 const MegaMenuContext = createContext<MegaMenuContextType | null>(null);
 
+/**
+ * Provides mega menu state and behavior to child components
+ * Handles open/close logic, mouse tracking, and click-outside detection
+ */
 export function MegaMenuProvider({children}: {children: ReactNode}) {
   const [openMenu, setOpenMenu] = useState<MegaMenuType | null>(null);
   const navigation = useNavigation();
@@ -35,7 +40,9 @@ export function MegaMenuProvider({children}: {children: ReactNode}) {
   const dropdownRef = useRef<HTMLElement | null>(null);
 
   const header = useHeaderSettings();
-  const behavior = ((header?.desktopMegaMenuBehavior ?? 'hover') as 'hover' | 'click');
+  const behaviorSetting = header?.desktopMegaMenuBehavior ?? 'hover';
+  const behavior: 'hover' | 'click' =
+    behaviorSetting === 'click' ? 'click' : 'hover';
   const allowParentLinks = header?.desktopAllowMegaMenuParentLinks ?? true;
 
   const closeMenu = useCallback(() => {
@@ -66,7 +73,7 @@ export function MegaMenuProvider({children}: {children: ReactNode}) {
 
     const activationTimeout = setTimeout(() => {
       isMouseMoveActive = true;
-    }, 100);
+    }, HOVER_ACTIVATION_DELAY_MS);
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!isMouseMoveActive) return;
@@ -86,20 +93,17 @@ export function MegaMenuProvider({children}: {children: ReactNode}) {
         const navRect = navBar.getBoundingClientRect();
         const dropdownRect = dropdownRef.current.getBoundingClientRect();
 
-        // Add 5px tolerance to prevent overly sensitive detection
-        const TOLERANCE = 5;
-
         const isInNav =
-          e.clientX >= navRect.left - TOLERANCE &&
-          e.clientX <= navRect.right + TOLERANCE &&
-          e.clientY >= navRect.top - TOLERANCE &&
-          e.clientY <= navRect.bottom + TOLERANCE;
+          e.clientX >= navRect.left - MOUSE_TOLERANCE_PX &&
+          e.clientX <= navRect.right + MOUSE_TOLERANCE_PX &&
+          e.clientY >= navRect.top - MOUSE_TOLERANCE_PX &&
+          e.clientY <= navRect.bottom + MOUSE_TOLERANCE_PX;
 
         const isInDropdown =
-          e.clientX >= dropdownRect.left - TOLERANCE &&
-          e.clientX <= dropdownRect.right + TOLERANCE &&
-          e.clientY >= dropdownRect.top - TOLERANCE &&
-          e.clientY <= dropdownRect.bottom + TOLERANCE;
+          e.clientX >= dropdownRect.left - MOUSE_TOLERANCE_PX &&
+          e.clientX <= dropdownRect.right + MOUSE_TOLERANCE_PX &&
+          e.clientY >= dropdownRect.top - MOUSE_TOLERANCE_PX &&
+          e.clientY <= dropdownRect.bottom + MOUSE_TOLERANCE_PX;
 
         if (!isInNav && !isInDropdown) {
           closeMenu();
@@ -141,8 +145,7 @@ export function MegaMenuProvider({children}: {children: ReactNode}) {
     if (!openMenu) return;
 
     const handleResize = () => {
-      // Tailwind's lg breakpoint is 1024px
-      if (window.innerWidth < 1024) {
+      if (window.innerWidth < LG_BREAKPOINT_PX) {
         closeMenu();
       }
     };
@@ -168,7 +171,11 @@ export function MegaMenuProvider({children}: {children: ReactNode}) {
   );
 }
 
-export function useMegaMenu() {
+/**
+ * Hook to access mega menu state and controls
+ * Must be used within a MegaMenuProvider
+ */
+export function useMegaMenu(): MegaMenuContextType {
   const context = useContext(MegaMenuContext);
   if (!context) {
     throw new Error('useMegaMenu must be used within MegaMenuProvider');

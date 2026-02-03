@@ -1,12 +1,7 @@
 // mega-menu/mega-menu-dropdown.tsx
-
-// React
 import {useRef, useEffect, useState} from 'react';
-
-// Motion
 import {m, AnimatePresence} from 'motion/react';
 
-// Context & Hooks
 import {useMegaMenu} from '../context/mega-menu-context';
 import {useHeaderSettings} from '~/features/header';
 import {useMegaMenuStyles} from '../hooks/use-mega-menu-styles';
@@ -14,12 +9,16 @@ import {useMegaMenuHeight} from '../hooks/use-mega-menu-height';
 import {useMegaMenuScrollLock} from '../hooks/use-mega-menu-scroll-lock';
 import {useMegaMenuOverlay} from '../hooks/use-mega-menu-overlay';
 
-// Components
 import {GridRenderer} from './renderers/grid-renderer';
 import {SectionRenderer} from './renderers/section-renderer';
 
-// Utils
 import {getDropdownVariant} from '../animations/dropdown-variants';
+
+// Animation defaults
+const DEFAULT_ANIMATION_TYPE = 'slideFade';
+const DEFAULT_ANIMATION_DURATION_MS = 250;
+const MS_TO_SECONDS = 1000;
+const ANIMATION_EASING: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
 
 /**
  * Main mega menu dropdown container
@@ -33,8 +32,10 @@ export function MegaMenuDropdown() {
 
   const styles = useMegaMenuStyles();
   const header = useHeaderSettings();
-  const animationType = header?.desktopMegaMenuAnimation ?? 'slideFade';
-  const duration = (header?.desktopMegaMenuAnimationDuration ?? 250) / 1000;
+  const animationType = header?.desktopMegaMenuAnimation ?? DEFAULT_ANIMATION_TYPE;
+  const duration =
+    (header?.desktopMegaMenuAnimationDuration ?? DEFAULT_ANIMATION_DURATION_MS) /
+    MS_TO_SECONDS;
   const maxHeight = useMegaMenuHeight(!!openMenu);
 
   // Apply scroll lock when menu is open (if enabled)
@@ -122,6 +123,8 @@ export function MegaMenuDropdown() {
           <m.div
             ref={dropdownRef}
             id="mega-menu-dropdown"
+            role="menu"
+            aria-label="Submenu"
             data-mega-menu-dropdown
             className="absolute top-full right-0 left-0 z-40 overflow-y-auto bg-background"
             style={{maxHeight}}
@@ -131,7 +134,7 @@ export function MegaMenuDropdown() {
             variants={getDropdownVariant(animationType)}
             transition={{
               duration,
-              ease: [0.25, 0.46, 0.45, 0.94],
+              ease: ANIMATION_EASING,
             }}
           >
             <div className="container">

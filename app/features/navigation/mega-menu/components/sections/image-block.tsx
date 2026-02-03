@@ -1,5 +1,4 @@
 // mega-menu/sections/image-block.tsx
-
 import {SanityReferenceLink} from '~/components/sanity/link/sanity-reference-link';
 import {SanityImage} from '~/components/sanity/sanity-image';
 import {useHeaderSettings} from '~/features/header';
@@ -18,23 +17,24 @@ import {
   type OverlayTextColor,
   type CTAColorScheme,
 } from '~/features/navigation/mega-menu/constants';
-import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
+import type {ImageBlockType} from '~/features/navigation/types';
 import type {SanityImage as SanityImageType} from 'types';
 import type {CSSProperties} from 'react';
 
-type HeaderMenu = NonNullable<NonNullable<ROOT_QUERYResult['header']>['menu']>;
-type MenuItem = HeaderMenu[number];
-type MegaMenuType = Extract<MenuItem, {_type: 'megaMenu'}>;
-type ImageBlockType = Extract<
-  NonNullable<MegaMenuType['content']>[number],
-  {_type: 'imageBlock'}
->;
+// Default values for image block styling
+const DEFAULT_OVERLAY_OPACITY = 60;
+const DEFAULT_CTA_PADDING_X = 16;
+const DEFAULT_CTA_PADDING_Y = 8;
 
 interface ImageBlockProps {
   data: ImageBlockType;
   className?: string;
 }
 
+/**
+ * Renders an image block within the mega menu
+ * Supports overlay and below-image content layouts with customizable CTAs
+ */
 export function ImageBlock({data, className}: ImageBlockProps) {
   const header = useHeaderSettings();
 
@@ -61,7 +61,7 @@ export function ImageBlock({data, className}: ImageBlockProps) {
   
   // Get content layout mode and overlay opacity
   const contentLayout = data.contentLayout || 'overlay';
-  const overlayOpacity = data.overlayOpacity ?? 60;
+  const overlayOpacity = data.overlayOpacity ?? DEFAULT_OVERLAY_OPACITY;
 
   // Get image hover effect class
   const imageHoverClass = getCardHoverClasses(data.hoverEffect);
@@ -91,10 +91,14 @@ export function ImageBlock({data, className}: ImageBlockProps) {
     }
 
     // BUTTON STYLES (filled, outlined, ghost)
-    const colorScheme = CTA_COLOR_SCHEMES[data.ctaColorScheme as CTAColorScheme] || CTA_COLOR_SCHEMES.primary;
-    const borderRadius = CTA_BORDER_RADIUS[data.ctaBorderRadius as CTABorderRadius] || CTA_BORDER_RADIUS.md;
-    const paddingX = data.ctaPaddingX ?? 16;
-    const paddingY = data.ctaPaddingY ?? 8;
+    const colorScheme =
+      CTA_COLOR_SCHEMES[data.ctaColorScheme as CTAColorScheme] ||
+      CTA_COLOR_SCHEMES.primary;
+    const borderRadius =
+      CTA_BORDER_RADIUS[data.ctaBorderRadius as CTABorderRadius] ||
+      CTA_BORDER_RADIUS.md;
+    const paddingX = data.ctaPaddingX ?? DEFAULT_CTA_PADDING_X;
+    const paddingY = data.ctaPaddingY ?? DEFAULT_CTA_PADDING_Y;
 
     const baseClasses = `inline-block image-block-cta ${borderRadius} ${ctaHoverClass}`;
     

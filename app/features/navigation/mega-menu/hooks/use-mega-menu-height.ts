@@ -1,12 +1,16 @@
 // use-mega-menu-height.ts
 import {useState, useEffect} from 'react';
 
+// Height calculation constants
+const DEFAULT_MAX_HEIGHT = '80vh';
+const BOTTOM_PADDING_PX = 50;
+
 /**
  * Calculates and updates the maximum height for the mega menu dropdown
  * based on available viewport space
  */
-export function useMegaMenuHeight(isOpen: boolean) {
-  const [maxHeight, setMaxHeight] = useState<string>('80vh');
+export function useMegaMenuHeight(isOpen: boolean): string {
+  const [maxHeight, setMaxHeight] = useState<string>(DEFAULT_MAX_HEIGHT);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -25,7 +29,7 @@ export function useMegaMenuHeight(isOpen: boolean) {
         window.innerHeight -
         headerWrapper.offsetHeight -
         (announcementBar?.offsetHeight || 0) -
-        50;
+        BOTTOM_PADDING_PX;
 
       setMaxHeight(`${available}px`);
     };

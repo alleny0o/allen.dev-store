@@ -1,12 +1,18 @@
 // mega-menu/renderers/section-renderer.tsx
-
 import {m} from 'motion/react';
 import {LinkSection} from '../sections/link-section';
 import {ImageBlock} from '../sections/image-block';
 import {SECTION_PRESETS, type SectionPreset} from '~/features/navigation/mega-menu/constants';
-import {MegaMenuType} from '~/features/navigation/types';
+import type {MegaMenuType} from '~/features/navigation/types';
 import {useHeaderSettings} from '~/features/header';
 import {getStaggerVariant} from '../../animations/stagger-variants';
+
+// Animation constants
+const DEFAULT_STAGGER_DELAY_MS = 50;
+const DEFAULT_STAGGER_START_DELAY_MS = 0;
+const STAGGER_ANIMATION_DURATION = 0.3;
+const STAGGER_ANIMATION_EASING: [number, number, number, number] = [0.04, 0.62, 0.23, 0.98];
+const MS_TO_SECONDS = 1000;
 
 interface SectionRendererProps {
   menu: MegaMenuType;
@@ -25,9 +31,11 @@ export function SectionRenderer({menu, shouldAnimate}: SectionRendererProps) {
   // Get stagger settings from header
   const header = useHeaderSettings();
   const staggerType = header?.desktopMegaMenuContentStagger ?? 'none';
-  const staggerDelay = (header?.desktopMegaMenuStaggerDelay ?? 50) / 1000; // Convert to seconds
+  const staggerDelay =
+    (header?.desktopMegaMenuStaggerDelay ?? DEFAULT_STAGGER_DELAY_MS) / MS_TO_SECONDS;
   const staggerStartDelay =
-    (header?.desktopMegaMenuStaggerStartDelay ?? 0) / 1000; // Convert to seconds
+    (header?.desktopMegaMenuStaggerStartDelay ?? DEFAULT_STAGGER_START_DELAY_MS) /
+    MS_TO_SECONDS;
 
   return (
     <div className={`grid ${preset.gridCols} gap-6 section-padding`}>
@@ -67,8 +75,8 @@ export function SectionRenderer({menu, shouldAnimate}: SectionRendererProps) {
                     animate="visible"
                     variants={getStaggerVariant(staggerType)}
                     transition={{
-                      duration: 0.3,
-                      ease: [0.04, 0.62, 0.23, 0.98],
+                      duration: STAGGER_ANIMATION_DURATION,
+                      ease: STAGGER_ANIMATION_EASING,
                       delay: staggerStartDelay + blockIndex * staggerDelay,
                     }}
                   >

@@ -1,22 +1,29 @@
 import * as React from 'react';
 
-import { IconMenu } from '~/components/icons/icon-menu';
-import { IconButton } from '~/components/ui/button';
+import {IconMenu} from '~/components/icons/icon-menu';
+import {IconButton} from '~/components/ui/button';
 
+// Icon sizing and stroke
+const MENU_ICON_SIZE = 7;
+const MENU_ICON_STROKE_WIDTH = 1.5;
+
+/**
+ * Trigger button for opening the mobile navigation drawer
+ * Forwards ref for use with DrawerTrigger asChild
+ */
 export const MobileNavigationTrigger = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement>
->((props, ref) => {
+>(function MobileNavigationTrigger(props, ref) {
   return (
     <IconButton
       ref={ref}
-      className="-mr-2 lg:mr-0 lg:hidden pointer-coarse:block"
+      aria-label="Open menu"
+      className="-mr-2 pointer-coarse:block lg:mr-0 lg:hidden"
       {...props}
     >
       <span className="sr-only">Menu</span>
-      <IconMenu className="size-7" strokeWidth={1.5} />
+      <IconMenu className={`size-${MENU_ICON_SIZE}`} strokeWidth={MENU_ICON_STROKE_WIDTH} />
     </IconButton>
   );
 });
-
-MobileNavigationTrigger.displayName = 'MobileNavigationTrigger';

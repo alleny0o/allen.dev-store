@@ -1,23 +1,18 @@
 // mega-menu/sections/link-section.tsx
-
 import {SanityInternalLink} from '~/components/sanity/link/sanity-internal-link';
 import {SanityExternalLink} from '~/components/sanity/link/sanity-external-link';
 import {SanityReferenceLink} from '~/components/sanity/link/sanity-reference-link';
-import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
-
-type HeaderMenu = NonNullable<NonNullable<ROOT_QUERYResult['header']>['menu']>;
-type MenuItem = HeaderMenu[number];
-type MegaMenuType = Extract<MenuItem, {_type: 'megaMenu'}>;
-type LinkSectionType = Extract<
-  NonNullable<MegaMenuType['content']>[number],
-  {_type: 'linkSection'}
->;
+import type {LinkSectionType} from '~/features/navigation/types';
 
 interface LinkSectionProps {
   data: LinkSectionType;
   className?: string;
 }
 
+/**
+ * Renders a link section within the mega menu
+ * Displays an optional heading with links below
+ */
 export function LinkSection({data, className}: LinkSectionProps) {
   return (
     <nav className={className} aria-label={data.heading || 'Menu section'}>

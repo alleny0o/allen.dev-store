@@ -6,8 +6,9 @@ import {useTypographyCssVars} from '~/hooks/use-typography-css-vars';
 
 /**
  * Generates CSS variables for mega menu styling
+ * Combines dropdown colors, heading typography, and link typography
  */
-export function useMegaMenuStyles() {
+export function useMegaMenuStyles(): string {
   const header = useHeaderSettings();
 
   const dropdownCssVars = useColorsCssVars({

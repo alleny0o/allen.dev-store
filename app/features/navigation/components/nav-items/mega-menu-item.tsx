@@ -9,6 +9,10 @@ interface MegaMenuItemProps {
   item: MegaMenuType;
 }
 
+/**
+ * Mega menu navigation item
+ * Supports hover and click behaviors with optional parent links
+ */
 export function MegaMenuItem({item}: MegaMenuItemProps) {
   const {
     openMenu,
@@ -94,6 +98,7 @@ export function MegaMenuItem({item}: MegaMenuItemProps) {
     <li
       ref={itemRef}
       className="h-full shrink-0"
+      role="none"
       onMouseEnter={handleMouseEnter}
     >
       <div className="flex h-full items-center">
@@ -102,6 +107,9 @@ export function MegaMenuItem({item}: MegaMenuItemProps) {
             data={item.link}
             className={`nav-text ${hoverClasses} ${isOpen ? 'active' : ''}`}
             onClick={handleClick}
+            role="menuitem"
+            aria-expanded={isOpen}
+            aria-haspopup="menu"
           >
             {label}
           </SanityReferenceLink>
@@ -110,8 +118,9 @@ export function MegaMenuItem({item}: MegaMenuItemProps) {
             type="button"
             className={`nav-text cursor-pointer ${hoverClasses} ${isOpen ? 'active' : ''}`}
             onClick={handleClick}
+            role="menuitem"
             aria-expanded={isOpen}
-            aria-haspopup="true"
+            aria-haspopup="menu"
           >
             {label}
           </button>

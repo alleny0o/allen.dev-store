@@ -8,21 +8,22 @@ interface ExternalLinkItemProps {
   item: ExternalLinkType;
 }
 
+/**
+ * External link navigation item
+ * Closes any open mega menu on hover
+ */
 export function ExternalLinkItem({item}: ExternalLinkItemProps) {
-  const {closeMenu } = useMegaMenu();
+  const {closeMenu} = useMegaMenu();
   const hoverClasses = useNavHoverClasses('navigation');
 
   const handleMouseEnter = () => {
-    closeMenu(); // Always close mega menu when hovering internal links
+    closeMenu();
   };
 
   return (
-    <li className="h-full shrink-0" onMouseEnter={handleMouseEnter}>
+    <li className="h-full shrink-0" role="none" onMouseEnter={handleMouseEnter}>
       <div className="flex h-full items-center">
-        <SanityExternalLink
-          data={item}
-          className={`nav-text ${hoverClasses}`}
-        />
+        <SanityExternalLink data={item} className={`nav-text ${hoverClasses}`} />
       </div>
     </li>
   );
