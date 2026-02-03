@@ -3,24 +3,22 @@ import {Link} from 'react-router';
 
 import {useLocalePath} from '~/hooks/use-locale-path';
 import {DesktopNavigation} from '~/features/navigation';
-
-import { Logo } from '../../components/header-logo';
+import {Logo} from '../../components/header-logo';
 
 type SplitRightLayoutProps = {
   logoWidth?: string;
 };
 
+/**
+ * Desktop header layout with logo on left, navigation and actions grouped on right.
+ */
 export function SplitRightLayout({logoWidth}: SplitRightLayoutProps) {
   const homePath = useLocalePath({path: '/'});
 
   return (
     <div className="flex h-full items-stretch justify-between">
-      {' '}
-      {/* ← items-stretch */}
       <div className="flex items-center">
-        {' '}
-        {/* ← wrap logo */}
-        <Link className="group" prefetch="intent" to={homePath}>
+        <Link aria-label="Home" className="group" prefetch="intent" to={homePath}>
           <Logo
             className="h-auto w-(--logoWidth)"
             sizes={logoWidth}
@@ -33,8 +31,6 @@ export function SplitRightLayout({logoWidth}: SplitRightLayoutProps) {
         </Link>
       </div>
       <div className="flex h-full items-stretch gap-8">
-        {' '}
-        {/* ← items-stretch */}
         <DesktopNavigation />
         <div className="flex items-center">{/* actions */}</div>
       </div>

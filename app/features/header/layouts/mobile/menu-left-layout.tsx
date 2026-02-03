@@ -4,18 +4,20 @@ import {Link} from 'react-router';
 import {useLocalePath} from '~/hooks/use-locale-path';
 import {ClientOnly} from '~/components/client-only';
 import {MobileNavigation, MobileNavigationTrigger} from '~/features/navigation';
-
-import { Logo } from '../../components/header-logo';
+import {Logo} from '../../components/header-logo';
 import {useHeaderSettings} from '~/features/header';
 
 type MenuLeftLayoutProps = {
   logoWidth?: string;
 };
 
+/**
+ * Mobile header layout with menu and logo grouped on left, actions on right.
+ */
 export function MenuLeftLayout({logoWidth}: MenuLeftLayoutProps) {
   const homePath = useLocalePath({path: '/'});
   const header = useHeaderSettings();
-  const menu = header.menu ?? [];
+  const menu = header?.menu ?? [];
 
   return (
     <div className="flex items-center justify-between">
@@ -24,7 +26,7 @@ export function MenuLeftLayout({logoWidth}: MenuLeftLayoutProps) {
           {() => <MobileNavigation data={menu} />}
         </ClientOnly>
 
-        <Link className="group" prefetch="intent" to={homePath}>
+        <Link aria-label="Home" className="group" prefetch="intent" to={homePath}>
           <Logo
             className="h-auto w-(--logoWidth)"
             sizes={logoWidth}

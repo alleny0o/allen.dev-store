@@ -1,8 +1,12 @@
-import {useRootLoaderData} from '~/root';
 import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
 
-import { SanityImage } from '~/components/sanity/sanity-image';
+import {SanityImage} from '~/components/sanity/sanity-image';
+import {useRootLoaderData} from '~/root';
 
+/**
+ * Renders the site logo from Sanity CMS settings.
+ * Falls back to site name text if no logo image is configured.
+ */
 export function Logo(props: {
   className?: string;
   loading?: 'eager' | 'lazy';

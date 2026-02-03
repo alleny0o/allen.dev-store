@@ -1,39 +1,40 @@
-// header.tsx
 import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
 import {stegaClean} from '@sanity/client/stega';
 import {cx} from 'class-variance-authority';
 
 import {useRootLoaderData} from '~/root';
 
-import {HeaderWrapper} from './header-wrapper';
 import {HeaderContext} from './header-context';
+import {HeaderWrapper} from './header-wrapper';
 
-import {MegaMenuProvider} from '~/features/navigation/mega-menu/context/mega-menu-context';
 import {MegaMenuDropdown} from '~/features/navigation/mega-menu/components/mega-menu-dropdown';
+import {MegaMenuProvider} from '~/features/navigation/mega-menu/context/mega-menu-context';
 
-// Desktop layouts
-import {ClassicLayout} from '../layouts/desktop/classic-layout';
 import {CenterLogoLayout} from '../layouts/desktop/center-logo-layout';
-import {ThreeColumnLayout} from '../layouts/desktop/three-column-layout';
+import {ClassicLayout} from '../layouts/desktop/classic-layout';
 import {SplitRightLayout} from '../layouts/desktop/split-right-layout';
+import {ThreeColumnLayout} from '../layouts/desktop/three-column-layout';
 
-// Mobile layouts
 import {BalancedLayout} from '../layouts/mobile/balanced-layout';
-import {MenuLeftLayout} from '../layouts/mobile/menu-left-layout';
 import {BrandLeftLayout} from '../layouts/mobile/brand-left-layout';
+import {MenuLeftLayout} from '../layouts/mobile/menu-left-layout';
 
+/** Z-index for sticky header positioning */
+const STICKY_HEADER_Z_INDEX = 'z-50';
+
+/**
+ * Main site header component with responsive desktop and mobile layouts.
+ * Layout variants and sticky behavior are controlled via Sanity CMS.
+ */
 export function Header() {
-  // Load header data
   const {sanityRoot} = useRootLoaderData();
   const data = sanityRoot?.data as ROOT_QUERYResult | undefined;
   const header = data?.header;
 
-  // Logo width for both desktop and mobile layouts
   const logoWidth = header?.desktopLogoWidth
     ? `${header.desktopLogoWidth}px`
     : undefined;
 
-  // Normalize layout values with fallbacks
   const desktopLayout = stegaClean(header?.desktopLayout);
   const mobileLayout = stegaClean(header?.mobileLayout);
   const sticky = stegaClean(header?.sticky);
@@ -41,13 +42,15 @@ export function Header() {
   return (
     <HeaderContext.Provider value={header ?? null}>
       <MegaMenuProvider>
-        {/* Wrapper for positioning context */}
         <div
           data-header-wrapper
-          className={cx('relative', sticky !== 'none' && 'sticky top-0 z-50')}
+          role="banner"
+          className={cx(
+            'relative',
+            sticky !== 'none' && `sticky top-0 ${STICKY_HEADER_Z_INDEX}`,
+          )}
         >
           <HeaderWrapper>
-
             <div className="h-full w-full">
               {/* Desktop layout (lg+) */}
               <div className="hidden lg:block">
@@ -80,7 +83,6 @@ export function Header() {
             </div>
           </HeaderWrapper>
 
-          {/* Dropdown for mega menu content - outside HeaderWrapper */}
           <MegaMenuDropdown />
         </div>
       </MegaMenuProvider>

@@ -1,4 +1,3 @@
-// header-animation.tsx
 import React, {useEffect, useState, type CSSProperties} from 'react';
 import {useLocation} from 'react-router';
 import {
@@ -13,6 +12,36 @@ import {useBoundedScroll} from '~/hooks/use-bounded-scroll';
 import {cn} from '~/lib/utils';
 import {useHeaderHeight} from '../hooks/use-header-height';
 
+/** Scroll distance in pixels before header starts hiding */
+const SCROLL_BOUND_DISTANCE = 250;
+/** Progress threshold before delayed transform begins */
+const SCROLL_DELAY_THRESHOLD = 0.75;
+/** Progress threshold to trigger hidden state */
+const HIDDEN_THRESHOLD = 0.5;
+/** Animation duration in seconds */
+const ANIMATION_DURATION = 0.2;
+
+type HeaderVariant = 'hidden' | 'initial' | 'visible';
+
+const variants: Variants = {
+  hidden: {
+    transform: 'translateY(-100%)',
+  },
+  initial: {
+    transform: 'translateY(0)',
+    transition: {
+      duration: 0,
+    },
+  },
+  visible: {
+    transform: 'translateY(0)',
+  },
+};
+
+/**
+ * Animated header wrapper that hides/shows based on scroll direction.
+ * Resets to visible state on route changes.
+ */
 export function HeaderAnimation(props: {
   children: React.ReactNode;
   className: string;
@@ -25,27 +54,24 @@ export function HeaderAnimation(props: {
   const {desktopHeaderHeight} = useHeaderHeight();
   const desktopHeaderHeightValue = desktopHeaderHeight || 0;
 
-  const [activeVariant, setActiveVariant] = useState<
-    'hidden' | 'initial' | 'visible'
-  >('initial');
+  const [activeVariant, setActiveVariant] = useState<HeaderVariant>('initial');
 
-  const {scrollYBoundedProgress} = useBoundedScroll(250);
+  const {scrollYBoundedProgress} = useBoundedScroll(SCROLL_BOUND_DISTANCE);
 
   const scrollYBoundedProgressDelayed = useTransform(
     scrollYBoundedProgress,
-    [0, 0.75, 1],
+    [0, SCROLL_DELAY_THRESHOLD, 1],
     [0, 0, 1],
   );
 
   useEffect(() => {
-    // Reset the header position on route change
     setActiveVariant('initial');
   }, [pathname]);
 
   useMotionValueEvent(scrollYBoundedProgressDelayed, 'change', (latest) => {
     if (latest === 0) {
       setActiveVariant('visible');
-    } else if (latest > 0.5) {
+    } else if (latest > HIDDEN_THRESHOLD) {
       setActiveVariant('hidden');
     } else {
       setActiveVariant('visible');
@@ -57,27 +83,11 @@ export function HeaderAnimation(props: {
       [`${desktopHeaderHeightValue}px`, '0px'],
     );
 
-    // Reassign header height css var on scroll
     document.documentElement.style.setProperty(
       '--desktopHeaderHeight',
       newDesktopHeaderHeight,
     );
   });
-
-  const variants: Variants = {
-    hidden: {
-      transform: 'translateY(-100%)',
-    },
-    initial: {
-      transform: 'translateY(0)',
-      transition: {
-        duration: 0,
-      },
-    },
-    visible: {
-      transform: 'translateY(0)',
-    },
-  };
 
   return (
     <m.header
@@ -86,7 +96,7 @@ export function HeaderAnimation(props: {
       className={cn(className)}
       initial="visible"
       transition={{
-        duration: 0.2,
+        duration: ANIMATION_DURATION,
       }}
       variants={variants}
       style={style}

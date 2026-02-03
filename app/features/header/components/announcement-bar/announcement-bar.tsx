@@ -19,6 +19,15 @@ import {AnnouncementItem} from './announcement-item';
 import {SanityInternalLink} from '~/components/sanity/link/sanity-internal-link';
 import {SanityExternalLink} from '~/components/sanity/link/sanity-external-link';
 
+/** Default padding value in pixels when not specified */
+const DEFAULT_PADDING = 0;
+/** Default arrow icon size in pixels */
+const DEFAULT_ARROW_SIZE = 24;
+/** Default arrow stroke width */
+const DEFAULT_ARROW_STROKE_WIDTH = 2;
+/** Padding offset for visual alignment in pixels */
+const PADDING_OFFSET = 2;
+
 type AnnouncementBarEntry = NonNullable<
   NonNullable<ROOT_QUERYResult['header']>['announcementBar']
 >[number];
@@ -27,6 +36,10 @@ type UtilityLink = NonNullable<
   NonNullable<ROOT_QUERYResult['header']>['utilityLinks']
 >[number];
 
+/**
+ * Displays a rotating announcement bar with optional navigation arrows and utility links.
+ * Supports auto-rotation, fade/slide transitions, and customizable styling via Sanity CMS.
+ */
 export function AnnouncementBar() {
   const {sanityRoot} = useRootLoaderData();
   const data = sanityRoot?.data as ROOT_QUERYResult | undefined;
@@ -34,15 +47,15 @@ export function AnnouncementBar() {
   const announcementBar = header?.announcementBar;
   const utilityLinks = header?.utilityLinks;
 
-  const paddingTop = header?.announcementBarPadding?.top ?? 0;
-  const paddingBottom = header?.announcementBarPadding?.bottom ?? 0;
+  const paddingTop = header?.announcementBarPadding?.top ?? DEFAULT_PADDING;
+  const paddingBottom =
+    header?.announcementBarPadding?.bottom ?? DEFAULT_PADDING;
 
   const isArrowsActive =
     header?.showAnnouncementArrows && (announcementBar?.length ?? 0) > 1;
 
   const isUtilitiesActive = (utilityLinks?.length ?? 0) > 0;
 
-  // Generate color CSS vars
   const colorsCssVars = useColorsCssVars({
     selector: `#announcement-bar`,
     settings: {
@@ -53,7 +66,6 @@ export function AnnouncementBar() {
     },
   });
 
-  // Generate typography CSS vars
   const announcementTypographyCss = useTypographyCssVars({
     selector: '#announcement-bar .announcement-text',
     override: header?.announcementBarTypography,
@@ -64,11 +76,10 @@ export function AnnouncementBar() {
     override: header?.utilityLinksTypography,
   });
 
-  // Generate arrow styling CSS vars
   const arrowStyleCss = `
     #announcement-bar {
-      --arrow-size: ${header?.announcementArrowSize ?? 24}px;
-      --arrow-stroke-width: ${header?.announcementArrowStrokeWidth ?? 2};
+      --arrow-size: ${header?.announcementArrowSize ?? DEFAULT_ARROW_SIZE}px;
+      --arrow-stroke-width: ${header?.announcementArrowStrokeWidth ?? DEFAULT_ARROW_STROKE_WIDTH};
     }
   `;
 
@@ -104,14 +115,20 @@ export function AnnouncementBar() {
           >
             {isArrowsActive && (
               <div className="pointer-events-auto absolute top-0 bottom-0 left-0 z-10 hidden items-center gap-0 bg-background lg:flex">
-                <AnnouncementRotatorPrevious className="shrink-0 rounded-md">
+                <AnnouncementRotatorPrevious
+                  className="shrink-0 rounded-md"
+                  aria-label="Previous announcement"
+                >
                   <ChevronLeft
                     className="announcement-arrow"
                     aria-hidden="true"
                   />
                 </AnnouncementRotatorPrevious>
 
-                <AnnouncementRotatorNext className="shrink-0 rounded-md">
+                <AnnouncementRotatorNext
+                  className="shrink-0 rounded-md"
+                  aria-label="Next announcement"
+                >
                   <ChevronRight
                     className="announcement-arrow"
                     aria-hidden="true"
@@ -127,8 +144,8 @@ export function AnnouncementBar() {
                   : ''
               } ${!isArrowsActive && isUtilitiesActive ? 'lg:pl-(--container-padding)' : ''}`}
               style={{
-                paddingTop: `calc(${paddingTop}px + 2px)`,
-                paddingBottom: `calc(${paddingBottom}px + 2px)`,
+                paddingTop: `calc(${paddingTop}px + ${PADDING_OFFSET}px)`,
+                paddingBottom: `calc(${paddingBottom}px + ${PADDING_OFFSET}px)`,
               }}
             >
               {announcementBar.map((item: AnnouncementBarEntry) => (
@@ -144,7 +161,10 @@ export function AnnouncementBar() {
       </div>
 
       {isUtilitiesActive && (
-        <div className="utility-links pointer-events-auto absolute top-0 right-(--container-padding) bottom-0 z-10 hidden items-center justify-end gap-4 border-l border-current bg-background pl-4 lg:flex">
+        <nav
+          className="utility-links pointer-events-auto absolute top-0 right-(--container-padding) bottom-0 z-10 hidden items-center justify-end gap-4 border-l border-current bg-background pl-4 lg:flex"
+          aria-label="Utility links"
+        >
           {utilityLinks?.map((link: UtilityLink) => (
             <React.Fragment key={link._key}>
               {link._type === 'internalLink' && (
@@ -159,7 +179,7 @@ export function AnnouncementBar() {
               )}
             </React.Fragment>
           ))}
-        </div>
+        </nav>
       )}
     </section>
   );

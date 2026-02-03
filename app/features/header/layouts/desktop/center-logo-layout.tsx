@@ -3,12 +3,15 @@ import {Link} from 'react-router';
 
 import {useLocalePath} from '~/hooks/use-locale-path';
 import {DesktopNavigation} from '~/features/navigation';
-import { Logo } from '../../components/header-logo';
+import {Logo} from '../../components/header-logo';
 
 type CenterLogoLayoutProps = {
   logoWidth?: string;
 };
 
+/**
+ * Desktop header layout with centered logo, navigation on left, actions on right.
+ */
 export function CenterLogoLayout({logoWidth}: CenterLogoLayoutProps) {
   const homePath = useLocalePath({path: '/'});
 
@@ -21,7 +24,7 @@ export function CenterLogoLayout({logoWidth}: CenterLogoLayoutProps) {
 
       {/* Center: Logo */}
       <div className="flex h-full items-center justify-center">
-        <Link className="group" prefetch="intent" to={homePath}>
+        <Link aria-label="Home" className="group" prefetch="intent" to={homePath}>
           <Logo
             className="h-auto w-(--logoWidth)"
             sizes={logoWidth}
