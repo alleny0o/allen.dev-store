@@ -5,16 +5,13 @@ import {useLocalePath} from '~/hooks/use-locale-path';
 import {ClientOnly} from '~/components/client-only';
 import {MobileNavigation, MobileNavigationTrigger} from '~/features/navigation';
 import {Logo} from '../../components/header-logo';
-import {useHeaderSettings} from '~/features/header';
-
-type BrandLeftLayoutProps = {
-  logoWidth?: string;
-};
+import {useHeaderSettings} from '../../components/header-context';
+import type {HeaderLayoutProps} from '../../types';
 
 /**
  * Mobile header layout with logo on left, actions and menu grouped on right.
  */
-export function BrandLeftLayout({logoWidth}: BrandLeftLayoutProps) {
+export function BrandLeftLayout({logoWidth}: HeaderLayoutProps) {
   const homePath = useLocalePath({path: '/'});
   const header = useHeaderSettings();
   const menu = header?.menu ?? [];

@@ -4,15 +4,12 @@ import {Link} from 'react-router';
 import {useLocalePath} from '~/hooks/use-locale-path';
 import {DesktopNavigation} from '~/features/navigation';
 import {Logo} from '../../components/header-logo';
-
-type SplitRightLayoutProps = {
-  logoWidth?: string;
-};
+import type {HeaderLayoutProps} from '../../types';
 
 /**
  * Desktop header layout with logo on left, navigation and actions grouped on right.
  */
-export function SplitRightLayout({logoWidth}: SplitRightLayoutProps) {
+export function SplitRightLayout({logoWidth}: HeaderLayoutProps) {
   const homePath = useLocalePath({path: '/'});
 
   return (

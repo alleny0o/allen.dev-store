@@ -1,8 +1,6 @@
 import {createContext, useContext} from 'react';
-import type {ROOT_QUERYResult} from 'types/sanity/sanity.generated';
 
-/** Header configuration data from Sanity CMS */
-export type HeaderData = ROOT_QUERYResult['header'];
+import type {HeaderData} from '../types';
 
 /** Context for accessing header settings throughout the header component tree */
 export const HeaderContext = createContext<HeaderData | null>(null);

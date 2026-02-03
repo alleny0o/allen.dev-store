@@ -4,15 +4,12 @@ import {Link} from 'react-router';
 import {useLocalePath} from '~/hooks/use-locale-path';
 import {DesktopNavigation} from '~/features/navigation';
 import {Logo} from '../../components/header-logo';
-
-type CenterLogoLayoutProps = {
-  logoWidth?: string;
-};
+import type {HeaderLayoutProps} from '../../types';
 
 /**
  * Desktop header layout with centered logo, navigation on left, actions on right.
  */
-export function CenterLogoLayout({logoWidth}: CenterLogoLayoutProps) {
+export function CenterLogoLayout({logoWidth}: HeaderLayoutProps) {
   const homePath = useLocalePath({path: '/'});
 
   return (

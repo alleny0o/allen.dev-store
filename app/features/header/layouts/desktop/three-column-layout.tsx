@@ -4,15 +4,12 @@ import {Link} from 'react-router';
 import {useLocalePath} from '~/hooks/use-locale-path';
 import {DesktopNavigation} from '~/features/navigation';
 import {Logo} from '../../components/header-logo';
-
-type ThreeColumnLayoutProps = {
-  logoWidth?: string;
-};
+import type {HeaderLayoutProps} from '../../types';
 
 /**
  * Desktop header layout with three equal columns: logo left, nav center, actions right.
  */
-export function ThreeColumnLayout({logoWidth}: ThreeColumnLayoutProps) {
+export function ThreeColumnLayout({logoWidth}: HeaderLayoutProps) {
   const homePath = useLocalePath({path: '/'});
 
   return (

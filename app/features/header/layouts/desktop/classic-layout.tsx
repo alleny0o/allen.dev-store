@@ -4,15 +4,12 @@ import {Link} from 'react-router';
 import {useLocalePath} from '~/hooks/use-locale-path';
 import {DesktopNavigation} from '~/features/navigation';
 import {Logo} from '../../components/header-logo';
-
-type ClassicLayoutProps = {
-  logoWidth?: string;
-};
+import type {HeaderLayoutProps} from '../../types';
 
 /**
  * Desktop header layout with logo and navigation grouped on left, actions on right.
  */
-export function ClassicLayout({logoWidth}: ClassicLayoutProps) {
+export function ClassicLayout({logoWidth}: HeaderLayoutProps) {
   const homePath = useLocalePath({path: '/'});
 
   return (

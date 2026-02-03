@@ -18,6 +18,7 @@ import {AnnouncementItem} from './announcement-item';
 
 import {SanityInternalLink} from '~/components/sanity/link/sanity-internal-link';
 import {SanityExternalLink} from '~/components/sanity/link/sanity-external-link';
+import type {AnnouncementBarEntry, UtilityLink} from '../../types';
 
 /** Default padding value in pixels when not specified */
 const DEFAULT_PADDING = 0;
@@ -27,14 +28,6 @@ const DEFAULT_ARROW_SIZE = 24;
 const DEFAULT_ARROW_STROKE_WIDTH = 2;
 /** Padding offset for visual alignment in pixels */
 const PADDING_OFFSET = 2;
-
-type AnnouncementBarEntry = NonNullable<
-  NonNullable<ROOT_QUERYResult['header']>['announcementBar']
->[number];
-
-type UtilityLink = NonNullable<
-  NonNullable<ROOT_QUERYResult['header']>['utilityLinks']
->[number];
 
 /**
  * Displays a rotating announcement bar with optional navigation arrows and utility links.
