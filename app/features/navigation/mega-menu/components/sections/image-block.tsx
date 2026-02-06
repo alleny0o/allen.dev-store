@@ -1,4 +1,3 @@
-// mega-menu/sections/image-block.tsx
 import {SanityReferenceLink} from '~/components/sanity/link/sanity-reference-link';
 import {SanityImage} from '~/components/sanity/sanity-image';
 import {useHeaderSettings} from '~/features/header';

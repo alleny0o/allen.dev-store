@@ -1,5 +1,3 @@
-// hooks/use-mega-menu-scroll-lock.ts
-
 import {useEffect} from 'react';
 import {useHeaderSettings} from '~/features/header';
 

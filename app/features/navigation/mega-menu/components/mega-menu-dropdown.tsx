@@ -1,4 +1,3 @@
-// mega-menu/mega-menu-dropdown.tsx
 import {useRef, useEffect, useState} from 'react';
 import {m, AnimatePresence} from 'motion/react';
 

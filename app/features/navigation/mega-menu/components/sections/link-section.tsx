@@ -1,4 +1,3 @@
-// mega-menu/sections/link-section.tsx
 import {SanityInternalLink} from '~/components/sanity/link/sanity-internal-link';
 import {SanityExternalLink} from '~/components/sanity/link/sanity-external-link';
 import {SanityReferenceLink} from '~/components/sanity/link/sanity-reference-link';

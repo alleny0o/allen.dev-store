@@ -1,4 +1,3 @@
-// desktop-navigation.tsx
 import {useHeaderSettings} from '~/features/header';
 
 import type {HeaderMenu} from '../types';

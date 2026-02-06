@@ -1,4 +1,3 @@
-// hooks/use-mega-menu-overlay.ts
 import {useHeaderSettings} from '~/features/header';
 import type {CSSProperties} from 'react';
 

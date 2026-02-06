@@ -1,4 +1,3 @@
-// mega-menu/renderers/section-renderer.tsx
 import {m} from 'motion/react';
 import {LinkSection} from '../sections/link-section';
 import {ImageBlock} from '../sections/image-block';
