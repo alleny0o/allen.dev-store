@@ -474,7 +474,27 @@ export type Header = {
   desktopMegaMenuContentStagger?: 'none' | 'fade' | 'lift' | 'scale' | 'blur';
   desktopMegaMenuStaggerDelay?: RangeSlider;
   desktopMegaMenuStaggerStartDelay?: RangeSlider;
+  mobileDrawerType?: 'sidebar' | 'modal';
+  mobileSidebarConfig?: SidebarConfig;
+  mobileModalConfig?: ModalConfig;
+  mobileMegaMenuDepth?: 'flat' | 'nested';
+  mobileMegaMenuBehavior?: 'accordion' | 'sequential';
+  mobileDrawerContentPaddingX?: RangeSlider;
+  mobileDrawerContentPaddingY?: RangeSlider;
+  mobileNavigationItemPaddingY?: RangeSlider;
+  mobileMegaMenuLinkSpacing?: RangeSlider;
   mobileNavigationTypography?: FontStyleOverride;
+  mobileMegaMenuHeadingTypography?: FontStyleOverride;
+  mobileMegaMenuLinkTypography?: FontStyleOverride;
+  mobileNavigationColorScheme?: {
+    _ref: string;
+    _type: 'reference';
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: 'colorScheme';
+  };
+  mobileMegaMenuSectionBackgroundProperty?: 'background' | 'card' | 'primary';
+  mobileMegaMenuLinkBackgroundProperty?: 'background' | 'card' | 'primary';
+  mobileNavigationSeparatorLine?: SeparatorLine;
   announcementBar?: InternationalizedArrayAnnouncementBar;
   announcementBarTypography?: FontStyleOverride;
   utilityLinks?: InternationalizedArrayLinks;
@@ -548,6 +568,31 @@ export type InternationalizedArrayAnnouncementBar = Array<
     _key: string;
   } & InternationalizedArrayAnnouncementBarValue
 >;
+
+export type ModalConfig = {
+  _type: 'modalConfig';
+  insetX?: RangeSlider;
+  insetY?: RangeSlider;
+  maxWidth?: RangeSlider;
+  maxHeight?: RangeSlider;
+  fullScreenBelow?: 'never' | 'sm' | 'md' | 'lg';
+  borderRadiusOnFullScreen?: 'keep' | 'none';
+  borderRadius?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
+  animation?: 'none' | 'fade' | 'scale' | 'slideTop' | 'slideBottom';
+  animationDuration?: RangeSlider;
+  overlayOpacity?: RangeSlider;
+};
+
+export type SidebarConfig = {
+  _type: 'sidebarConfig';
+  position?: 'left' | 'right';
+  width?: RangeSlider;
+  maxWidth?: RangeSlider;
+  fullWidthBelow?: 'never' | 'sm' | 'md' | 'lg';
+  animation?: 'none' | 'slide' | 'slideFade';
+  animationDuration?: RangeSlider;
+  overlayOpacity?: RangeSlider;
+};
 
 export type InternationalizedArrayHeaderNavigation = Array<
   {
@@ -1693,6 +1738,8 @@ export type AllSanitySchemaTypes =
   | SeparatorLine
   | InternationalizedArrayLinks
   | InternationalizedArrayAnnouncementBar
+  | ModalConfig
+  | SidebarConfig
   | InternationalizedArrayHeaderNavigation
   | SocialLinksOnly
   | RichtextSection

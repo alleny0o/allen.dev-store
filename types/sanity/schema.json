@@ -3119,11 +3119,206 @@
         },
         "optional": true
       },
+      "mobileDrawerType": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "sidebar"
+            },
+            {
+              "type": "string",
+              "value": "modal"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "mobileSidebarConfig": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "sidebarConfig"
+        },
+        "optional": true
+      },
+      "mobileModalConfig": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "modalConfig"
+        },
+        "optional": true
+      },
+      "mobileMegaMenuDepth": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "flat"
+            },
+            {
+              "type": "string",
+              "value": "nested"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "mobileMegaMenuBehavior": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "accordion"
+            },
+            {
+              "type": "string",
+              "value": "sequential"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "mobileDrawerContentPaddingX": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "rangeSlider"
+        },
+        "optional": true
+      },
+      "mobileDrawerContentPaddingY": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "rangeSlider"
+        },
+        "optional": true
+      },
+      "mobileNavigationItemPaddingY": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "rangeSlider"
+        },
+        "optional": true
+      },
+      "mobileMegaMenuLinkSpacing": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "rangeSlider"
+        },
+        "optional": true
+      },
       "mobileNavigationTypography": {
         "type": "objectAttribute",
         "value": {
           "type": "inline",
           "name": "fontStyleOverride"
+        },
+        "optional": true
+      },
+      "mobileMegaMenuHeadingTypography": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "fontStyleOverride"
+        },
+        "optional": true
+      },
+      "mobileMegaMenuLinkTypography": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "fontStyleOverride"
+        },
+        "optional": true
+      },
+      "mobileNavigationColorScheme": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "_ref": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              }
+            },
+            "_type": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string",
+                "value": "reference"
+              }
+            },
+            "_weak": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "boolean"
+              },
+              "optional": true
+            }
+          },
+          "dereferencesTo": "colorScheme"
+        },
+        "optional": true
+      },
+      "mobileMegaMenuSectionBackgroundProperty": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "background"
+            },
+            {
+              "type": "string",
+              "value": "card"
+            },
+            {
+              "type": "string",
+              "value": "primary"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "mobileMegaMenuLinkBackgroundProperty": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "background"
+            },
+            {
+              "type": "string",
+              "value": "card"
+            },
+            {
+              "type": "string",
+              "value": "primary"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "mobileNavigationSeparatorLine": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "separatorLine"
         },
         "optional": true
       },
@@ -3656,6 +3851,281 @@
         "rest": {
           "type": "inline",
           "name": "internationalizedArrayAnnouncementBarValue"
+        }
+      }
+    }
+  },
+  {
+    "name": "modalConfig",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "modalConfig"
+          }
+        },
+        "insetX": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
+          },
+          "optional": true
+        },
+        "insetY": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
+          },
+          "optional": true
+        },
+        "maxWidth": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
+          },
+          "optional": true
+        },
+        "maxHeight": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
+          },
+          "optional": true
+        },
+        "fullScreenBelow": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "never"
+              },
+              {
+                "type": "string",
+                "value": "sm"
+              },
+              {
+                "type": "string",
+                "value": "md"
+              },
+              {
+                "type": "string",
+                "value": "lg"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "borderRadiusOnFullScreen": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "keep"
+              },
+              {
+                "type": "string",
+                "value": "none"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "borderRadius": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "none"
+              },
+              {
+                "type": "string",
+                "value": "sm"
+              },
+              {
+                "type": "string",
+                "value": "md"
+              },
+              {
+                "type": "string",
+                "value": "lg"
+              },
+              {
+                "type": "string",
+                "value": "xl"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "animation": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "none"
+              },
+              {
+                "type": "string",
+                "value": "fade"
+              },
+              {
+                "type": "string",
+                "value": "scale"
+              },
+              {
+                "type": "string",
+                "value": "slideTop"
+              },
+              {
+                "type": "string",
+                "value": "slideBottom"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "animationDuration": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
+          },
+          "optional": true
+        },
+        "overlayOpacity": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "sidebarConfig",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "sidebarConfig"
+          }
+        },
+        "position": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "left"
+              },
+              {
+                "type": "string",
+                "value": "right"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "width": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
+          },
+          "optional": true
+        },
+        "maxWidth": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
+          },
+          "optional": true
+        },
+        "fullWidthBelow": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "never"
+              },
+              {
+                "type": "string",
+                "value": "sm"
+              },
+              {
+                "type": "string",
+                "value": "md"
+              },
+              {
+                "type": "string",
+                "value": "lg"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "animation": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "none"
+              },
+              {
+                "type": "string",
+                "value": "slide"
+              },
+              {
+                "type": "string",
+                "value": "slideFade"
+              }
+            ]
+          },
+          "optional": true
+        },
+        "animationDuration": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
+          },
+          "optional": true
+        },
+        "overlayOpacity": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "rangeSlider"
+          },
+          "optional": true
         }
       }
     }

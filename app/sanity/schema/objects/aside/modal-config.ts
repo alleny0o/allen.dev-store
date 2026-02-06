@@ -123,12 +123,5 @@ export default defineField({
       options: {min: 0, max: 100, suffix: '%'},
       initialValue: 50,
     }),
-    defineField({
-      name: 'colorScheme',
-      title: 'Color scheme (optional)',
-      type: 'reference',
-      to: [{type: 'colorScheme'}],
-      description: 'Override modal colors',
-    }),
   ],
 });

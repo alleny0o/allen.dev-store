@@ -41,6 +41,13 @@ import sectionsList, {
 } from './objects/global/sections-list';
 
 /**
+ * ASIDE OBJECTS
+ * Configuration for overlay UI patterns (sidebars, modals).
+ */
+import modalConfig from './objects/aside/modal-config';
+import sidebarConfig from './objects/aside/sidebar-config';
+
+/**
  * NAVIGATION OBJECTS
  * Navigation-related schema utilities.
  */
@@ -159,6 +166,7 @@ const objects = [
   contentAlignment,
   contentPosition,
   footersList,
+  modalConfig,
   padding,
   productRichtext,
   rangeSlider,
@@ -169,6 +177,7 @@ const objects = [
   productSections,
   separatorLine,
   seo,
+  sidebarConfig,
 
   /* Navigation */
   anchor,

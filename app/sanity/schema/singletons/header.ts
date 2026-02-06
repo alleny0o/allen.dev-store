@@ -302,15 +302,196 @@ export default defineType({
     /**
      * ============================================================================
      * MOBILE NAVIGATION
-     * Mobile navigation styling (drawer/hamburger menu - future).
+     * Mobile navigation styling and behavior (drawer/hamburger menu).
+     * Image blocks from desktop mega menus are hidden on mobile for better performance.
      * ============================================================================
      */
     defineField({
+      name: 'mobileDrawerType',
+      title: 'Mobile drawer type',
+      type: 'string',
+      group: 'mobileNavigation',
+      options: {
+        list: [
+          {title: 'Sidebar (Slide from side)', value: 'sidebar'},
+          {title: 'Modal (Center overlay)', value: 'modal'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'sidebar',
+      validation: (Rule) => Rule.required(),
+      description:
+        'Choose between side drawer or centered modal for mobile navigation',
+    }),
+    defineField({
+      name: 'mobileSidebarConfig',
+      title: 'Sidebar configuration',
+      type: 'sidebarConfig',
+      group: 'mobileNavigation',
+      hidden: ({parent}) => parent?.mobileDrawerType !== 'sidebar',
+    }),
+    defineField({
+      name: 'mobileModalConfig',
+      title: 'Modal configuration',
+      type: 'modalConfig',
+      group: 'mobileNavigation',
+      hidden: ({parent}) => parent?.mobileDrawerType !== 'modal',
+    }),
+    defineField({
+      name: 'mobileMegaMenuDepth',
+      title: 'Navigation structure',
+      type: 'string',
+      group: 'mobileNavigation',
+      options: {
+        list: [
+          {
+            title: 'Flat (One tap to links)',
+            value: 'flat',
+          },
+          {
+            title: 'Grouped (Two taps: section → links)',
+            value: 'nested',
+          },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'nested',
+      description:
+        'FLAT: Tap main navigation → see all submenu links directly. GROUPED: Tap main navigation → tap section heading → see links.',
+    }),
+    defineField({
+      name: 'mobileMegaMenuBehavior',
+      title: 'Submenu display style',
+      type: 'string',
+      group: 'mobileNavigation',
+      options: {
+        list: [
+          {title: 'Accordion (Expands in place)', value: 'accordion'},
+          {title: 'Sequential (Slides to new screen)', value: 'sequential'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'accordion',
+      validation: (Rule) => Rule.required(),
+      description:
+        'ACCORDION: Submenus expand below. SEQUENTIAL: Submenus replace screen with back button.',
+    }),
+
+    // SPACING
+    defineField({
+      name: 'mobileDrawerContentPaddingX',
+      title: 'Drawer content horizontal padding',
+      type: 'rangeSlider',
+      group: 'mobileNavigation',
+      options: {min: 0, max: 100, suffix: 'px'},
+      initialValue: 20,
+      description: 'Left and right spacing inside the drawer',
+    }),
+    defineField({
+      name: 'mobileDrawerContentPaddingY',
+      title: 'Drawer content vertical padding',
+      type: 'rangeSlider',
+      group: 'mobileNavigation',
+      options: {min: 0, max: 100, suffix: 'px'},
+      initialValue: 20,
+      description: 'Top and bottom spacing inside the drawer',
+    }),
+    defineField({
+      name: 'mobileNavigationItemPaddingY',
+      title: 'Navigation item vertical padding',
+      type: 'rangeSlider',
+      group: 'mobileNavigation',
+      options: {min: 0, max: 40, suffix: 'px'},
+      initialValue: 12,
+      description:
+        'Vertical padding inside each tappable navigation item (affects tap target size)',
+    }),
+    defineField({
+      name: 'mobileMegaMenuLinkSpacing',
+      title: 'Space between submenu links',
+      type: 'rangeSlider',
+      group: 'mobileNavigation',
+      options: {min: 0, max: 40, suffix: 'px'},
+      initialValue: 0,
+      description: 'Vertical spacing between submenu links',
+    }),
+
+    // TYPOGRAPHY
+    defineField({
       name: 'mobileNavigationTypography',
-      title: 'Mobile navigation typography',
+      title: 'Top-level navigation typography',
       type: 'fontStyleOverride',
       group: 'mobileNavigation',
-      description: 'Typography for mobile navigation links',
+      description: 'Typography for top-level navigation items',
+    }),
+    defineField({
+      name: 'mobileMegaMenuHeadingTypography',
+      title: 'Section heading typography',
+      type: 'fontStyleOverride',
+      group: 'mobileNavigation',
+      description: 'Typography for section headings',
+    }),
+    defineField({
+      name: 'mobileMegaMenuLinkTypography',
+      title: 'Link typography',
+      type: 'fontStyleOverride',
+      group: 'mobileNavigation',
+      description: 'Typography for submenu links',
+    }),
+
+    // COLOR SCHEMES
+    defineField({
+      name: 'mobileNavigationColorScheme',
+      title: 'Mobile navigation color scheme',
+      type: 'reference',
+      to: [{type: 'colorScheme'}],
+      group: 'mobileNavigation',
+      description: 'Color scheme for mobile navigation drawer',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'mobileMegaMenuSectionBackgroundProperty',
+      title: 'Section heading background color',
+      type: 'string',
+      group: 'mobileNavigation',
+      options: {
+        list: [
+          {title: 'Background', value: 'background'},
+          {title: 'Card', value: 'card'},
+          {title: 'Primary', value: 'primary'},
+        ],
+        layout: 'dropdown',
+      },
+      initialValue: 'card',
+      description:
+        'Which color property to use for section heading backgrounds',
+      hidden: ({parent}) => !parent?.mobileNavigationColorScheme,
+    }),
+    defineField({
+      name: 'mobileMegaMenuLinkBackgroundProperty',
+      title: 'Link background color',
+      type: 'string',
+      group: 'mobileNavigation',
+      options: {
+        list: [
+          {title: 'Background', value: 'background'},
+          {title: 'Card', value: 'card'},
+          {title: 'Primary', value: 'primary'},
+        ],
+        layout: 'dropdown',
+      },
+      initialValue: 'background',
+      description: 'Which color property to use for link backgrounds',
+      hidden: ({parent}) => !parent?.mobileNavigationColorScheme,
+    }),
+
+    // SEPARATORS
+    defineField({
+      name: 'mobileNavigationSeparatorLine',
+      title: 'Navigation separator line',
+      type: 'separatorLine',
+      group: 'mobileNavigation',
+      description: 'Separator line between navigation items',
     }),
 
     /**
