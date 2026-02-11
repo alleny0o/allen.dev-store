@@ -2,8 +2,7 @@ import type {CSSProperties} from 'react';
 import {Link} from 'react-router';
 
 import {useLocalePath} from '~/hooks/use-locale-path';
-import {ClientOnly} from '~/components/client-only';
-import {MobileNavigation, MobileNavigationTrigger} from '~/features/navigation';
+import {MobileNavigation} from '~/features/navigation';
 import {Logo} from '../../components/header-logo';
 import {useHeaderSettings} from '../../components/header-context';
 import type {HeaderLayoutProps} from '../../types';
@@ -19,11 +18,14 @@ export function MenuLeftLayout({logoWidth}: HeaderLayoutProps) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">
-        <ClientOnly fallback={<MobileNavigationTrigger />}>
-          {() => <MobileNavigation data={menu} />}
-        </ClientOnly>
+        <MobileNavigation data={menu} />
 
-        <Link aria-label="Home" className="group" prefetch="intent" to={homePath}>
+        <Link
+          aria-label="Home"
+          className="group"
+          prefetch="intent"
+          to={homePath}
+        >
           <Logo
             className="h-auto w-(--logoWidth)"
             sizes={logoWidth}
@@ -36,9 +38,7 @@ export function MenuLeftLayout({logoWidth}: HeaderLayoutProps) {
         </Link>
       </div>
 
-      <div className="flex items-center gap-4">
-        {/* actions */}
-      </div>
+      <div className="flex items-center gap-4">{/* actions */}</div>
     </div>
   );
 }

@@ -2,8 +2,7 @@ import type {CSSProperties} from 'react';
 import {Link} from 'react-router';
 
 import {useLocalePath} from '~/hooks/use-locale-path';
-import {ClientOnly} from '~/components/client-only';
-import {MobileNavigation, MobileNavigationTrigger} from '~/features/navigation';
+import {MobileNavigation} from '~/features/navigation';
 import {Logo} from '../../components/header-logo';
 import {useHeaderSettings} from '../../components/header-context';
 import type {HeaderLayoutProps} from '../../types';
@@ -20,9 +19,7 @@ export function BalancedLayout({logoWidth}: HeaderLayoutProps) {
     <div className="flex items-center justify-between">
       {/* Left: Menu + Search */}
       <div className="flex items-center gap-4">
-        <ClientOnly fallback={<MobileNavigationTrigger />}>
-          {() => <MobileNavigation data={menu} />}
-        </ClientOnly>
+        <MobileNavigation data={menu} />
         {/* search */}
       </div>
 
@@ -40,9 +37,7 @@ export function BalancedLayout({logoWidth}: HeaderLayoutProps) {
       </Link>
 
       {/* Right: Actions */}
-      <div className="flex items-center gap-4">
-        {/* actions */}
-      </div>
+      <div className="flex items-center gap-4">{/* actions */}</div>
     </div>
   );
 }

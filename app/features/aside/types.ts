@@ -1,53 +1,111 @@
 import type {ReactNode} from 'react';
+import type {ColorsCssVarsSettings} from '~/hooks/use-colors-css-vars';
 
-/**
- * Available aside panel types in the application
- */
+// ============================================================================
+// ASIDE STATE
+// ============================================================================
+
+/** All possible aside panel types. 'closed' means no aside is open. */
 export type AsideType = 'search' | 'cart' | 'mobile' | 'closed';
 
-/**
- * Positioning options for aside panels
- * - left: Slide in from left edge
- * - right: Slide in from right edge
- * - modal: Center overlay modal
- */
-export type AsidePosition = 'left' | 'right' | 'modal';
+// ============================================================================
+// SIDEBAR CONFIG
+// Matches Sanity sidebarConfig schema exactly.
+// ============================================================================
 
-/**
- * Responsive breakpoint identifiers
- */
-export type Breakpoint = 'sm' | 'md' | 'lg';
+export type SidebarAnimation = 'none' | 'slide' | 'slideFade';
+export type FullWidthBelow = 'never' | 'sm' | 'md' | 'lg';
 
-/**
- * Responsive configuration for aside positioning
- * Allows different positions at different breakpoints with a required default
- */
-export type AsideConfig = Partial<Record<Breakpoint, AsidePosition>> & {
-  default: AsidePosition;
+export type SidebarConfig = {
+  type: 'sidebar';
+  position: 'left' | 'right';
+  /** Fixed width of the sidebar in px */
+  width: number;
+  /** Maximum width as percentage of viewport */
+  maxWidth: number;
+  /** Breakpoint below which sidebar becomes full width */
+  fullWidthBelow: FullWidthBelow;
+  animation: SidebarAnimation;
+  /** Animation duration in ms */
+  animationDuration: number;
+  /** Overlay opacity 0-100 */
+  overlayOpacity: number;
 };
 
-/**
- * Context value for aside state management
- */
+// ============================================================================
+// MODAL CONFIG
+// Matches Sanity modalConfig schema exactly.
+// ============================================================================
+
+export type ModalAnimation =
+  | 'none'
+  | 'fade'
+  | 'scale'
+  | 'slideTop'
+  | 'slideBottom';
+export type FullScreenBelow = 'never' | 'sm' | 'md' | 'lg';
+export type BorderRadius = 'none' | 'sm' | 'md' | 'lg' | 'xl';
+export type BorderRadiusOnFullScreen = 'keep' | 'none';
+
+export type ModalConfig = {
+  type: 'modal';
+  /** Horizontal inset (left/right spacing) in px */
+  insetX: number;
+  /** Vertical inset (top/bottom spacing) in px */
+  insetY: number;
+  /** Maximum width as percentage of viewport */
+  maxWidth: number;
+  /** Maximum height as percentage of viewport */
+  maxHeight: number;
+  /** Breakpoint below which modal goes fullscreen */
+  fullScreenBelow: FullScreenBelow;
+  borderRadius: BorderRadius;
+  /** Whether to keep or remove border radius when fullscreen */
+  borderRadiusOnFullScreen: BorderRadiusOnFullScreen;
+  animation: ModalAnimation;
+  /** Animation duration in ms */
+  animationDuration: number;
+  /** Overlay opacity 0-100 */
+  overlayOpacity: number;
+};
+
+// ============================================================================
+// DISCRIMINATED UNION
+// ============================================================================
+
+/** Full aside config — either a sidebar or a modal */
+export type AsideConfig = SidebarConfig | ModalConfig;
+
+// ============================================================================
+// CONTEXT
+// ============================================================================
+
 export type AsideContextValue = {
-  /** Currently active aside type */
   type: AsideType;
-  /** Open an aside panel */
   open: (mode: AsideType) => void;
-  /** Close the current aside panel */
   close: () => void;
 };
 
-/**
- * Props for aside component instances
- */
+// ============================================================================
+// COMPONENT PROPS
+// ============================================================================
+
 export interface AsideProps {
-  /** Content to render inside the aside */
-  children?: ReactNode;
-  /** Type of aside panel to render */
+  children: ReactNode;
+  header?: ReactNode;
+  footer?: ReactNode;
+  /** Which aside type this instance represents */
   type: AsideType;
-  /** Heading content for the aside */
-  heading: ReactNode;
-  /** Responsive positioning configuration */
+  /** Full config from Sanity — sidebar or modal */
   config: AsideConfig;
+  /**
+   * Color scheme reference from Sanity.
+   * Passed to useColorsCssVars to scope CSS variables to this aside.
+   */
+  colorScheme?: ColorsCssVarsSettings;
+  /**
+   * Tailwind breakpoint above which the aside auto-closes.
+   * e.g. 'lg' closes the aside when the screen grows past 1024px.
+   */
+  closeAbove?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 }

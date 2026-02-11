@@ -10,10 +10,18 @@ import {useRootLoaderData} from '~/root';
 // ─────────────────────────────────────────────────────────────────────────────
 export type CmsSectionSettings = SectionDataType['settings'];
 export type FooterSettings = FooterDataType['settings'];
-type HeaderQuery = NonNullable<ROOT_QUERYResult['header']>;
-type CartColorScheme = {
+export type HeaderQuery = NonNullable<ROOT_QUERYResult['header']>;
+export type CartColorScheme = {
   colorScheme?: NonNullable<ROOT_QUERYResult['settings']>['cartColorScheme'];
 };
+
+/** Exported union of all valid settings shapes for useColorsCssVars */
+export type ColorsCssVarsSettings =
+  | CartColorScheme
+  | CmsSectionSettings
+  | FooterSettings
+  | HeaderQuery;
+
 type Rgb =
   | null
   | undefined
@@ -28,7 +36,7 @@ type Rgb =
 // ─────────────────────────────────────────────────────────────────────────────
 /**
  * Generates CSS custom properties (variables) for component styling
- * Used for: Header, Footer, CMS Sections, Cart
+ * Used for: Header, Footer, CMS Sections, Cart, Aside
  *
  * @param selector - CSS selector to target (e.g., '#header', '.section')
  * @param settings - Settings object containing colorScheme, padding, separator, etc.
@@ -43,11 +51,7 @@ type Rgb =
  */
 export function useColorsCssVars(props: {
   selector?: string;
-  settings?:
-    | CartColorScheme
-    | CmsSectionSettings
-    | FooterSettings
-    | HeaderQuery;
+  settings?: ColorsCssVarsSettings;
 }) {
   const {settings} = props;
   const {sanityRoot} = useRootLoaderData();
@@ -122,13 +126,11 @@ export function useCardColorsCssVars(props: {
   const defaultColorScheme = data?.defaultColorScheme;
   const fallbackScheme = useFallbackColorScheme();
 
-  // Extract and process color scheme
   const colorScheme =
     settings?.colorScheme || defaultColorScheme || fallbackScheme;
   let primary = colorScheme.primary;
   let primaryForeground = colorScheme.primaryForeground;
 
-  // Invert primary colors if primary is equal to card color (ensures contrast)
   if (
     toRgbString(colorScheme.primary?.rgb) === toRgbString(colorScheme.card?.rgb)
   ) {
@@ -138,9 +140,6 @@ export function useCardColorsCssVars(props: {
 
   return `
     ${props.selector} {
-      /* ─────────────────────────────────────────
-         Card Color Variables
-         ───────────────────────────────────────── */
       --accent: ${getMutedColor(primary?.rgb, colorScheme.card?.rgb, 0.85)};
       --accent-foreground: ${toRgbString(primary?.rgb)};
       --background: ${toRgbString(colorScheme.card?.rgb)};
@@ -166,17 +165,7 @@ export function useCardColorsCssVars(props: {
 // ─────────────────────────────────────────────────────────────────────────────
 // HELPER FUNCTIONS - VALUE EXTRACTION
 // ─────────────────────────────────────────────────────────────────────────────
-/**
- * Extracts padding values from settings
- * @returns Object with top and bottom padding as CSS strings
- */
-function getPaddingVars(
-  settings?:
-    | CartColorScheme
-    | CmsSectionSettings
-    | FooterSettings
-    | HeaderQuery,
-) {
+function getPaddingVars(settings?: ColorsCssVarsSettings) {
   const top =
     settings && 'padding' in settings && settings.padding
       ? `${settings.padding.top}px`
@@ -189,17 +178,7 @@ function getPaddingVars(
   return {top, bottom};
 }
 
-/**
- * Extracts separator line values from settings
- * @returns Object with opacity (number) and height (CSS string)
- */
-function getSeparatorVars(
-  settings?:
-    | CartColorScheme
-    | CmsSectionSettings
-    | FooterSettings
-    | HeaderQuery,
-) {
+function getSeparatorVars(settings?: ColorsCssVarsSettings) {
   if (!settings) return {opacity: 10, height: '1px'};
 
   if ('separatorLine' in settings && settings.separatorLine) {
@@ -215,24 +194,11 @@ function getSeparatorVars(
 // ─────────────────────────────────────────────────────────────────────────────
 // HELPER FUNCTIONS - COLOR MANIPULATION
 // ─────────────────────────────────────────────────────────────────────────────
-/**
- * Converts RGB object to space-separated string format for CSS variables
- * @example toRgbString({r: 255, g: 255, b: 255}) → "255 255 255"
- */
 function toRgbString(rgb?: Rgb) {
   if (!rgb) return 'null';
   return `${rgb.r} ${rgb.g} ${rgb.b}` as const;
 }
 
-/**
- * Creates a muted/blended color by mixing foreground with background
- * Adjusts weight slightly for dark colors to maintain better contrast
- *
- * @param color - The color to mute (foreground)
- * @param background - The background color to blend with
- * @param weight - Blend weight (0-1, where 1 is full background)
- * @returns Space-separated RGB string for CSS variables
- */
 function getMutedColor(color: Rgb, background: Rgb, weight: number) {
   if (!color || !background) return 'null';
 
@@ -240,32 +206,24 @@ function getMutedColor(color: Rgb, background: Rgb, weight: number) {
   const bgString = `rgb(${background.r}, ${background.g}, ${background.b})`;
   const isDark = readableColor(colorString) === '#fff';
 
-  // Adjust weight for dark colors to maintain contrast
   if (isDark) {
     weight = weight - 0.05;
   }
 
   const mixedColor = mix(colorString, bgString, weight);
 
-  // Convert to space-separated format for CSS variables
   return mixedColor
     .replace('rgba(', '')
     .replace(', 1)', '')
     .replaceAll(',', '');
 }
 
-/**
- * Creates a darkened version of a color for shadows
- * @param color - The color to darken
- * @returns Space-separated RGB string for CSS variables
- */
 function getDarkenColor(color: Rgb) {
   if (!color) return 'null';
 
   const colorString = `rgb(${color.r}, ${color.g}, ${color.b})`;
   const darkenColor = toRgba(darken(colorString, 1));
 
-  // Convert to space-separated format for CSS variables
   return darkenColor
     .replace('rgba(', '')
     .replace(', 1)', '')
@@ -275,65 +233,12 @@ function getDarkenColor(color: Rgb) {
 // ─────────────────────────────────────────────────────────────────────────────
 // FALLBACK COLOR SCHEME
 // ─────────────────────────────────────────────────────────────────────────────
-/**
- * Provides default color scheme when none is configured in Sanity
- * Uses a light, neutral palette suitable for most use cases
- */
 export const useFallbackColorScheme = () => ({
-  background: {
-    hex: '#FBFDFC',
-    rgb: {
-      r: 251,
-      g: 253,
-      b: 252,
-    },
-  },
-  foreground: {
-    hex: '#1A211EC',
-    rgb: {
-      r: 26,
-      g: 33,
-      b: 30,
-    },
-  },
-  border: {
-    hex: '#D7DAD9',
-    rgb: {
-      r: 215,
-      g: 218,
-      b: 217,
-    },
-  },
-  card: {
-    hex: '#FBFDFC',
-    rgb: {
-      r: 251,
-      g: 253,
-      b: 252,
-    },
-  },
-  cardForeground: {
-    hex: '#1A211EC',
-    rgb: {
-      r: 26,
-      g: 33,
-      b: 30,
-    },
-  },
-  primary: {
-    hex: '#1A211EC',
-    rgb: {
-      r: 26,
-      g: 33,
-      b: 30,
-    },
-  },
-  primaryForeground: {
-    hex: '#FBFDFC',
-    rgb: {
-      r: 251,
-      g: 253,
-      b: 252,
-    },
-  },
+  background: {hex: '#FBFDFC', rgb: {r: 251, g: 253, b: 252}},
+  foreground: {hex: '#1A211EC', rgb: {r: 26, g: 33, b: 30}},
+  border: {hex: '#D7DAD9', rgb: {r: 215, g: 218, b: 217}},
+  card: {hex: '#FBFDFC', rgb: {r: 251, g: 253, b: 252}},
+  cardForeground: {hex: '#1A211EC', rgb: {r: 26, g: 33, b: 30}},
+  primary: {hex: '#1A211EC', rgb: {r: 26, g: 33, b: 30}},
+  primaryForeground: {hex: '#FBFDFC', rgb: {r: 251, g: 253, b: 252}},
 });

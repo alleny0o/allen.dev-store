@@ -99,6 +99,7 @@ export default defineType({
       type: 'reference',
       to: [{type: 'colorScheme'}],
       group: 'desktopMegaMenu',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'desktopMegaMenuHeadingTypography',
@@ -640,6 +641,7 @@ export default defineType({
       type: 'reference',
       to: [{type: 'colorScheme'}],
       group: 'appearance',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'blur',
@@ -661,6 +663,7 @@ export default defineType({
       type: 'reference',
       to: [{type: 'colorScheme'}],
       group: 'appearance',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'announcementBarPadding',

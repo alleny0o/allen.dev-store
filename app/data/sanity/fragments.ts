@@ -43,6 +43,34 @@ export const COLOR_SCHEME_FRAGMENT = defineQuery(`{
 }`);
 
 /**
+ * ASIDE CONFIG FRAGMENTS
+ * Reusable fragments for sidebar and modal drawer configuration.
+ * Used by mobile navigation, cart drawer, search drawer, etc.
+ */
+export const SIDEBAR_CONFIG_FRAGMENT = defineQuery(`{
+  position,
+  width,
+  maxWidth,
+  fullWidthBelow,
+  animation,
+  animationDuration,
+  overlayOpacity,
+}`);
+
+export const MODAL_CONFIG_FRAGMENT = defineQuery(`{
+  insetX,
+  insetY,
+  maxWidth,
+  maxHeight,
+  fullScreenBelow,
+  borderRadius,
+  borderRadiusOnFullScreen,
+  animation,
+  animationDuration,
+  overlayOpacity,
+}`);
+
+/**
  * THEME CONTENT FRAGMENT
  * Localized interface copy for all theme components.
  */
@@ -319,10 +347,15 @@ export const PRODUCT_SECTION_DESIGN_FRAGMENT = defineQuery(`{
 
 /**
  * HEADER FRAGMENT
- * Localized header configuration, appearance, layout, actions, and mega menu.
+ * Full header configuration including announcement bar, navigation,
+ * desktop mega menu, mobile navigation, layout, appearance, actions, and behavior.
  */
 export const HEADER_FRAGMENT = defineQuery(`{
-  // Announcement bar (localized)
+  // ─────────────────────────────────────────────────────────────────────────
+  // ANNOUNCEMENT BAR
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // Content (localized)
   "announcementBar": coalesce(
     announcementBar[_key == $language][0].value[],
     announcementBar[_key == $defaultLanguage][0].value[],
@@ -342,29 +375,53 @@ export const HEADER_FRAGMENT = defineQuery(`{
     utilityLinks[_key == $defaultLanguage][0].value[],
   )[] ${LINKS_LIST_SELECTION},
 
-  // Announcement bar appearance
+  // Appearance
   announcementBarColorScheme -> ${COLOR_SCHEME_FRAGMENT},
   announcementBarTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
   utilityLinksTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
+  announcementBarPadding,
+
+  // Behavior
   fadeTransition,
   autoRotateAnnouncements,
-  announcementBarPadding,
   showAnnouncementArrows,
   announcementArrowSize,
   announcementArrowStrokeWidth,
 
-  // Navigation menu (localized) - SHARED between desktop and mobile
+  // ─────────────────────────────────────────────────────────────────────────
+  // NAVIGATION MENU
+  // Shared between desktop and mobile.
+  // ─────────────────────────────────────────────────────────────────────────
+
   "menu": coalesce(
     menu[_key == $language][0].value[],
     menu[_key == $defaultLanguage][0].value[],
   )[] ${LINKS_LIST_SELECTION},
 
-  // Desktop styles
+  // ─────────────────────────────────────────────────────────────────────────
+  // DESKTOP NAVIGATION
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // Typography + spacing
   desktopNavigationTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
   desktopMenuItemPaddingX,
   desktopMenuItemPaddingY,
   desktopNavigationHoverEffect,
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // DESKTOP MEGA MENU
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // Appearance
   desktopMegaMenuColorScheme -> ${COLOR_SCHEME_FRAGMENT},
+  desktopMegaMenuPadding,
+  desktopMegaMenuSeparatorLine {
+    show,
+    opacity,
+    height,
+  },
+
+  // Typography
   desktopMegaMenuHeadingTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
   desktopMegaMenuHeadingHoverEffect,
   desktopMegaMenuLinkTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
@@ -372,27 +429,61 @@ export const HEADER_FRAGMENT = defineQuery(`{
   desktopMegaMenuImageBlockHeadingTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
   desktopMegaMenuImageBlockDescriptionTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
   desktopMegaMenuCTATypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
-  desktopMegaMenuPadding,
-  desktopMegaMenuSeparatorLine {
-    show,
-    opacity,
-    height,
-  },
+
+  // Behavior
   desktopMegaMenuBehavior,
   desktopAllowMegaMenuParentLinks,
   desktopMegaMenuDisableScroll,
+
+  // Overlay
   desktopMegaMenuShowOverlay,
   desktopMegaMenuOverlayOpacity,
+
+  // Animation
   desktopMegaMenuAnimation,
   desktopMegaMenuAnimationDuration,
   desktopMegaMenuContentStagger,
   desktopMegaMenuStaggerDelay,
   desktopMegaMenuStaggerStartDelay,
 
-  // Mobile styles
-  mobileNavigationTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
+  // ─────────────────────────────────────────────────────────────────────────
+  // MOBILE NAVIGATION
+  // ─────────────────────────────────────────────────────────────────────────
 
-  // Header appearance
+  // Drawer type + config
+  mobileDrawerType,
+  mobileSidebarConfig ${SIDEBAR_CONFIG_FRAGMENT},
+  mobileModalConfig ${MODAL_CONFIG_FRAGMENT},
+
+  // Structure + behavior
+  mobileMegaMenuDepth,
+  mobileMegaMenuBehavior,
+
+  // Spacing
+  mobileDrawerContentPaddingX,
+  mobileDrawerContentPaddingY,
+  mobileNavigationItemPaddingY,
+  mobileMegaMenuLinkSpacing,
+
+  // Typography
+  mobileNavigationTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
+  mobileMegaMenuHeadingTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
+  mobileMegaMenuLinkTypography ${FONT_STYLE_OVERRIDE_FRAGMENT},
+
+  // Color scheme + appearance
+  mobileNavigationColorScheme -> ${COLOR_SCHEME_FRAGMENT},
+  mobileMegaMenuSectionBackgroundProperty,
+  mobileMegaMenuLinkBackgroundProperty,
+  mobileNavigationSeparatorLine {
+    show,
+    opacity,
+    height,
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // HEADER APPEARANCE
+  // ─────────────────────────────────────────────────────────────────────────
+
   colorScheme -> ${COLOR_SCHEME_FRAGMENT},
   blur,
   separatorLine {
@@ -401,13 +492,20 @@ export const HEADER_FRAGMENT = defineQuery(`{
     height,
   },
 
-  // Layout (desktop + mobile)
+  // ─────────────────────────────────────────────────────────────────────────
+  // LAYOUT
+  // ─────────────────────────────────────────────────────────────────────────
+
   desktopLayout,
   mobileLayout,
   desktopLogoWidth,
   headerMinHeight,
 
-  // Actions (account, wishlist, cart, localization)
+  // ─────────────────────────────────────────────────────────────────────────
+  // ACTIONS
+  // Account, cart, wishlist, localization.
+  // ─────────────────────────────────────────────────────────────────────────
+
   showLocalizationSelector,
   showWishlist,
   accountStyleDesktop,
@@ -415,6 +513,9 @@ export const HEADER_FRAGMENT = defineQuery(`{
   cartStyleDesktop,
   cartStyleMobile,
 
-  // Global behavior
+  // ─────────────────────────────────────────────────────────────────────────
+  // BEHAVIOR
+  // ─────────────────────────────────────────────────────────────────────────
+
   sticky,
 }`);

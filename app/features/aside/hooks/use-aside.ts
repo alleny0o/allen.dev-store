@@ -1,5 +1,5 @@
-import { useContext } from 'react';
-import { AsideContext } from '../context/aside-context';
+import {useContext} from 'react';
+import {AsideContext} from '../context/aside-context';
 
 export function useAside() {
   const aside = useContext(AsideContext);

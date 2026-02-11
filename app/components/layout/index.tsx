@@ -17,12 +17,12 @@ import {TogglePreviewMode} from '../sanity/toggle-preview-mode';
 import {VisualEditing} from '../sanity/visual-editing.client';
 
 // layout / ui components
-import { AnnouncementBar, Header } from '~/features/header';
+import {AnnouncementBar, Header} from '~/features/header';
 import {Footer} from '~/features/footer';
 import {TailwindIndicator} from '../tailwind-indicator';
 
-// aside / ui components
-import {AsideComponent} from '../aside';
+// aside
+import {AsideProvider} from '~/features/aside';
 
 import {type CartReturn} from '@shopify/hydrogen';
 
@@ -49,7 +49,7 @@ export function AppLayout({
       storefrontApiVersion={env.PUBLIC_STOREFRONT_API_VERSION}
       storefrontToken={env.PUBLIC_STOREFRONT_API_TOKEN}
     >
-      <AsideComponent.Provider>
+      <AsideProvider>
         <Motion>
           <ClientOnly fallback={null}>
             {() => <NavigationProgressBar />}
@@ -73,7 +73,7 @@ export function AppLayout({
             <TogglePreviewMode />
           )}
         </Motion>
-      </AsideComponent.Provider>
+      </AsideProvider>
     </ShopifyProvider>
   );
 }

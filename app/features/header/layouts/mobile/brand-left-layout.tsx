@@ -2,8 +2,7 @@ import type {CSSProperties} from 'react';
 import {Link} from 'react-router';
 
 import {useLocalePath} from '~/hooks/use-locale-path';
-import {ClientOnly} from '~/components/client-only';
-import {MobileNavigation, MobileNavigationTrigger} from '~/features/navigation';
+import {MobileNavigation} from '~/features/navigation';
 import {Logo} from '../../components/header-logo';
 import {useHeaderSettings} from '../../components/header-context';
 import type {HeaderLayoutProps} from '../../types';
@@ -36,10 +35,7 @@ export function BrandLeftLayout({logoWidth}: HeaderLayoutProps) {
         {/* search */}
         {/* cart */}
         {/* account */}
-
-        <ClientOnly fallback={<MobileNavigationTrigger />}>
-          {() => <MobileNavigation data={menu} />}
-        </ClientOnly>
+        <MobileNavigation data={menu} />
       </div>
     </div>
   );
