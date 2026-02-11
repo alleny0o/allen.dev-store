@@ -26,6 +26,15 @@ export {
   getSidebarCssVars,
   getModalCssVars,
 } from './utils/aside-css-vars';
+export {
+  resolveAsideConfig,
+  SIDEBAR_DEFAULTS,
+  MODAL_DEFAULTS,
+} from './utils/resolve-aside-config';
+export type {
+  RawSidebarConfig,
+  RawModalConfig,
+} from './utils/resolve-aside-config';
 
 // Types
 export type {
