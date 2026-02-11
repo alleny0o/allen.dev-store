@@ -11,3 +11,4 @@ export { HeaderHeightCssVars } from './components/header-height-css-vars';
 export { useHeaderHeight } from './hooks/use-header-height';
 export { AnnouncementBar } from './components/announcement-bar/announcement-bar';
 export {useMobileAsideConfig} from './hooks/use-mobile-aside-config';
+export {HEADER_BREAKPOINT, HEADER_BREAKPOINT_PX} from './constants';
