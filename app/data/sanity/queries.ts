@@ -9,6 +9,7 @@ import {
   PRODUCT_SECTION_DESIGN_FRAGMENT,
   SETTINGS_FRAGMENT,
   THEME_CONTENT_FRAGMENT,
+  LOCALE_SELECTOR_FRAGMENT,
 } from './fragments';
 import {
   COLLECTION_SECTIONS_FRAGMENT,
@@ -67,6 +68,7 @@ export const ROOT_QUERY = defineQuery(`{
   "settings": *[_type == "settings"][0] ${SETTINGS_FRAGMENT},
   "themeContent": *[_type == "themeContent"][0] ${THEME_CONTENT_FRAGMENT},
   "productSectionDesign": *[_type == "productSectionDesign"][0] ${PRODUCT_SECTION_DESIGN_FRAGMENT},
+  "localeSelector": *[_type == "localeSelector"][0] ${LOCALE_SELECTOR_FRAGMENT},
 }`);
 
 export const COLLECTION_QUERY = defineQuery(`{

@@ -71,6 +71,30 @@ export const MODAL_CONFIG_FRAGMENT = defineQuery(`{
 }`);
 
 /**
+ * LOCALE SELECTOR FRAGMENT
+ * Configuration for the locale selector UI component.
+ *
+ * Fetches trigger appearance (variant + chevron), display mode
+ * (single or responsive per breakpoint), and the embedded sidebar/modal
+ * configs used when the selector opens as a drawer or overlay.
+ *
+ * Available in root loader data as `localeSelector`.
+ * Resolved to a fully typed LocaleSelectorConfig via resolveLocaleSelectorConfig().
+ */
+export const LOCALE_SELECTOR_FRAGMENT = defineQuery(`{
+  triggerVariant,
+  showChevron,
+  displayModeKind,
+  mode,
+  modeBase,
+  modeSm,
+  modeMd,
+  modeLg,
+  sidebarConfig ${SIDEBAR_CONFIG_FRAGMENT},
+  modalConfig ${MODAL_CONFIG_FRAGMENT},
+}`);
+
+/**
  * THEME CONTENT FRAGMENT
  * Localized interface copy for all theme components.
  */

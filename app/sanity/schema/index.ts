@@ -116,6 +116,7 @@ import home from './singletons/home';
 import settings from './singletons/settings';
 import themeContent from './singletons/theme-content';
 import productSectionDesign from './singletons/product-section-design';
+import localeSelector from './singletons/locale-selector';
 
 /**
  * SCHEMA GROUPS
@@ -128,6 +129,7 @@ const singletons = [
   settings,
   themeContent,
   productSectionDesign,
+  localeSelector,
 ];
 
 const documents = [

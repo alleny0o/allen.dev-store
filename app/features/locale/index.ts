@@ -10,6 +10,9 @@ export {
 // Hooks
 export {useLocaleSelector} from './hooks/use-locale-selector';
 
+// Utils
+export {resolveLocaleSelectorConfig} from './utils/resolve-locale-selector-config';
+
 // Types
 export type {
   LocaleSelectorProps,
@@ -21,3 +24,4 @@ export type {
   SingleDisplayMode,
   ResponsiveDisplayMode,
 } from './types';
+export type {RawSanityLocaleSelectorConfig} from './utils/resolve-locale-selector-config';
