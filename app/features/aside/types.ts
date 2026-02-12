@@ -6,7 +6,7 @@ import type {ColorsCssVarsSettings} from '~/hooks/use-colors-css-vars';
 // ============================================================================
 
 /** All possible aside panel types. 'closed' means no aside is open. */
-export type AsideType = 'search' | 'cart' | 'mobile' | 'closed';
+export type AsideType = 'search' | 'cart' | 'mobile' | 'locale' | 'closed';
 
 // ============================================================================
 // SIDEBAR CONFIG
