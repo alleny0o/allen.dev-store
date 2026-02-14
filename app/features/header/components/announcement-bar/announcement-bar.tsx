@@ -19,6 +19,7 @@ import {AnnouncementItem} from './announcement-item';
 import {SanityInternalLink} from '~/components/sanity/link/sanity-internal-link';
 import {SanityExternalLink} from '~/components/sanity/link/sanity-external-link';
 import type {AnnouncementBarEntry, UtilityLink} from '../../types';
+import {LocaleSelector} from '~/features/locale';
 
 /** Default padding value in pixels when not specified */
 const DEFAULT_PADDING = 0;
@@ -34,7 +35,7 @@ const PADDING_OFFSET = 2;
  * Supports auto-rotation, fade/slide transitions, and customizable styling via Sanity CMS.
  */
 export function AnnouncementBar() {
-  const {sanityRoot} = useRootLoaderData();
+  const {sanityRoot, localeSelectorConfig} = useRootLoaderData();
   const data = sanityRoot?.data as ROOT_QUERYResult | undefined;
   const header = data?.header;
   const announcementBar = header?.announcementBar;
@@ -47,7 +48,10 @@ export function AnnouncementBar() {
   const isArrowsActive =
     header?.showAnnouncementArrows && (announcementBar?.length ?? 0) > 1;
 
-  const isUtilitiesActive = (utilityLinks?.length ?? 0) > 0;
+  const showLocaleSelector = header?.showLocalizationSelector ?? false;
+
+  const isUtilitiesActive =
+    (utilityLinks?.length ?? 0) > 0 || showLocaleSelector;
 
   const colorsCssVars = useColorsCssVars({
     selector: `#announcement-bar`,
@@ -172,6 +176,9 @@ export function AnnouncementBar() {
               )}
             </React.Fragment>
           ))}
+          { localeSelectorConfig && (
+            <LocaleSelector config={localeSelectorConfig} />
+          )}
         </nav>
       )}
     </section>

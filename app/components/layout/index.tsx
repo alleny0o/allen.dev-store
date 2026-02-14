@@ -24,6 +24,9 @@ import {TailwindIndicator} from '../tailwind-indicator';
 // aside
 import {AsideProvider} from '~/features/aside';
 
+// locale selector
+import {LocaleSelectorProvider} from '~/features/locale/context/locale-selector-context';
+
 import {type CartReturn} from '@shopify/hydrogen';
 
 export type LayoutProps = {
@@ -50,29 +53,31 @@ export function AppLayout({
       storefrontToken={env.PUBLIC_STOREFRONT_API_TOKEN}
     >
       <AsideProvider>
-        <Motion>
-          <ClientOnly fallback={null}>
-            {() => <NavigationProgressBar />}
-          </ClientOnly>
-          <AnnouncementBar />
-          <Header />
-          <main className="flex min-h-[90vh] grow flex-col gap-y-[calc(var(--space-between-template-sections)*.75)] sm:gap-y-(--space-between-template-sections)">
-            {children}
-          </main>
-          <Footer />
-          <TailwindIndicator />
-          {sanityPreviewMode ? (
+        <LocaleSelectorProvider>
+          <Motion>
             <ClientOnly fallback={null}>
-              {() => (
-                <Suspense>
-                  <VisualEditing />
-                </Suspense>
-              )}
+              {() => <NavigationProgressBar />}
             </ClientOnly>
-          ) : (
-            <TogglePreviewMode />
-          )}
-        </Motion>
+            <AnnouncementBar />
+            <Header />
+            <main className="flex min-h-[90vh] grow flex-col gap-y-[calc(var(--space-between-template-sections)*.75)] sm:gap-y-(--space-between-template-sections)">
+              {children}
+            </main>
+            <Footer />
+            <TailwindIndicator />
+            {sanityPreviewMode ? (
+              <ClientOnly fallback={null}>
+                {() => (
+                  <Suspense>
+                    <VisualEditing />
+                  </Suspense>
+                )}
+              </ClientOnly>
+            ) : (
+              <TogglePreviewMode />
+            )}
+          </Motion>
+        </LocaleSelectorProvider>
       </AsideProvider>
     </ShopifyProvider>
   );

@@ -1,5 +1,4 @@
-import type {StructureBuilder} from 'sanity/structure'
-
+import type {StructureBuilder} from 'sanity/structure';
 import {
   CogIcon,
   EarthGlobeIcon,
@@ -7,15 +6,16 @@ import {
   InsertAboveIcon,
   InsertBelowIcon,
   CubeIcon,
-} from '@sanity/icons'
+  EarthAmericasIcon,
+} from '@sanity/icons';
 
 type Singleton = {
-  _type: string
-  icon?: any
-  id: string
-  initialValue?: any
-  title: string
-}
+  _type: string;
+  icon?: any;
+  id: string;
+  initialValue?: any;
+  title: string;
+};
 
 export const SINGLETONS: {[key: string]: Singleton} = {
   home: {
@@ -35,6 +35,12 @@ export const SINGLETONS: {[key: string]: Singleton} = {
     _type: 'footer',
     title: 'Footer',
     icon: InsertAboveIcon,
+  },
+  localeSelector: {
+    id: 'localeSelector',
+    _type: 'localeSelector',
+    title: 'Locale Selector',
+    icon: EarthAmericasIcon,
   },
   productSectionDesign: {
     id: 'productSectionDesign',
@@ -59,14 +65,18 @@ export const SINGLETONS: {[key: string]: Singleton} = {
     title: 'Settings',
     icon: CogIcon,
   },
-}
+};
 
 export const singletonsTypes = new Set(
   Object.values(SINGLETONS).map((singleton) => singleton._type),
-)
+);
 
 // Define the actions allowed for singleton documents
-export const singletonActions = new Set(['discardChanges', 'publish', 'restore'])
+export const singletonActions = new Set([
+  'discardChanges',
+  'publish',
+  'restore',
+]);
 
 export const singleton = (S: StructureBuilder, singleton: Singleton) =>
   S.documentTypeListItem(singleton._type)
@@ -77,4 +87,4 @@ export const singleton = (S: StructureBuilder, singleton: Singleton) =>
         .schemaType(singleton._type)
         .documentId(singleton._type)
         .views([S.view.form()]),
-    )
+    );

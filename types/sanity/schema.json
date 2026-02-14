@@ -1,5 +1,457 @@
 [
   {
+    "name": "localeSelector",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "localeSelector"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "triggerVariant": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "icon"
+            },
+            {
+              "type": "string",
+              "value": "flag"
+            },
+            {
+              "type": "string",
+              "value": "flag-country"
+            },
+            {
+              "type": "string",
+              "value": "flag-country-lang"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "showChevron": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
+      "displayModeKind": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "single"
+            },
+            {
+              "type": "string",
+              "value": "responsive"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "mode": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "dropdown"
+            },
+            {
+              "type": "string",
+              "value": "modal"
+            },
+            {
+              "type": "string",
+              "value": "sidebar"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "modeBase": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "dropdown"
+            },
+            {
+              "type": "string",
+              "value": "modal"
+            },
+            {
+              "type": "string",
+              "value": "sidebar"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "modeSm": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "dropdown"
+            },
+            {
+              "type": "string",
+              "value": "modal"
+            },
+            {
+              "type": "string",
+              "value": "sidebar"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "modeMd": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "dropdown"
+            },
+            {
+              "type": "string",
+              "value": "modal"
+            },
+            {
+              "type": "string",
+              "value": "sidebar"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "modeLg": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "dropdown"
+            },
+            {
+              "type": "string",
+              "value": "modal"
+            },
+            {
+              "type": "string",
+              "value": "sidebar"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "sidebarConfig": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "position": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "left"
+                  },
+                  {
+                    "type": "string",
+                    "value": "right"
+                  }
+                ]
+              },
+              "optional": true
+            },
+            "width": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            },
+            "maxWidth": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            },
+            "fullWidthBelow": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "never"
+                  },
+                  {
+                    "type": "string",
+                    "value": "sm"
+                  },
+                  {
+                    "type": "string",
+                    "value": "md"
+                  },
+                  {
+                    "type": "string",
+                    "value": "lg"
+                  }
+                ]
+              },
+              "optional": true
+            },
+            "animation": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "none"
+                  },
+                  {
+                    "type": "string",
+                    "value": "slide"
+                  },
+                  {
+                    "type": "string",
+                    "value": "slideFade"
+                  }
+                ]
+              },
+              "optional": true
+            },
+            "animationDuration": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            },
+            "overlayOpacity": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      },
+      "modalConfig": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "insetX": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            },
+            "insetY": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            },
+            "maxWidth": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            },
+            "maxHeight": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            },
+            "fullScreenBelow": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "never"
+                  },
+                  {
+                    "type": "string",
+                    "value": "sm"
+                  },
+                  {
+                    "type": "string",
+                    "value": "md"
+                  },
+                  {
+                    "type": "string",
+                    "value": "lg"
+                  }
+                ]
+              },
+              "optional": true
+            },
+            "borderRadiusOnFullScreen": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "keep"
+                  },
+                  {
+                    "type": "string",
+                    "value": "none"
+                  }
+                ]
+              },
+              "optional": true
+            },
+            "borderRadius": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "none"
+                  },
+                  {
+                    "type": "string",
+                    "value": "sm"
+                  },
+                  {
+                    "type": "string",
+                    "value": "md"
+                  },
+                  {
+                    "type": "string",
+                    "value": "lg"
+                  },
+                  {
+                    "type": "string",
+                    "value": "xl"
+                  }
+                ]
+              },
+              "optional": true
+            },
+            "animation": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "union",
+                "of": [
+                  {
+                    "type": "string",
+                    "value": "none"
+                  },
+                  {
+                    "type": "string",
+                    "value": "fade"
+                  },
+                  {
+                    "type": "string",
+                    "value": "scale"
+                  },
+                  {
+                    "type": "string",
+                    "value": "slideTop"
+                  },
+                  {
+                    "type": "string",
+                    "value": "slideBottom"
+                  }
+                ]
+              },
+              "optional": true
+            },
+            "animationDuration": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            },
+            "overlayOpacity": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "inline",
+                "name": "rangeSlider"
+              },
+              "optional": true
+            }
+          }
+        },
+        "optional": true
+      }
+    }
+  },
+  {
     "name": "productSectionDesign",
     "type": "document",
     "attributes": {

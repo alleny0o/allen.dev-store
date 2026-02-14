@@ -43,6 +43,9 @@ import {generateFaviconUrls} from './lib/generate-favicon-urls';
 // locale resolver
 import {resolveLocaleServer} from './lib/locale/resolve-locale-server';
 
+// locale selector config
+import {resolveLocaleSelectorConfig} from './features/locale';
+
 // sanity loader
 import {loadSanityRoot} from './lib/sanity/load-sanity-root';
 
@@ -113,6 +116,10 @@ export async function loader({context, request}: Route.LoaderArgs) {
 
   const isLoggedInPromise = customerAccount.isLoggedIn();
 
+  const localeSelectorConfig = resolveLocaleSelectorConfig(
+    sanityRoot.data?.localeSelector,
+  );
+
   return {
     cart: cart.get(),
     collectionListPromise,
@@ -126,6 +133,7 @@ export async function loader({context, request}: Route.LoaderArgs) {
     isLoggedIn: isLoggedInPromise,
     locale,
     localizations,
+    localeSelectorConfig,
     sanityPreviewMode,
     sanityRoot,
     seo,

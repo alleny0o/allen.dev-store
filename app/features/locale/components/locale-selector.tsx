@@ -1,4 +1,3 @@
-import {useRef} from 'react';
 import {cn} from '~/lib/utils';
 
 import {useLocaleSelector} from '../hooks/use-locale-selector';
@@ -63,8 +62,7 @@ function getResponsiveClasses(
 // ============================================================================
 
 function DropdownSelector({config, inMobileMenu}: LocaleSelectorProps) {
-  const triggerRef = useRef<HTMLButtonElement>(null);
-  const {isOpen, toggle, close} = useLocaleSelectorContext();
+  const {isOpen, open, close} = useLocaleSelectorContext();
   const {
     currentLocale,
     locales,
@@ -75,37 +73,34 @@ function DropdownSelector({config, inMobileMenu}: LocaleSelectorProps) {
   } = useLocaleSelector();
 
   return (
-    <div className="relative">
-      <LocaleTrigger
-        ref={triggerRef}
-        variant={config.triggerVariant}
-        showChevron={config.showChevron}
-        locale={currentLocale}
-        isOpen={isOpen}
-        onClick={toggle}
-      />
-      <LocaleDropdown
-        isOpen={isOpen}
-        onClose={close}
-        triggerRef={triggerRef}
-        forceUpward={inMobileMenu}
-      >
-        <LocaleForm
-          currentLocale={currentLocale}
-          locales={locales}
-          selectedCountry={selectedCountry}
-          setSelectedCountry={setSelectedCountry}
-          availableLanguages={availableLanguages}
-          handleLocaleChange={handleLocaleChange}
-          onClose={close}
+    <LocaleDropdown
+      isOpen={isOpen}
+      onOpenChange={(next) => (next ? open() : close())}
+      forceUpward={inMobileMenu}
+      trigger={
+        <LocaleTrigger
+          variant={config.triggerVariant}
+          showChevron={config.showChevron}
+          locale={currentLocale}
+          isOpen={isOpen}
+          onClick={() => {}}
         />
-      </LocaleDropdown>
-    </div>
+      }
+    >
+      <LocaleForm
+        currentLocale={currentLocale}
+        locales={locales}
+        selectedCountry={selectedCountry}
+        setSelectedCountry={setSelectedCountry}
+        availableLanguages={availableLanguages}
+        handleLocaleChange={handleLocaleChange}
+        onClose={close}
+      />
+    </LocaleDropdown>
   );
 }
 
 function ModalSelector({config}: LocaleSelectorProps) {
-  const triggerRef = useRef<HTMLButtonElement>(null);
   const {isOpen, toggle, close} = useLocaleModal();
   const {
     currentLocale,
@@ -119,7 +114,6 @@ function ModalSelector({config}: LocaleSelectorProps) {
   return (
     <>
       <LocaleTrigger
-        ref={triggerRef}
         variant={config.triggerVariant}
         showChevron={config.showChevron}
         locale={currentLocale}
@@ -142,7 +136,6 @@ function ModalSelector({config}: LocaleSelectorProps) {
 }
 
 function SidebarSelector({config}: LocaleSelectorProps) {
-  const triggerRef = useRef<HTMLButtonElement>(null);
   const {isOpen, toggle, close} = useLocaleSidebar();
   const {
     currentLocale,
@@ -156,7 +149,6 @@ function SidebarSelector({config}: LocaleSelectorProps) {
   return (
     <>
       <LocaleTrigger
-        ref={triggerRef}
         variant={config.triggerVariant}
         showChevron={config.showChevron}
         locale={currentLocale}

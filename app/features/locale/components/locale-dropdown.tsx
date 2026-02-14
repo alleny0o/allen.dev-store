@@ -1,148 +1,102 @@
-import {useEffect, useRef, useState, type RefObject} from 'react';
+import {useEffect} from 'react';
 import {AnimatePresence, m} from 'motion/react';
+import * as Popover from '@radix-ui/react-popover';
 import {cn} from '~/lib/utils';
 
 interface LocaleDropdownProps {
   isOpen: boolean;
-  onClose: () => void;
-  triggerRef: RefObject<HTMLButtonElement>;
-  /** When true, always opens upward — no collision detection needed */
+  onOpenChange: (open: boolean) => void;
+  trigger: React.ReactNode;
+  /**
+   * When true, always opens upward.
+   * Used when locale selector is rendered inside the mobile menu.
+   */
   forceUpward?: boolean;
   children: React.ReactNode;
 }
 
-type DropdownPosition = {
-  top?: number;
-  bottom?: number;
-  left: number;
-  width: number;
-};
+const ENTER_EASE: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
 
 /**
- * Plain TSX dropdown container. No positioning libraries.
+ * Locale selector dropdown container using Radix Popover.
  *
- * - Measures trigger via getBoundingClientRect()
- * - Opens downward by default
- * - Flips upward if not enough space below viewport
- * - forceUpward skips collision detection (used inside mobile menu)
- * - Click outside closes the dropdown
+ * - Portals to document.body — never trapped under headers or stacking contexts
+ * - Collision-aware positioning out of the box (flips, shifts, stays in viewport)
+ * - forceUpward forces upward alignment (used inside mobile menu)
+ * - Click outside and Escape handled by Radix
+ * - Closes on scroll via document capture listener
+ * - Motion animation via AnimatePresence + m.div
  */
 export function LocaleDropdown({
   isOpen,
-  onClose,
-  triggerRef,
+  onOpenChange,
+  trigger,
   forceUpward = false,
   children,
 }: LocaleDropdownProps) {
-  const panelRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState<DropdownPosition | null>(null);
-  const [opensUpward, setOpensUpward] = useState(forceUpward);
-
-  // ── Position calculation ──────────────────────────────────────────────────
-  // Runs when dropdown opens. Measures trigger rect and checks available
-  // space above and below to decide open direction.
-  useEffect(() => {
-    if (!isOpen || !triggerRef.current) return;
-
-    const trigger = triggerRef.current.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    const panelHeight = panelRef.current?.offsetHeight ?? 300;
-
-    const spaceBelow = viewportHeight - trigger.bottom;
-    const spaceAbove = trigger.top;
-
-    const shouldOpenUpward =
-      forceUpward || (spaceBelow < panelHeight && spaceAbove > spaceBelow);
-
-    setOpensUpward(shouldOpenUpward);
-
-    if (shouldOpenUpward) {
-      setPosition({
-        bottom: viewportHeight - trigger.top,
-        left: trigger.left,
-        width: trigger.width,
-      });
-    } else {
-      setPosition({
-        top: trigger.bottom,
-        left: trigger.left,
-        width: trigger.width,
-      });
-    }
-  }, [isOpen, triggerRef, forceUpward]);
-
-  // ── Click outside ─────────────────────────────────────────────────────────
+  // Radix has no built-in close-on-scroll. We attach to document in capture
+  // phase so scroll on any element (not just window) triggers the close.
   useEffect(() => {
     if (!isOpen) return;
-
-    const handlePointerDown = (e: PointerEvent) => {
-      if (
-        panelRef.current &&
-        !panelRef.current.contains(e.target as Node) &&
-        triggerRef.current &&
-        !triggerRef.current.contains(e.target as Node)
-      ) {
-        onClose();
-      }
-    };
-
-    document.addEventListener('pointerdown', handlePointerDown);
-    return () => document.removeEventListener('pointerdown', handlePointerDown);
-  }, [isOpen, onClose, triggerRef]);
-
-  // ── Escape key ────────────────────────────────────────────────────────────
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const controller = new AbortController();
-    document.addEventListener(
-      'keydown',
-      (e) => {
-        if (e.key === 'Escape') onClose();
-      },
-      {signal: controller.signal},
-    );
-    return () => controller.abort();
-  }, [isOpen, onClose]);
-
-  const ENTER_EASE: [number, number, number, number] = [0.25, 0.46, 0.45, 0.94];
-
-  const variants = {
-    open: {
-      opacity: 1,
-      y: 0,
-      transition: {duration: 0.2, ease: ENTER_EASE},
-    },
-    closed: {
-      opacity: 0,
-      y: opensUpward ? 4 : -4,
-      transition: {duration: 0},
-    },
-  };
+    const handleScroll = () => onOpenChange(false);
+    document.addEventListener('scroll', handleScroll, {passive: true, capture: true});
+    return () => document.removeEventListener('scroll', handleScroll, {capture: true});
+  }, [isOpen, onOpenChange]);
 
   return (
-    <AnimatePresence>
-      {isOpen && position && (
-        <m.div
-          ref={panelRef}
-          role="listbox"
-          aria-label="Locale selector"
+    <Popover.Root open={isOpen} onOpenChange={onOpenChange}>
+      {/* asChild merges Radix trigger behaviour onto our button */}
+      <Popover.Trigger asChild>{trigger}</Popover.Trigger>
+
+      <Popover.Portal>
+        {/*
+         * forceMount keeps content in the DOM so AnimatePresence can
+         * play the exit animation before unmounting.
+         * pointer-events-none when closed prevents the invisible panel
+         * from intercepting clicks.
+         */}
+        <Popover.Content
+          forceMount
+          side={forceUpward ? 'top' : 'bottom'}
+          align="start"
+          sideOffset={6}
+          avoidCollisions={!forceUpward}
+          collisionPadding={8}
+          onOpenAutoFocus={(e) => e.preventDefault()}
           className={cn(
-            'fixed z-50 min-w-50 rounded-md border bg-background p-4 shadow-md',
+            'z-70 outline-none',
+            !isOpen && 'pointer-events-none',
           )}
-          style={{
-            top: position.top,
-            bottom: position.bottom,
-            left: position.left,
-          }}
-          variants={variants}
-          initial="closed"
-          animate="open"
-          exit="closed"
         >
-          {children}
-        </m.div>
-      )}
-    </AnimatePresence>
+          <AnimatePresence>
+            {isOpen && (
+              <m.div
+                key="locale-dropdown"
+                role="dialog"
+                aria-label="Select country and language"
+                className={cn(
+                  'w-[min(320px,calc(100vw-16px))]',
+                  'rounded-md border bg-background p-4 shadow-md',
+                  'max-h-[min(400px,calc(100vh-80px))] overflow-y-auto',
+                )}
+                initial={{opacity: 0, y: forceUpward ? 4 : -4}}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  transition: {duration: 0.2, ease: ENTER_EASE},
+                }}
+                exit={{
+                  opacity: 0,
+                  y: forceUpward ? 4 : -4,
+                  transition: {duration: 0.15},
+                }}
+              >
+                {children}
+              </m.div>
+            )}
+          </AnimatePresence>
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
   );
 }

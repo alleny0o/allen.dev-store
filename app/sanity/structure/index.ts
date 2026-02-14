@@ -2,14 +2,7 @@ import type {
   DefaultDocumentNodeResolver,
   StructureResolver,
 } from 'sanity/structure';
-
-import {
-  LayoutTemplate,
-  PanelsTopLeft,
-  Package, 
-  Paintbrush,
-} from 'lucide-react';
-
+import {LayoutTemplate, PanelsTopLeft, Package, Paintbrush} from 'lucide-react';
 import {collections} from './collection-structure';
 import {products} from './product-structure';
 import {singleton, SINGLETONS} from './singletons';
@@ -31,6 +24,7 @@ export const structure: StructureResolver = (S, context) => {
       // 🧩 ===== Global Layout =====
       singleton(S, SINGLETONS.header),
       singleton(S, SINGLETONS.footer),
+      singleton(S, SINGLETONS.localeSelector),
       S.divider(),
 
       // ⚙️ ===== Global Settings =====
@@ -45,13 +39,15 @@ export const structure: StructureResolver = (S, context) => {
           S.list()
             .title('Design')
             .items([
-              singleton(S, SINGLETONS.productSectionDesign).id('productSectionDesign').title('Product section').icon(Package),
+              singleton(S, SINGLETONS.productSectionDesign)
+                .id('productSectionDesign')
+                .title('Product section')
+                .icon(Package),
               S.documentTypeListItem('colorScheme').showIcon(true),
               singleton(S, SINGLETONS.typography),
               singleton(S, SINGLETONS.themeContent).title('Theme content'),
             ]),
         ),
-
       S.divider(),
 
       // 🧱 ===== Templates =====
